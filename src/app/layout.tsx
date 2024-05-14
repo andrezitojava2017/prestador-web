@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Home from "./page";
-import { ChakraProvider, HStack } from "@chakra-ui/react";
+import { ChakraProvider, HStack, Stack } from "@chakra-ui/react";
 import BarraNavegacao from "@/componentes/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,9 +21,9 @@ export default function RootLayout({
     <html lang="pt-br">
       <body className={inter.className}>
         <ChakraProvider>
-          <HStack background={'red'} height={'100vh'}>
+          <HStack height={"100vh"}>
             <BarraNavegacao />
-            {children}
+            <Stack width={'100%'}>{children}</Stack>
           </HStack>
         </ChakraProvider>
       </body>
