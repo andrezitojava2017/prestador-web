@@ -10,6 +10,7 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
+import { ImUpload2 } from "react-icons/im";
 
 type Props = {
   data: Freelance[];
@@ -17,7 +18,7 @@ type Props = {
 const TableOfServices = ({ data }: Props) => {
   return (
     <TableContainer overflowY={"auto"}>
-      <Table variant="simple" size={"sm"}>
+      <Table variant="simple"  >
         <TableCaption>Lista de Terceiros</TableCaption>
         <Thead>
           <Tr>
@@ -28,26 +29,22 @@ const TableOfServices = ({ data }: Props) => {
         </Thead>
         <Tbody>
           
-          {data.length !== 0 ? (
+          {data.length !== 0 && data != null ? (
             data.map((el) => (
               <Tr key={el["pis-pasep"]}>
-                <Td>{el["pis-pasep"]}</Td>
-                <Td>{el.nome}</Td>
+                <Td >{el["pis-pasep"]}</Td>
+                <Td >{el.nome}</Td>
+                <Td >{<ImUpload2 size={20} cursor={'pointer'} color="#106B87" />}</Td>
               </Tr>
             ))
           ) : (
             <Tr>
-              <Td colSpan={3} color={'red'}>Nenhum autonomo importado</Td>
+              <Td colSpan={3} color={'red'} textAlign={'center'} padding={6}>Nenhum autonomo importado</Td>
             </Tr>
           )}
          
         </Tbody>
-        <Tfoot>
-          <Tr>
-            <Th colSpan={3} textAlign={'center'} fontSize={18}>Prestador Web</Th>
-            
-          </Tr>
-        </Tfoot>
+ 
       </Table>
     </TableContainer>
   );
