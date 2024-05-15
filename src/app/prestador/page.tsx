@@ -11,7 +11,7 @@ import Information from "@/componentes/information/information";
 const Prestador = () => {
   return (
     <Stack height={"100vh"}>
-      <Head text="Prestador" />
+      <Head text="Prestador" buttonReturn={true}/>
       <HStack gap={8} marginLeft={6}>
         <Button
           action={() => console.log("Inserir novo prestador")}

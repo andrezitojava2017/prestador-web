@@ -1,16 +1,26 @@
 import { michroma } from "@/app/fonts/fonts";
-import { Box, Divider, Text } from "@chakra-ui/react";
+import { Box, Divider, HStack, Text } from "@chakra-ui/react";
+import Link from "next/link";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 type Props = {
   text: string;
+  buttonReturn: boolean;
 };
 
-const Head = ({ text }: Props) => {
+const Head = ({ text, buttonReturn }: Props) => {
   return (
     <Box padding={6}>
-      <Text fontFamily={michroma.style.fontFamily} color={"#106B87"}>
-        {text}
-      </Text>
+      <HStack>
+        {buttonReturn ? (
+          <Link href={"/"}>
+            <IoMdArrowRoundBack size={20} color={"#106B87"} />
+          </Link>
+        ) : null}
+        <Text fontFamily={michroma.style.fontFamily} color={"#106B87"}>
+          {text}
+        </Text>
+      </HStack>
       <Divider />
     </Box>
   );

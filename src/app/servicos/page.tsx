@@ -7,7 +7,7 @@ import { MdViewKanban } from "react-icons/md";
 const Servicos = () => {
   return (
     <Stack height={"100vh"} >
-      <Head text="Serviços" />
+      <Head text="Serviços" buttonReturn={true}/>
       <HStack gap={8} marginLeft={6}>
         <Button
           description="Novo Serviço"

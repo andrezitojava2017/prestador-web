@@ -79,7 +79,7 @@ const ImportFile = () => {
 
   return (
     <Stack height={"100vh"}>
-      <Head text="Importar arquivo .RE" />
+      <Head text="Importar arquivo .RE" buttonReturn={true} />
 
       <Stack
         marginLeft={6}

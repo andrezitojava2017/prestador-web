@@ -49,11 +49,19 @@ export const readLinesOfFile = (file: ChangeEvent<HTMLInputElement>) : Promise<F
   });
 };
 
+/**
+ * salva os dados recuperados do arquivo em localstorage
+ * @param data 
+ */
 export const saveLocalStorage = (data:Freelance[])=>{
 
     localStorage.setItem('freelance',JSON.stringify(data))
 }
 
+/**
+ * recupera todos os dados contidos no localstorage
+ * @returns  Freelance[]
+ */
 export const getFreelanceStorage = ()=>{
     
     try {
