@@ -1,3 +1,4 @@
+import { Freelance } from "@/interface/freelance";
 import {
   Table,
   Thead,
@@ -10,11 +11,13 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 
-
-const TableOfServices = () => {
+type Props = {
+  data: Freelance[];
+};
+const TableOfServices = ({ data }: Props) => {
   return (
-    <TableContainer overflowY={'auto'}>
-      <Table variant="simple" size={'sm'}>
+    <TableContainer overflowY={"auto"}>
+      <Table variant="simple" size={"sm"}>
         <TableCaption>Lista de Terceiros</TableCaption>
         <Thead>
           <Tr>
@@ -24,77 +27,25 @@ const TableOfServices = () => {
           </Tr>
         </Thead>
         <Tbody>
-          <Tr >
-            <Td >inches</Td>
-            <Td >millimetres (mm)</Td>
-            <Td >25.4</Td>
-          </Tr>
-          <Tr>
-            <Td>feet</Td>
-            <Td>centimetres (cm)</Td>
-            <Td>30.48</Td>
-          </Tr>
-          <Tr>
-            <Td>yards</Td>
-            <Td>metres (m)</Td>
-            <Td>0.91444</Td>
-          </Tr>
-          <Tr>
-            <Td>yards</Td>
-            <Td>metres (m)</Td>
-            <Td>0.91444</Td>
-          </Tr>
-          <Tr>
-            <Td>yards</Td>
-            <Td>metres (m)</Td>
-            <Td>0.91444</Td>
-          </Tr>
-          <Tr>
-            <Td>yards</Td>
-            <Td>metres (m)</Td>
-            <Td >0.91444</Td>
-          </Tr>
-          <Tr>
-            <Td>yards</Td>
-            <Td>metres (m)</Td>
-            <Td >0.91444</Td>
-          </Tr>
-          <Tr>
-            <Td>yards</Td>
-            <Td>metres (m)</Td>
-            <Td >0.91444</Td>
-          </Tr>
-          <Tr>
-            <Td>yards</Td>
-            <Td>metres (m)</Td>
-            <Td >0.91444</Td>
-          </Tr>
-          <Tr>
-            <Td>yards</Td>
-            <Td>metres (m)</Td>
-            <Td >0.91444</Td>
-          </Tr>
-          <Tr>
-            <Td>yards</Td>
-            <Td>metres (m)</Td>
-            <Td >0.91444</Td>
-          </Tr>
-          <Tr>
-            <Td>yards</Td>
-            <Td>metres (m)</Td>
-            <Td >0.91444</Td>
-          </Tr>
-          <Tr>
-            <Td>yards</Td>
-            <Td>metres (m)</Td>
-            <Td >0.91444</Td>
-          </Tr>
+          
+          {data.length !== 0 ? (
+            data.map((el) => (
+              <Tr key={el["pis-pasep"]}>
+                <Td>{el["pis-pasep"]}</Td>
+                <Td>{el.nome}</Td>
+              </Tr>
+            ))
+          ) : (
+            <Tr>
+              <Td colSpan={3} color={'red'}>Nenhum autonomo importado</Td>
+            </Tr>
+          )}
+         
         </Tbody>
         <Tfoot>
           <Tr>
-            <Th>To convert</Th>
-            <Th>into</Th>
-            <Th >multiply by</Th>
+            <Th colSpan={3} textAlign={'center'} fontSize={18}>Prestador Web</Th>
+            
           </Tr>
         </Tfoot>
       </Table>
