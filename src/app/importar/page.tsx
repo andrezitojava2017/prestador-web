@@ -4,9 +4,11 @@ import Head from "@/componentes/head/head";
 import TableOfServices from "@/componentes/upload/table";
 import {
   Button,
+  Flex,
   FormControl,
   FormHelperText,
   FormLabel,
+  HStack,
   Input,
   Stack,
   Text,
@@ -19,6 +21,7 @@ import {
 } from "./actions";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Freelance } from "../../interface/freelance";
+import BarraNavegacao from "@/componentes/navbar";
 
 const ImportFile = () => {
   const [freelanceList, setFreelanceList] = useState<Freelance[]>([]);
@@ -37,7 +40,7 @@ const ImportFile = () => {
     const list = await readLinesOfFile(file);
     setFreelanceList(list);
     saveLocalStorage(list);
-    setButtonDisable(!buttonDisable)
+    setButtonDisable(!buttonDisable);
   };
 
   /**
@@ -49,7 +52,7 @@ const ImportFile = () => {
     if (localStorage.getItem("freelance") !== null) {
       localStorage.removeItem("freelance");
       setButtonDisable(!buttonDisable);
-      setFreelanceList([])
+      setFreelanceList([]);
     }
   };
 
@@ -63,9 +66,8 @@ const ImportFile = () => {
       let free = getFreelanceStorage();
       if (free.length !== 0) {
         setFreelanceList(free);
-        setButtonDisable(!buttonDisable)
+        setButtonDisable(!buttonDisable);
       }
-     
     } catch (error) {
       toast({
         title: "Tivemos um problema",
@@ -78,38 +80,39 @@ const ImportFile = () => {
   }, []);
 
   return (
-    <Stack height={"100vh"}>
-      <Head text="Importar arquivo .RE" buttonReturn={true} />
+    <HStack height={"100vh"}>
+      <BarraNavegacao />
+      <Flex flexDirection={'column'} width={'100vw'} height={'100vh'}>
+        <Head text="Importar arquivo .RE" buttonReturn={true} />
 
-      <Stack
-        marginLeft={6}
-        width={"40%"}
-        border={"1px solid #106B87"}
-        borderRadius={8}
-        padding={4}
-      >
-        <FormControl>
-          <FormLabel>Importar arquivo</FormLabel>
-          <Input
-            type="file"
-            accept=".re"
-            onChange={(file) => readFileFreelance(file)}
-          />
-          <FormHelperText>Arquivo com extensao .RE</FormHelperText>
-        </FormControl>
-        // caso existir dados no localstorage, o btn ficara disponivel para
-        limpar os dados
-       
-          <Button isDisabled={buttonDisable} onClick={() => clearHistory()} >
+        <Stack
+          marginLeft={6}
+          width={"40%"}
+          border={"1px solid #106B87"}
+          borderRadius={8}
+          padding={4}
+        >
+          <FormControl>
+            <FormLabel>Importar arquivo</FormLabel>
+            <Input
+              type="file"
+              accept=".re"
+              onChange={(file) => readFileFreelance(file)}
+            />
+            <FormHelperText>Arquivo com extensao .RE</FormHelperText>
+          </FormControl>
+          // caso existir dados no localstorage, o btn ficara disponivel para
+          limpar os dados
+          <Button isDisabled={buttonDisable} onClick={() => clearHistory()}>
             <Text>Limpar historico</Text>
           </Button>
-       
-      </Stack>
+        </Stack>
 
-      <Stack maxHeight={"50vh"} marginTop={8}>
-        <TableOfServices data={freelanceList} />
-      </Stack>
-    </Stack>
+        <Stack maxHeight={"50vh"} marginTop={8}>
+          <TableOfServices data={freelanceList} />
+        </Stack>
+      </Flex>
+    </HStack>
   );
 };
 
