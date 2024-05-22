@@ -2,6 +2,7 @@
 
 import { Freelance } from "@/interface/freelance";
 import { consultaPisPasep } from "@/service/prestadorService";
+import { SetStateAction } from "react";
 
 /**
  * Remove números, pontos e caracteres especiais de uma string.
@@ -14,7 +15,7 @@ export const verificarNomePrestador = (value: string): string => {
   const regex = /[^a-zA-Z\s]/g;
 
   const nomeVerificado = value.replace(regex, "");
-  return nomeVerificado;
+  return nomeVerificado.toLocaleUpperCase();
 };
 
 /**
@@ -67,4 +68,14 @@ export const verificarCamposPreenchidos = (freelance: Freelance) => {
   ) {
     throw new Error("PIS/PASEP do prestador não foi informado");
   }
+};
+
+/**
+ * Limpa os campos do formulario
+ * @param setFreelance setState
+ */
+export const limparFormulario = (
+  setFreelance: React.Dispatch<SetStateAction<Freelance>>
+) => {
+  setFreelance({ nome: "", pisPasep: "" });
 };

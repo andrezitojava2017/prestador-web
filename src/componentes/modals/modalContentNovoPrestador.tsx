@@ -17,6 +17,7 @@ import {
 import { useEffect, useState } from "react";
 import {
   formatarPisPasepParaBancoDeDados,
+  limparFormulario,
   verificarCamposPreenchidos,
   verificarNomePrestador,
   verificarPrestadorExisteNaBase,
@@ -28,6 +29,7 @@ type Props = {
 };
 const ModalContentNewProvider = ({ close }: Props) => {
   const toast = useToast();
+  const [loading, setLoading] = useState<boolean>(false);
   const [freelance, setFreelance] = useState<Freelance>({
     nome: "",
     pisPasep: "",
@@ -51,6 +53,8 @@ const ModalContentNewProvider = ({ close }: Props) => {
   }, [mensagem]);
 
   const salvarNovoPrestador = async () => {
+    setLoading(true);
+
     try {
       // faz verificação se todos os campos estão preenchidos
       verificarCamposPreenchidos(freelance);
@@ -58,11 +62,25 @@ const ModalContentNewProvider = ({ close }: Props) => {
       // verifica se pispasep já existe na base de dados
       await verificarPrestadorExisteNaBase(freelance);
 
+      // faz a inserção dos dados
       await incluirNovoPrestador(freelance);
+
+      // limpa o formulario
+      limparFormulario(setFreelance);
+
+      // define a mensagem toast
+      setMensagem({
+        message: "Prestador foi salvo com sucesso!",
+        title: "Parabéns",
+        type: "success",
+      });
       
+      setLoading(false);
+
     } catch (error: any) {
       console.warn(error.message);
       setMensagem({ title: "Atenção", message: error.message, type: "error" });
+      setLoading(false);
     }
   };
 
@@ -98,7 +116,12 @@ const ModalContentNewProvider = ({ close }: Props) => {
       </ModalBody>
 
       <ModalFooter>
-        <Button colorScheme="blue" onClick={() => salvarNovoPrestador()}>
+        <Button
+          isLoading={loading}
+          loadingText={"Aguarde..."}
+          colorScheme="blue"
+          onClick={() => salvarNovoPrestador()}
+        >
           Salvar
         </Button>
         <Button variant="cyan" mr={3} onClick={close}>
