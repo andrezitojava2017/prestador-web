@@ -30,7 +30,7 @@ export const readLinesOfFile = (file: ChangeEvent<HTMLInputElement>) : Promise<F
         lines.forEach(el => {
             let freelance = {
                 nome: el.substring(53, 123),
-                "pis-pasep": el.substring(32, 43),
+                pisPasep: el.substring(32, 43),
               };
               freelanceList.push(freelance);
         });
