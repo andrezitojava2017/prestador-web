@@ -1,3 +1,4 @@
+"use client"
 import { Freelance } from "@/interface/freelance";
 import {
   Table,
@@ -29,10 +30,10 @@ const TableOfServices = ({ data }: Props) => {
         </Thead>
         <Tbody>
           
-          {data.length !== 0 && data != null ? (
-            data.map((el) => (
-              <Tr key={el["pis-pasep"]}>
-                <Td >{el["pis-pasep"]}</Td>
+          {data.length !== 0 && data != null && data != undefined ? (
+            data.map((el, index) => (
+              <Tr key={index}>
+                <Td >{el.pisPasep}</Td>
                 <Td >{el.nome}</Td>
                 <Td >{<ImUpload2 size={20} cursor={'pointer'} color="#106B87" />}</Td>
               </Tr>
