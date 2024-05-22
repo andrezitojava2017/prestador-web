@@ -9,6 +9,8 @@ import { BsClipboardDataFill } from "react-icons/bs";
 import Information from "@/componentes/information/information";
 import BarraNavegacao from "@/componentes/navbar";
 import ModalContentNewProvider from "@/componentes/modals/modalContentNovoPrestador";
+import ButtonService from "@/componentes/buttons/buttonService";
+import Link from "next/link";
 
 const Prestador = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -26,9 +28,15 @@ const Prestador = () => {
             isOpen={isOpen}
             onOpen={onOpen}
             onClose={onClose}
-            modalContentProvider={<ModalContentNewProvider close={onClose}/>}
+            modalContentProvider={<ModalContentNewProvider close={onClose} />}
           />
-{/* 
+          <Link href={'/lista/prestador'}>
+            <ButtonService
+              description="Listar Prestador"
+              icon={<BsClipboardDataFill size={50} color="white" />}
+            />
+          </Link>
+          {/* 
           <Option
             // action={() => console.log("Alterar informação de prestador")}
             description="Alterar inf. Prestador"
