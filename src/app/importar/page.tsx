@@ -1,7 +1,6 @@
 "use client";
 
 import Head from "@/componentes/head/head";
-import TableOfServices from "@/componentes/upload/table";
 import {
   Button,
   Flex,
@@ -22,12 +21,14 @@ import {
 import { ChangeEvent, useEffect, useState } from "react";
 import { Freelance } from "../../interface/freelance";
 import BarraNavegacao from "@/componentes/navbar";
+import TableOfServices from "@/componentes/tabela/table";
 
 const ImportFile = () => {
   const [freelanceList, setFreelanceList] = useState<Freelance[]>([]);
   const [buttonDisable, setButtonDisable] = useState<boolean>(true);
   const toast = useToast();
 
+  
   /**
    * faz a leitura do arquivo selecionado, retornando um array de objetos com a estrutura definida
    * na interface Freelance;

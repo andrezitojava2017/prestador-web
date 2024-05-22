@@ -3,7 +3,7 @@
 import Head from "@/componentes/head/head";
 import BarraNavegacao from "@/componentes/navbar";
 import Pesquisa from "@/componentes/pesquisa/pesquisa";
-import TableOfServices from "@/componentes/upload/table";
+import TableOfServices from "@/componentes/tabela/table";
 import { Freelance } from "@/interface/freelance";
 import { buscarPrestador } from "@/service/prestadorService";
 import { Button, Flex, HStack, Text, VStack } from "@chakra-ui/react";
