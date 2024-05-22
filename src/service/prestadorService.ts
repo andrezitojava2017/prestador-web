@@ -1,3 +1,4 @@
+import { IPesquisa } from "@/interface/IPesquisa";
 import { Freelance } from "@/interface/freelance";
 import supabase from "@/lib/supabase";
 
@@ -39,5 +40,19 @@ export const consultaPisPasep = async (freelance: Freelance) => {
   }
 
   return db_pessoas;
+};
 
+export const buscarPrestador = async (value:string) => {
+  let { data: db_pessoas, error } = await supabase
+  .from('db_pessoas')
+  .select("*")
+  .ilike('nome', `%${value}%`)
+
+  if(error){
+    console.warn('Ocorreu um erro na busca por prestador\n', error.message)
+    throw new Error(`Ocorreu um erro na busca por prestador - ${error.message}`)
+  }
+
+  //console.log(db_pessoas)
+  return db_pessoas;
 };
