@@ -22,13 +22,13 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Freelance } from "../../interface/freelance";
 import BarraNavegacao from "@/componentes/navbar";
 import TableOfServices from "@/componentes/tabela/table";
+import { ImUpload2 } from "react-icons/im";
 
 const ImportFile = () => {
   const [freelanceList, setFreelanceList] = useState<Freelance[]>([]);
   const [buttonDisable, setButtonDisable] = useState<boolean>(true);
   const toast = useToast();
 
-  
   /**
    * faz a leitura do arquivo selecionado, retornando um array de objetos com a estrutura definida
    * na interface Freelance;
@@ -83,7 +83,7 @@ const ImportFile = () => {
   return (
     <HStack height={"100vh"}>
       <BarraNavegacao />
-      <Flex flexDirection={'column'} width={'100vw'} height={'100vh'}>
+      <Flex flexDirection={"column"} width={"100vw"} height={"100vh"}>
         <Head text="Importar arquivo .RE" buttonReturn={true} />
 
         <Stack
@@ -110,7 +110,10 @@ const ImportFile = () => {
         </Stack>
 
         <Stack maxHeight={"50vh"} marginTop={8}>
-          <TableOfServices data={freelanceList} />
+          <TableOfServices
+            data={freelanceList}
+            eventos={<ImUpload2 size={20} cursor={"pointer"} color="#106B87" />}
+          />
         </Stack>
       </Flex>
     </HStack>
