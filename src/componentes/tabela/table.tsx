@@ -11,12 +11,12 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
-import { ImUpload2 } from "react-icons/im";
 
 type Props = {
   data: Freelance[];
+  eventos?:React.ReactNode
 };
-const TableOfServices = ({ data }: Props) => {
+const TableOfServices = ({ data, eventos }: Props) => {
   return (
     <TableContainer overflowY={"auto"}>
       <Table variant="simple"  >
@@ -35,7 +35,7 @@ const TableOfServices = ({ data }: Props) => {
               <Tr key={index}>
                 <Td >{el.pisPasep}</Td>
                 <Td >{el.nome}</Td>
-                <Td >{<ImUpload2 size={20} cursor={'pointer'} color="#106B87" />}</Td>
+                <Td >{eventos}</Td>
               </Tr>
             ))
           ) : (
