@@ -6,16 +6,29 @@ import Pesquisa from "@/componentes/pesquisa/pesquisa";
 import TableOfServices from "@/componentes/tabela/table";
 import { Freelance } from "@/interface/freelance";
 import { buscarPrestador } from "@/service/prestadorService";
-import { Box, Button, Flex, HStack, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Text,
+  VStack,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import { FaUserEdit } from "react-icons/fa";
 import { BsTools } from "react-icons/bs";
+import AlterarPrestadorDrawer from "@/componentes/drawers/AlterarPrestadorDrawer";
+
 
 const ListarPrestador = () => {
+
+
   const [dadosPesquisa, setDadosPesquisa] = useState<{
     competencia: string;
     prestador: string;
   }>({ competencia: "", prestador: "" });
+
   const [listaPrestador, setListaPrestador] = useState<Freelance[]>([]);
 
   const consultar = async () => {
@@ -25,13 +38,10 @@ const ListarPrestador = () => {
     }
   };
 
-  const eventos = () => {
+  const eventos = (el:Freelance) => {
     return (
       <HStack>
-        <Flex flexDirection={"column"} alignItems={"center"}>
-          <Text fontSize={10}>Editar</Text>
-          <FaUserEdit size={18} color="green" />
-        </Flex>
+        <AlterarPrestadorDrawer data={el} />
 
         <Flex flexDirection={"column"} alignItems={"center"}>
           <Text fontSize={10}>Serviço</Text>
@@ -59,7 +69,7 @@ const ListarPrestador = () => {
           />
         </VStack>
 
-        <TableOfServices data={listaPrestador!} eventos={eventos()} />
+        <TableOfServices data={listaPrestador!}  />
       </Flex>
     </HStack>
   );

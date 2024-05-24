@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Freelance } from "@/interface/freelance";
 import {
   Table,
@@ -10,16 +10,38 @@ import {
   Td,
   TableCaption,
   TableContainer,
+  Text,
+  HStack,
+  Flex,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import AlterarPrestadorDrawer from "../drawers/AlterarPrestadorDrawer";
+import { BsTools } from "react-icons/bs";
+import { usePathname } from "next/navigation";
 
 type Props = {
   data: Freelance[];
-  eventos?:React.ReactNode
+  // eventos?: React.ReactNode;
 };
-const TableOfServices = ({ data, eventos }: Props) => {
+const TableOfServices = ({ data }: Props) => {
+  const pathname = usePathname();
+
+  const eventos = (el: Freelance) => {
+    return (
+      <HStack>
+        <AlterarPrestadorDrawer data={el} />
+
+        <Flex flexDirection={"column"} alignItems={"center"}>
+          <Text fontSize={10}>Serviço</Text>
+          <BsTools size={18} color="green" />
+        </Flex>
+      </HStack>
+    );
+  };
+
   return (
     <TableContainer overflowY={"auto"}>
-      <Table variant="simple"  >
+      <Table variant="simple">
         <TableCaption>Lista de Terceiros</TableCaption>
         <Thead>
           <Tr>
@@ -29,23 +51,26 @@ const TableOfServices = ({ data, eventos }: Props) => {
           </Tr>
         </Thead>
         <Tbody>
-          
           {data.length !== 0 && data != null && data != undefined ? (
             data.map((el, index) => (
               <Tr key={index}>
-                <Td >{el.pisPasep}</Td>
-                <Td >{el.nome}</Td>
-                <Td >{eventos}</Td>
+                <Td>{el.pisPasep}</Td>
+                <Td>{el.nome}</Td>
+                {pathname === "/lista/prestador" ? (
+                  <Td>{eventos(el)}</Td>
+                ) : (
+                  <td>texto</td>
+                )}
               </Tr>
             ))
           ) : (
             <Tr>
-              <Td colSpan={3} color={'red'} textAlign={'center'} padding={6}>Nenhum autonomo importado</Td>
+              <Td colSpan={3} color={"red"} textAlign={"center"} padding={6}>
+                Nenhum autonomo importado
+              </Td>
             </Tr>
           )}
-         
         </Tbody>
- 
       </Table>
     </TableContainer>
   );
