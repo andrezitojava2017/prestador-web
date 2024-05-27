@@ -13,9 +13,10 @@ import {
   Input,
   Button,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaUserEdit } from "react-icons/fa";
 import FormularioPrestador from "../FormularioPrestador/FormularioPrestador";
+import { FreelanceContexts } from "@/context/FreelanceContext";
 
 type Props = {
   data: Freelance;
@@ -24,11 +25,13 @@ type Props = {
 const AlterarPrestadorDrawer = (props: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [prestador, setPrestador] = useState<Freelance>({nome:'', pisPasep:'',});
 
+  const {setFreelancers, freelancers} = useContext(FreelanceContexts)
+
+  
   useEffect(() => {
-    if (props.data) setPrestador(props.data);
-  }, [prestador]);
+    if (props.data) setFreelancers(props.data);
+  }, [props.data]);
 
   return (
     <>
@@ -54,7 +57,7 @@ const AlterarPrestadorDrawer = (props: Props) => {
             <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="blue" onClick={() => console.log(props.data)}>
+            <Button colorScheme="blue" onClick={() => console.log(freelancers)}>
               Save
             </Button>
           </DrawerFooter>

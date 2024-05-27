@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import AlterarPrestadorDrawer from "../drawers/AlterarPrestadorDrawer";
 import { BsTools } from "react-icons/bs";
 import { usePathname } from "next/navigation";
+import { FreelanceProvider } from "@/context/FreelanceContext";
 
 type Props = {
   data: Freelance[];
@@ -26,16 +27,25 @@ type Props = {
 const TableOfServices = ({ data }: Props) => {
   const pathname = usePathname();
 
+  /**
+   * botoes de ação que será exibido em cada prestador da tabela
+   * @param el
+   * @returns
+   */
   const eventos = (el: Freelance) => {
+    
     return (
-      <HStack>
-        <AlterarPrestadorDrawer data={el} />
+      <FreelanceProvider>
+        
+        <HStack>
+          <AlterarPrestadorDrawer data={el} />
 
-        <Flex flexDirection={"column"} alignItems={"center"}>
-          <Text fontSize={10}>Serviço</Text>
-          <BsTools size={18} color="green" />
-        </Flex>
-      </HStack>
+          <Flex flexDirection={"column"} alignItems={"center"}>
+            <Text fontSize={10}>Serviço</Text>
+            <BsTools size={18} color="green" />
+          </Flex>
+        </HStack>
+      </FreelanceProvider>
     );
   };
 
