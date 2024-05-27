@@ -4,7 +4,6 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
@@ -14,7 +13,6 @@ import {
   HStack,
   Flex,
 } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import AlterarPrestadorDrawer from "../drawers/AlterarPrestadorDrawer";
 import { BsTools } from "react-icons/bs";
 import { usePathname } from "next/navigation";
