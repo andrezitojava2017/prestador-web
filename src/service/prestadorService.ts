@@ -42,17 +42,33 @@ export const consultaPisPasep = async (freelance: Freelance) => {
   return db_pessoas;
 };
 
-export const buscarPrestador = async (value:string) => {
+export const buscarPrestador = async (value: string) => {
   let { data: db_pessoas, error } = await supabase
-  .from('db_pessoas')
-  .select("*")
-  .ilike('nome', `%${value}%`)
+    .from("db_pessoas")
+    .select("*")
+    .ilike("nome", `%${value}%`);
 
-  if(error){
-    console.warn('Ocorreu um erro na busca por prestador\n', error.message)
-    throw new Error(`Ocorreu um erro na busca por prestador - ${error.message}`)
+  if (error) {
+    console.warn("Ocorreu um erro na busca por prestador\n", error.message);
+    throw new Error(
+      `Ocorreu um erro na busca por prestador - ${error.message}`
+    );
   }
 
   //console.log(db_pessoas)
   return db_pessoas;
+};
+
+export const AtualizarDadosPrestadorService = async (prestador: Freelance) => {
+  const { data, error } = await supabase
+    .from("db_pessoas")
+    .update(prestador)
+    .eq("id", prestador.id)
+    .select();
+
+    if(error){
+      console.log('ocorreu um erro na atualização\n', error);
+      
+    }
+    console.log('dados atualizados\n', data)
 };
