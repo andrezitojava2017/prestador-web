@@ -6,8 +6,8 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
-import { formatarPisPasepParaBancoDeDados, verificarNomePrestador } from "../modals/actions";
 import { FreelanceContexts } from "@/context/FreelanceContext";
+import { formatarPisPasepParaBancoDeDados, verificarNomePrestador } from "@/utils/prestador/actions";
 
 
 /**

@@ -21,7 +21,7 @@ import {
   verificarCamposPreenchidos,
   verificarNomePrestador,
   verificarPrestadorExisteNaBase,
-} from "./actions";
+} from "@/utils/prestador/actions";
 import { incluirNovoPrestador } from "@/service/prestadorService";
 
 type Props = {
