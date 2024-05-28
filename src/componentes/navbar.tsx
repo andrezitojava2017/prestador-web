@@ -83,18 +83,20 @@ const BarraNavegacao = () => {
             </Flex>
           </Link>
           /** CONFIGURAÇÃO */
-          <Flex
-            flexDirection={"column"}
-            alignItems={"center"}
-            width={"100%"}
-            padding={2}
-            _hover={{ background: "#157A8C", cursor: "pointer" }}
-          >
-            <MdSettingsApplications size={40} color="#ffff" />
-            <Text fontSize={13} color="#ffff">
-              Configuração
-            </Text>
-          </Flex>
+          <Link href={"/configuracao"} style={{ width: "100%" }}>
+            <Flex
+              flexDirection={"column"}
+              alignItems={"center"}
+              width={"100%"}
+              padding={2}
+              _hover={{ background: "#157A8C", cursor: "pointer" }}
+            >
+              <MdSettingsApplications size={40} color="#ffff" />
+              <Text fontSize={13} color="#ffff">
+                Configuração
+              </Text>
+            </Flex>
+          </Link>
         </VStack>
       </Flex>
     </Box>
