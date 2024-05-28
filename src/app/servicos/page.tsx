@@ -1,9 +1,10 @@
-import Option from "@/componentes/buttons/button";
+
 import Head from "@/componentes/head/head";
 import { Flex, HStack } from "@chakra-ui/react";
 import { VscNewFolder } from "react-icons/vsc";
 import { MdViewKanban } from "react-icons/md";
 import BarraNavegacao from "@/componentes/navbar";
+import ButtonService from "@/componentes/buttons/buttonService";
 
 const Servicos = () => {
   return (
@@ -12,12 +13,12 @@ const Servicos = () => {
       <Flex flexDirection={'column'} height={'100vh'} >
       <Head text="Serviços" buttonReturn={true} />
       <HStack gap={8} marginLeft={6}>
-        <Option
+        <ButtonService
           description="Novo Serviço"
           icon={<VscNewFolder size={50} color="white" />}
           
         />
-        <Option
+        <ButtonService
           description="Listar serviços"
           icon={<MdViewKanban size={50} color="white" />}
         />
