@@ -112,7 +112,6 @@ const ImportFile = () => {
         <Stack maxHeight={"50vh"} marginTop={8}>
           <TableOfServices
             data={freelanceList}
-            eventos={<ImUpload2 size={20} cursor={"pointer"} color="#106B87" />}
           />
         </Stack>
       </Flex>
