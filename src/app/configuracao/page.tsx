@@ -1,19 +1,21 @@
-
+import CadastroSecretariaDrawer from "@/componentes/drawers/CadastroSecretariasDrawer";
 import ConfiguracaoIncluirTeto from "@/componentes/drawers/ConfiguracaoIncluirTeto";
 import Head from "@/componentes/head/head";
 import BarraNavegacao from "@/componentes/navbar";
-import { Box, Flex, HStack } from "@chakra-ui/react";
+import { Flex, HStack } from "@chakra-ui/react";
 
 const Configuracao = () => {
   return (
-    <HStack height={"100vh"} >
+    <HStack height={"100vh"}>
       <BarraNavegacao />
-      <Flex flexDirection={"column"} height={"100vh"}>
+      <Flex flexDirection={"column"} height={"100vh"} width={"100vw"}>
         <Head text="Configuração" buttonReturn={true} />
+        <HStack>
 
-        <Box>
           <ConfiguracaoIncluirTeto />
-        </Box>
+          <CadastroSecretariaDrawer />
+
+        </HStack>
       </Flex>
     </HStack>
   );
