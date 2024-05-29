@@ -22,7 +22,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Freelance } from "../../interface/freelance";
 import BarraNavegacao from "@/componentes/navbar";
 import TableOfServices from "@/componentes/tabela/table";
-import { ImUpload2 } from "react-icons/im";
+import { FreelanceProvider } from "@/context/FreelanceContext";
 
 const ImportFile = () => {
   const [freelanceList, setFreelanceList] = useState<Freelance[]>([]);
@@ -110,9 +110,9 @@ const ImportFile = () => {
         </Stack>
 
         <Stack maxHeight={"50vh"} marginTop={8}>
-          <TableOfServices
-            data={freelanceList}
-          />
+          <FreelanceProvider>
+            <TableOfServices data={freelanceList} />
+          </FreelanceProvider>
         </Stack>
       </Flex>
     </HStack>
