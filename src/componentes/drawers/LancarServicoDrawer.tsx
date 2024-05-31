@@ -9,13 +9,14 @@ import {
   Flex,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useContext, useEffect, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import { FreelanceContexts } from "@/context/FreelanceContext";
 import FormularioServico from "../formularioServico/FormularioServico";
 import { TbArrowBigRightLinesFilled } from "react-icons/tb";
 
 type Props = {
   data: Freelance;
+  icone: ReactNode;
 };
 
 const LancarServicoDrawer = (props: Props) => {
@@ -25,7 +26,7 @@ const LancarServicoDrawer = (props: Props) => {
 
 
   useEffect(() => {
-    
+
     if (props.data) setFreelancers(props.data);
   }, [props.data]);
 
@@ -35,9 +36,10 @@ const LancarServicoDrawer = (props: Props) => {
         flexDirection={"column"}
         alignItems={"center"}
         onClick={() => onOpen()}
-        _hover={{cursor:'pointer'}}
+        _hover={{ cursor: 'pointer' }}
       >
-        <TbArrowBigRightLinesFilled size={18} color="blue" />
+        {/*  <TbArrowBigRightLinesFilled size={18} color="blue" />*/}
+        {props.icone}
       </Flex>
       <Drawer isOpen={isOpen} placement="right" onClose={onClose} size={'xl'}>
         <DrawerOverlay />
@@ -46,7 +48,7 @@ const LancarServicoDrawer = (props: Props) => {
           <DrawerHeader>Lançar Serviço</DrawerHeader>
 
           <DrawerBody>
-            <FormularioServico/>
+            <FormularioServico />
           </DrawerBody>
 
         </DrawerContent>

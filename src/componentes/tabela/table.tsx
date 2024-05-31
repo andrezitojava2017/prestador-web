@@ -16,8 +16,11 @@ import {
 import AlterarPrestadorDrawer from "../drawers/AlterarPrestadorDrawer";
 import { BsTools } from "react-icons/bs";
 import { usePathname } from "next/navigation";
-import { FreelanceProvider } from "@/context/FreelanceContext";
+import { FreelanceContexts, FreelanceProvider } from "@/context/FreelanceContext";
 import LancarServicoDrawer from "../drawers/LancarServicoDrawer";
+import Link from "next/link";
+import { ReactNode, useContext } from "react";
+import { TbArrowBigRightLinesFilled } from "react-icons/tb";
 
 type Props = {
   data: Freelance[];
@@ -25,6 +28,18 @@ type Props = {
 };
 const TableOfServices = ({ data }: Props) => {
   const pathname = usePathname();
+
+  const drawerRegistroServico = (freelance: Freelance, icone: ReactNode) => {
+    return (
+      <FreelanceProvider>
+        <LancarServicoDrawer
+          data={freelance}
+          icone={icone}
+        />
+      </FreelanceProvider>
+    );
+  };
+
 
   /**
    * botoes de ação que será exibido em cada prestador da tabela
@@ -34,24 +49,25 @@ const TableOfServices = ({ data }: Props) => {
   const eventos = (el: Freelance) => {
     return (
       <FreelanceProvider>
-      <HStack>
-        <AlterarPrestadorDrawer data={el} />
-        <Flex flexDirection={"column"} alignItems={"center"}>
-          <Text fontSize={10}>Serviço</Text>
-          <BsTools size={18} color="green" />
-        </Flex>
-      </HStack>
+        <HStack>
+          <AlterarPrestadorDrawer data={el} />
+
+          <Flex flexDirection={"column"} alignItems={"center"}>
+            <Text fontSize={10}>Serviço</Text>
+            {drawerRegistroServico(el, <BsTools size={18} color="green" />)}
+          </Flex>
+          {/*
+          <Flex flexDirection={"column"} alignItems={"center"} onClick={() => console.log(el)}>
+            <Text fontSize={10}>Serviço</Text>
+            <BsTools size={18} color="green" />
+          </Flex>
+    */}
+        </HStack>
       </FreelanceProvider>
     );
   };
 
-  const drawerRegistroServico = (freelance: Freelance) => {
-    return (
-      <FreelanceProvider>
-        <LancarServicoDrawer data={freelance} />
-      </FreelanceProvider>
-    );
-  };
+
   return (
     <TableContainer overflowY={"auto"}>
       <Table variant="simple">
@@ -72,7 +88,7 @@ const TableOfServices = ({ data }: Props) => {
                 {pathname === "/lista/prestador" ? (
                   <Td>{eventos(el)}</Td>
                 ) : (
-                  <td>{drawerRegistroServico(el)}</td>
+                  <td>{drawerRegistroServico(el, <TbArrowBigRightLinesFilled size={18} color="blue" />)}</td>
                 )}
               </Tr>
             ))
