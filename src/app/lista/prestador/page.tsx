@@ -14,8 +14,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { BsTools } from "react-icons/bs";
-import AlterarPrestadorDrawer from "@/componentes/drawers/AlterarPrestadorDrawer";
 
 const ListarPrestador = () => {
   const [dadosPesquisa, setDadosPesquisa] = useState<{
@@ -50,9 +48,9 @@ const ListarPrestador = () => {
             }
           />
         </VStack>
-     
-          <TableOfServices data={listaPrestador!} />
-       
+
+        <TableOfServices data={listaPrestador!} />
+
       </Flex>
     </HStack>
   );

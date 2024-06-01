@@ -9,10 +9,9 @@ import {
   Flex,
   useDisclosure,
 } from "@chakra-ui/react";
-import { ReactNode, useContext, useEffect, useState } from "react";
+import { ReactNode, useContext, useEffect } from "react";
 import { FreelanceContexts } from "@/context/FreelanceContext";
 import FormularioServico from "../formularioServico/FormularioServico";
-import { TbArrowBigRightLinesFilled } from "react-icons/tb";
 
 type Props = {
   data: Freelance;
@@ -23,7 +22,6 @@ const LancarServicoDrawer = (props: Props) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { setFreelancers, freelancers } = useContext(FreelanceContexts);
-
 
   useEffect(() => {
 

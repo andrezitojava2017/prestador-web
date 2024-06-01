@@ -16,10 +16,9 @@ import {
 import AlterarPrestadorDrawer from "../drawers/AlterarPrestadorDrawer";
 import { BsTools } from "react-icons/bs";
 import { usePathname } from "next/navigation";
-import { FreelanceContexts, FreelanceProvider } from "@/context/FreelanceContext";
+import { FreelanceProvider } from "@/context/FreelanceContext";
 import LancarServicoDrawer from "../drawers/LancarServicoDrawer";
-import Link from "next/link";
-import { ReactNode, useContext } from "react";
+import { ReactNode } from "react";
 import { TbArrowBigRightLinesFilled } from "react-icons/tb";
 
 type Props = {
@@ -69,6 +68,7 @@ const TableOfServices = ({ data }: Props) => {
 
 
   return (
+
     <TableContainer overflowY={"auto"}>
       <Table variant="simple">
         <TableCaption>Lista de Terceiros</TableCaption>

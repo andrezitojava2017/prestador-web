@@ -62,7 +62,7 @@ const AlterarPrestadorDrawer = (props: Props) => {
         flexDirection={"column"}
         alignItems={"center"}
         onClick={() => onOpen()}
-        _hover={{cursor:'pointer'}}
+        _hover={{ cursor: 'pointer' }}
       >
         <Text fontSize={10}>Editar</Text>
         <FaUserEdit size={18} color="green" />

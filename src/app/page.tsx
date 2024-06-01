@@ -1,4 +1,3 @@
-"use client";
 
 import { Flex, HStack } from "@chakra-ui/react";
 import BarraNavegacao from "@/componentes/navbar";
@@ -11,7 +10,9 @@ export default function Home() {
       <BarraNavegacao />
       <Flex flexDirection={'column'} height={'100vh'} width={'100vw'}>
         <Head text="Pagina Principal" buttonReturn={false} />
+
         <HomePage />
+
       </Flex>
     </HStack>
   );
