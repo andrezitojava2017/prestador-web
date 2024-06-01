@@ -17,6 +17,7 @@ import { FreelanceContexts } from "@/context/FreelanceContext";
 import { IServico } from "@/interface/IServico";
 import { usePathname } from "next/navigation";
 import useSecretaria from "@/hook/useSecretarias";
+import { TributoContext } from "@/context/tributoContext";
 
 const FormularioServico = () => {
   const { setFreelancers, freelancers } = useContext(FreelanceContexts);
@@ -32,13 +33,14 @@ const FormularioServico = () => {
 
   const [readOnly, setReadOnly] = useState<boolean>(false);
   const caminhoUrl = usePathname();
+  const { tributoRef } = useContext(TributoContext)
 
   const { secretarias, erro } = useSecretaria();
-
-  useEffect(() => {
-    if (caminhoUrl === "/importar") setReadOnly(true);
-  });
-
+  /*
+    useEffect(() => {
+      if (caminhoUrl === "/importar") setReadOnly(true);
+    });
+  */
   return (
     <Stack width={"70vw"} maxWidth={"max-content"}>
       <Flex
@@ -68,7 +70,7 @@ const FormularioServico = () => {
               type="text"
               size={"sm"}
               value={freelancers?.nome}
-              readOnly={readOnly}
+              readOnly
               onChange={(e) =>
                 setFreelancers({ ...freelancers, nome: e.target.value })
               }
@@ -81,7 +83,7 @@ const FormularioServico = () => {
               type="number"
               size={"sm"}
               value={freelancers?.pisPasep}
-              readOnly={readOnly}
+              readOnly
               onChange={(e) =>
                 setFreelancers({ ...freelancers, pisPasep: e.target.value })
               }
@@ -160,7 +162,7 @@ const FormularioServico = () => {
       </HStack>
 
       <Flex justifyContent={"flex-end"}>
-        <Button colorScheme="blue" onClick={() => console.log(freelancers)}>
+        <Button colorScheme="blue" onClick={() => console.log(tributoRef)}>
           <Text>SALVAR</Text>
         </Button>
       </Flex>
