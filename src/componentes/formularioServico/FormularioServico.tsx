@@ -9,17 +9,16 @@ import {
   Select,
   Button,
   Text,
-  Box,
 } from "@chakra-ui/react";
 import Information from "../information/information";
 import { useContext, useEffect, useState } from "react";
 import { FreelanceContexts } from "@/context/FreelanceContext";
 import { IServico } from "@/interface/IServico";
-import { usePathname } from "next/navigation";
 import useSecretaria from "@/hook/useSecretarias";
 import { TributoContext } from "@/context/tributoContext";
 
 const FormularioServico = () => {
+  const [habilitaNovo, setHabilitaNovo] = useState<boolean>(false)
   const { setFreelancers, freelancers } = useContext(FreelanceContexts);
   const [servico, setServico] = useState<IServico>({
     competencia: "",
@@ -31,16 +30,14 @@ const FormularioServico = () => {
     salario_base: 0,
   });
 
-  const [readOnly, setReadOnly] = useState<boolean>(false);
-  const caminhoUrl = usePathname();
   const { tributoRef } = useContext(TributoContext)
 
   const { secretarias, erro } = useSecretaria();
-  /*
-    useEffect(() => {
-      if (caminhoUrl === "/importar") setReadOnly(true);
-    });
-  */
+
+  useEffect(() => {
+    if (tributoRef.competencia === '') setHabilitaNovo(true);
+  }, []);
+
   return (
     <Stack width={"70vw"} maxWidth={"max-content"}>
       <Flex
@@ -56,10 +53,8 @@ const FormularioServico = () => {
           <Input
             type="text"
             size={"sm"}
-            value={servico?.competencia}
-            onChange={(e) =>
-              setServico({ ...servico, competencia: e.target.value })
-            }
+            value={tributoRef.competencia}
+            readOnly
           />
         </FormControl>
 
@@ -162,7 +157,11 @@ const FormularioServico = () => {
       </HStack>
 
       <Flex justifyContent={"flex-end"}>
-        <Button colorScheme="blue" onClick={() => console.log(tributoRef)}>
+        <Button
+          isDisabled={habilitaNovo}
+          colorScheme="blue"
+          onClick={() => console.log(tributoRef)}
+        >
           <Text>SALVAR</Text>
         </Button>
       </Flex>
