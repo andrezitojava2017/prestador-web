@@ -1,12 +1,12 @@
 import { michroma } from "@/app/fonts/fonts";
 import { Flex, HStack, Text } from "@chakra-ui/react";
 
-type Props ={
-    information:string;
-    value:string;
+type Props = {
+  information: string;
+  value: number;
 }
 
-const Information = ({value, information}:Props) => {
+const Information = ({ value, information }: Props) => {
   return (
     <Flex
       flexDirection={"column"}
