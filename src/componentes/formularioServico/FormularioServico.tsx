@@ -16,6 +16,8 @@ import { FreelanceContexts } from "@/context/FreelanceContext";
 import { IServico } from "@/interface/IServico";
 import useSecretaria from "@/hook/useSecretarias";
 import { TributoContext } from "@/context/tributoContext";
+import { formatarCusto, verificaPreenchimentoCamposServico } from "./action";
+import { calcularSegurado } from "./calculos";
 
 const FormularioServico = () => {
   const [habilitaNovo, setHabilitaNovo] = useState<boolean>(false)
@@ -27,16 +29,51 @@ const FormularioServico = () => {
     fonte: 0,
     inss_patronal: 0,
     inss_retido: 0,
-    salario_base: 0,
+    salario_base: '',
   });
 
   const { tributoRef } = useContext(TributoContext)
-
   const { secretarias, erro } = useSecretaria();
 
   useEffect(() => {
     if (tributoRef.competencia === '') setHabilitaNovo(true);
+
   }, []);
+
+
+
+  const inserirNovoServico = async () => {
+    try {
+
+      verificaPreenchimentoCamposServico(servico, freelancers)
+      // await novoServico(servico, freelancers)
+
+    } catch (error) {
+      console.log('erro ao gravar registro')
+    }
+  }
+
+
+
+  const calcularInss = () => {
+
+    try {
+      const salBase = formatarCusto(servico.salario_base)
+
+      let retido = calcularSegurado(tributoRef.patronal, salBase)
+      setServico({ ...servico, inss_retido: retido })
+
+      console.log(tributoRef.patronal);
+
+    } catch (error) {
+      console.warn(error);
+
+    }
+
+
+    //setServico({ ...servico, inss_retido: retido })
+
+  }
 
   return (
     <Stack width={"70vw"} maxWidth={"max-content"}>
@@ -98,6 +135,7 @@ const FormularioServico = () => {
               }
             />
           </FormControl>
+
           <FormControl maxWidth={"19%"}>
             <FormLabel>Fonte</FormLabel>
             <Input
@@ -139,28 +177,31 @@ const FormularioServico = () => {
               onChange={(e) =>
                 setServico({
                   ...servico,
-                  salario_base: parseFloat(e.target.value),
+                  salario_base: e.target.value,
                 })
+
               }
             />
           </FormControl>
-          <Button onClick={() => console.log(freelancers)}>
+          <Button /*onClick={() => calcularSegurado(tributoRef.patronal, servico.salario_base)} */
+            onClick={calcularInss}
+          >
             <Text>CALCULAR</Text>
           </Button>
         </Flex>
       </Flex>
 
       <HStack>
-        <Information value="R$33.210,15" information="INSS retido" />
-        <Information value="R$33.210,15" information="Patronal" />
-        <Information value="R$33.210,15" information="Total INSS" />
+        <Information value={servico.inss_retido} information="INSS retido" />
+        <Information value={servico.inss_patronal || 0} information="Total INSS" />
+        <Information value={servico.inss_patronal || 0} information="Patronal" />
       </HStack>
 
       <Flex justifyContent={"flex-end"}>
         <Button
           isDisabled={habilitaNovo}
           colorScheme="blue"
-          onClick={() => console.log(tributoRef)}
+          onClick={() => inserirNovoServico()}
         >
           <Text>SALVAR</Text>
         </Button>
