@@ -18,9 +18,10 @@ const Information = ({ value, information }: Props) => {
       <Text
         fontFamily={michroma.style.fontFamily}
         fontSize={24}
-        color={"#106B87"}
+        //color={"#106B87"}
+        color='white'
       >
-        {value}
+        {value.toLocaleString('pt-br',{style:'currency', currency:'BRL'})}
       </Text>
       <Text
         fontFamily={michroma.style.fontFamily}
