@@ -20,14 +20,22 @@ export const validarDadosConfiguracaoTributo = (tributo: ITributos) => {
     tributo.max_recolhimento === undefined ||
     tributo.max_recolhimento === 0
   ) {
-    throw new Error("Maximo de recolhimento não foi informada");
+    throw new Error("Maximo de recolhimento não foi informado");
   }
   if (
-    tributo.patronal === null ||
-    tributo.patronal === undefined ||
-    tributo.patronal === 0
+    tributo.base_patronal === null ||
+    tributo.base_patronal === undefined ||
+    tributo.base_patronal === 0
   ) {
-    throw new Error("Patronal não foi informada");
+    throw new Error("Patronal não foi informado");
+  }
+
+  if (
+    tributo.base_segurado === null ||
+    tributo.base_segurado === undefined ||
+    tributo.base_segurado === 0
+  ) {
+    throw new Error("Segurado não foi informado");
   }
 };
 

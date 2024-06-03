@@ -37,7 +37,8 @@ const ConfiguracaoIncluirTeto = () => {
   const [tributo, setTributo] = useState<ITributos>({
     competencia: "",
     max_recolhimento: 0,
-    patronal: 0,
+    base_patronal: 0,
+    base_segurado:0,
   });
   const [errorCompetencia, setErrorCompetencia] = useState<boolean>(true);
 
@@ -131,15 +132,30 @@ const ConfiguracaoIncluirTeto = () => {
                 <FormLabel>Patronal ( % )</FormLabel>
                 <Input
                   type="number"
-                  value={tributo.patronal}
+                  value={tributo.base_patronal}
                   onChange={(e) =>
                     setTributo({
                       ...tributo,
-                      patronal: parseFloat(e.target.value),
+                      base_patronal: parseFloat(e.target.value),
                     })
                   }
                 />
-                <FormHelperText>parte da empresa (11%)</FormHelperText>
+                <FormHelperText>parte da empresa (20%)</FormHelperText>
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Segurado ( % )</FormLabel>
+                <Input
+                  type="number"
+                  value={tributo.base_segurado}
+                  onChange={(e) =>
+                    setTributo({
+                      ...tributo,
+                      base_segurado: parseFloat(e.target.value),
+                    })
+                  }
+                />
+                <FormHelperText>parte da segurado (11%)</FormHelperText>
               </FormControl>
 
               <FormControl isInvalid={errorCompetencia}>

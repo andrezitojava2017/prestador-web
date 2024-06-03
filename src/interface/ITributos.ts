@@ -1,6 +1,7 @@
 
 export interface ITributos {
     max_recolhimento:number,
-    patronal:number,
+    base_patronal:number,
+    base_segurado:number,
     competencia:string
 }

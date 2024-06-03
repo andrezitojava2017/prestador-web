@@ -91,6 +91,7 @@ export const novoServico = async (servico: IServico, autonomo: Freelance) => {
  * @returns float - 1234.56
  */
 export const formatarCusto = (value: string) => {
+  if(!value) throw new Error('Preencha o campo CUSTOS')
   value = value.replaceAll('.', '').replace(',', '.');
 
   return parseFloat(value);
