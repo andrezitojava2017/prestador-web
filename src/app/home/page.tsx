@@ -3,9 +3,7 @@ import {
     Button, Stack, Text, FormControl,
     FormLabel,
     Select,
-    HStack,
 } from "@chakra-ui/react"
-import { sair } from "./actions"
 import useTributo from "@/hook/useTributo";
 import { useContext, useEffect, useState } from "react";
 import { TributoContext } from "@/context/tributoContext";
@@ -31,10 +29,17 @@ const HomePage = () => {
         return <p>Não foi possive carregar as config. de tributos</p>
     }
 
-    const deslogar = async () => {
-        await sair()
-    }
 
+    const definirReferenciaTributos = (ref: string) => {
+
+        const tribReferencial = tributo.filter((trib) => trib.competencia === ref)
+        setTributoRef({
+            competencia: tribReferencial[0].competencia,
+            max_recolhimento: tribReferencial[0].max_recolhimento,
+            patronal: tribReferencial[0].patronal
+        })
+
+    }
 
 
     return (
@@ -45,12 +50,12 @@ const HomePage = () => {
                     <FormLabel>Defina uma competencia</FormLabel>
                     <Select
                         placeholder='Competencia'
-                        onChangeCapture={(e) => setTributoRef({ ...tributoRef, competencia: e.currentTarget.value })}
+                        onChangeCapture={(e) => definirReferenciaTributos(e.currentTarget.value)}
                         isDisabled={disable}
                     >
                         {
                             tributo.map((trib) => {
-                                return <option key={trib.competencia}>{trib.competencia}</option>
+                                return <option key={trib.competencia} >{trib.competencia}</option>
                             })
                         }
 
@@ -62,9 +67,12 @@ const HomePage = () => {
                     <Text>Alterar</Text>
                 </Button>
                 {
-                    tributoRef.competencia !== '' ?
+
+
+                    tributoRef.competencia !== '' || tributoRef.competencia ?
                         (<Text textAlign={'center'} color={'red'}>{`${tributoRef.competencia} selecionada`}</Text>)
                         : (<span>Nenhuma selecionada</span>)
+
                 }
 
             </Stack>
