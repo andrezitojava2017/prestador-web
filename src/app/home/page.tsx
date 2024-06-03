@@ -36,7 +36,8 @@ const HomePage = () => {
         setTributoRef({
             competencia: tribReferencial[0].competencia,
             max_recolhimento: tribReferencial[0].max_recolhimento,
-            patronal: tribReferencial[0].patronal
+            base_patronal: tribReferencial[0].base_patronal,
+            base_segurado: tribReferencial[0].base_segurado
         })
 
     }

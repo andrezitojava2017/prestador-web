@@ -9,6 +9,7 @@ import {
   Select,
   Button,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import Information from "../information/information";
 import { useContext, useEffect, useState } from "react";
@@ -16,11 +17,15 @@ import { FreelanceContexts } from "@/context/FreelanceContext";
 import { IServico } from "@/interface/IServico";
 import useSecretaria from "@/hook/useSecretarias";
 import { TributoContext } from "@/context/tributoContext";
-import { formatarCusto, verificaPreenchimentoCamposServico } from "./action";
-import { calcularSegurado } from "./calculos";
+import {
+  formatarCusto,
+  novoServico,
+  verificaPreenchimentoCamposServico,
+} from "./action";
+import { calcularPatronal, calcularRetido, totalImposto } from "./calculos";
 
 const FormularioServico = () => {
-  const [habilitaNovo, setHabilitaNovo] = useState<boolean>(false)
+  const [habilitaNovo, setHabilitaNovo] = useState<boolean>(false);
   const { setFreelancers, freelancers } = useContext(FreelanceContexts);
   const [servico, setServico] = useState<IServico>({
     competencia: "",
@@ -29,51 +34,68 @@ const FormularioServico = () => {
     fonte: 0,
     inss_patronal: 0,
     inss_retido: 0,
-    salario_base: '',
+    salario_base: "",
   });
-
-  const { tributoRef } = useContext(TributoContext)
+  const toast = useToast();
+  const { tributoRef } = useContext(TributoContext);
   const { secretarias, erro } = useSecretaria();
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (tributoRef.competencia === '') setHabilitaNovo(true);
+    // atributo habilitado para habilitar/desabilitar campos de nome e pispasep
+    if (tributoRef.competencia === "") setHabilitaNovo(true);
 
+    // define a referencia conforme selecionado na pagina home
+    if (tributoRef.competencia !== "")
+      setServico({ ...servico, competencia: tributoRef.competencia });
   }, []);
-
-
 
   const inserirNovoServico = async () => {
     try {
+      setLoading(true);
 
-      verificaPreenchimentoCamposServico(servico, freelancers)
-      // await novoServico(servico, freelancers)
+      verificaPreenchimentoCamposServico(servico, freelancers);
+      await novoServico(servico, freelancers);
 
-    } catch (error) {
-      console.log('erro ao gravar registro')
+      setLoading(false);
+    } catch (error: any) {
+      console.warn(error.message);
+
+      toast({
+        title: "Atenção",
+        description: `${error.message}`,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      setLoading(false);
     }
-  }
-
-
+  };
 
   const calcularInss = () => {
-
     try {
-      const salBase = formatarCusto(servico.salario_base)
+      const salBase = formatarCusto(servico.salario_base);
 
-      let retido = calcularSegurado(tributoRef.patronal, salBase)
-      setServico({ ...servico, inss_retido: retido })
+      let retido = calcularRetido(
+        tributoRef.base_segurado,
+        salBase,
+        tributoRef.max_recolhimento
+      );
 
-      console.log(tributoRef.patronal);
+      let patronal = calcularPatronal(tributoRef.base_patronal, salBase);
 
-    } catch (error) {
+      setServico({ ...servico, inss_retido: retido, inss_patronal: patronal });
+    } catch (error: any) {
       console.warn(error);
-
+      toast({
+        title: "Atenção",
+        description: `${error.message}`,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
-
-
-    //setServico({ ...servico, inss_retido: retido })
-
-  }
+  };
 
   return (
     <Stack width={"70vw"} maxWidth={"max-content"}>
@@ -150,16 +172,23 @@ const FormularioServico = () => {
 
           <FormControl maxWidth={"40%"}>
             <FormLabel>Secretaria</FormLabel>
-            <Select size={'sm'}
+            <Select
+              size={"sm"}
               placeholder={
                 erro
                   ? "Nenhuma Secretaria localizada"
                   : "Selecione uma Secretaria"
               }
+              onChangeCapture={(e) =>
+                setServico({
+                  ...servico,
+                  cod_lotacao: parseInt(e.currentTarget.value),
+                })
+              }
             >
               {secretarias.map((sec) => (
                 <option
-                  value={sec.descricao}
+                  value={sec.codigo}
                   key={sec.codigo}
                 >{`${sec.codigo} - ${sec.descricao}`}</option>
               ))}
@@ -179,7 +208,6 @@ const FormularioServico = () => {
                   ...servico,
                   salario_base: e.target.value,
                 })
-
               }
             />
           </FormControl>
@@ -193,12 +221,19 @@ const FormularioServico = () => {
 
       <HStack>
         <Information value={servico.inss_retido} information="INSS retido" />
-        <Information value={servico.inss_patronal || 0} information="Total INSS" />
-        <Information value={servico.inss_patronal || 0} information="Patronal" />
+        <Information
+          value={servico.inss_patronal || 0}
+          information="Patronal"
+        />
+        <Information
+          value={totalImposto(servico.inss_retido, servico.inss_patronal) || 0}
+          information="Total INSS"
+        />
       </HStack>
 
       <Flex justifyContent={"flex-end"}>
         <Button
+          isLoading={loading}
           isDisabled={habilitaNovo}
           colorScheme="blue"
           onClick={() => inserirNovoServico()}
