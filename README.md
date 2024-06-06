@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Prestador Web
 
-## Getting Started
+## Sumário
 
-First, run the development server:
+- [Introdução](#introdução)
+- [Funcionalidades](#funcionalidades)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Instalação](#instalação)
+- [Uso](#uso)
+- [Contribuição](#contribuição)
+- [Licença](#licença)
+- [Contato](#contato)
+
+## Introdução
+
+Prestador Web é um sistema web desenvolvido para gerenciar e gerar guias de INSS de prestadores de serviços contratados por órgãos públicos municipais. Este sistema visa facilitar o controle e a emissão desses documentos, garantindo eficiência e organização no processo.
+
+## Funcionalidades
+
+- **Controle de Prestadores de Serviços:** Cadastro e gerenciamento de prestadores de serviços.
+- **Geração de Guias de INSS:** Emissão automática de guias de INSS para os prestadores cadastrados.
+- **Relatórios:** Geração de relatórios detalhados sobre os pagamentos e guias emitidas.
+- **Autenticação de Usuários:** Sistema de login e gerenciamento de usuários para segurança e controle de acesso.
+
+## Tecnologias Utilizadas
+
+- **Next.js:** Framework React para construção da aplicação.
+- **JavaScript e TypeScript:** Linguagens de programação utilizadas no desenvolvimento.
+- **Supabase:** Plataforma de backend como serviço (BaaS) utilizada para armazenamento de dados.
+- **Chakra UI:** Biblioteca de componentes para a construção da interface do usuário.
+- **React Icons:** Conjunto de ícones utilizados na interface da aplicação.
+
+## Instalação
+
+Para instalar e rodar o projeto localmente, siga os passos abaixo:
+
+1. Clone o repositório:
+
+   ```bash
+   git clone https://github.com/seu-usuario/prestador-web.git
+
+   ```
+
+2. Navegue até o diretório do projeto:
+
+```bash
+   cd prestador-web
+```
+
+3. Instale as dependências:
+
+```bash
+   npm install
+
+```
+
+4. Configure as variáveis de ambiente conforme o exemplo fornecido no arquivo .env.example.
+
+## Uso
+
+Para iniciar o servidor de desenvolvimento, execute:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra http://localhost:3000 no seu navegador para ver a aplicação em execução.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Contribuição
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Contribuições são bem-vindas! Se você deseja contribuir com o projeto, siga os passos abaixo:
 
-## Learn More
+1. Faça um fork do projeto.
+2. Crie uma branch para sua feature ou correção:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+git checkout -b minha-nova-feature
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+3. Commit suas alterações
 
-## Deploy on Vercel
+```bash
+git commit -m 'Adiciona nova feature'
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. Faça um push para a branch
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+git push origin minha-nova-feature
+
+```
+
+5. Abra um Pull Request.
+
+## Contato
+
+Se você tiver alguma dúvida ou sugestão, sinta-se à vontade para entrar em contato:
+
+- Email: andre_sjx@live.com
+- GitHub: https://github.com/andrezitojava2017/
+- LinkedIn: https://www.linkedin.com/in/jederson-andre-dev/
