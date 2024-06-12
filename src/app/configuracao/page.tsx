@@ -1,3 +1,4 @@
+'use client'
 import CadastroSecretariaDrawer from "@/componentes/drawers/CadastroSecretariasDrawer";
 import ConfiguracaoIncluirTeto from "@/componentes/drawers/ConfiguracaoIncluirTeto";
 import Head from "@/componentes/head/head";
@@ -17,7 +18,7 @@ const Configuracao = () => {
         </HStack>
 
         <Stack padding={8}>
-          <TabelaCompetencia />
+            <TabelaCompetencia />
         </Stack>
       </Flex>
     </HStack>

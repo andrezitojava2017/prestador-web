@@ -1,3 +1,6 @@
+'use client'
+
+import { TributoContext } from "@/context/tributoContext";
 import {
   Table,
   Thead,
@@ -8,8 +11,12 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
+import { useContext } from "react";
 
 const TabelaCompetencia = () => {
+  
+  const {tributoRef} = useContext(TributoContext)
+
   return (
     <>
       <TableContainer>
@@ -17,7 +24,6 @@ const TabelaCompetencia = () => {
           <TableCaption>Imperial to metric conversion factors</TableCaption>
           <Thead>
             <Tr>
-              <Th>ID</Th>
               <Th>COMPETENCIA</Th>
               <Th>MAX_REC</Th>
               <Th>BASE % RETIDO</Th>
@@ -26,11 +32,10 @@ const TabelaCompetencia = () => {
           </Thead>
           <Tbody>
             <Tr>
-              <Td>05</Td>
-              <Td>06/2024</Td>
-              <Td>856,42</Td>
-              <Td >11 %</Td>
-              <Td >20 %</Td>
+              <Td>{tributoRef.competencia}</Td>
+              <Td>{tributoRef.max_recolhimento}</Td>
+              <Td >{tributoRef.base_segurado}</Td>
+              <Td >{tributoRef.base_patronal}</Td>
 
             </Tr>
             
