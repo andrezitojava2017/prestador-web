@@ -211,9 +211,7 @@ const FormularioServico = () => {
               }
             />
           </FormControl>
-          <Button /*onClick={() => calcularSegurado(tributoRef.patronal, servico.salario_base)} */
-            onClick={calcularInss}
-          >
+          <Button isDisabled={habilitaNovo} onClick={calcularInss}>
             <Text>CALCULAR</Text>
           </Button>
         </Flex>
