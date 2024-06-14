@@ -13,58 +13,55 @@ import {
   Button,
   useToast,
   HStack,
-  VStack,
-  FormControl,
-  Input,
-  FormHelperText,
-  FormLabel,
-  FormErrorMessage,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { FaUserEdit } from "react-icons/fa";
+import { useContext, useState } from "react";
 import ButtonService from "../buttons/buttonService";
 import { AiFillSetting } from "react-icons/ai";
 import { TbSettingsCode } from "react-icons/tb";
-import { ITributos } from "@/interface/ITributos";
-import { validarCompetencia } from "@/utils/configuracao/actions";
 import { validarDadosConfiguracaoTributo } from "./action";
 import { inserirConfigTributo } from "@/service/tributoService";
+import { TributoContext } from "@/context/tributoContext";
+import FormularioConfigTeto from "../formularioConfigTeto/FormularioConfigTeto";
+
+
 
 const ConfiguracaoIncluirTeto = () => {
+  const { tributoRef, setTributoRef } = useContext(TributoContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [loading, setLoading] = useState<boolean>(false);
-
+/*
   const [tributo, setTributo] = useState<ITributos>({
     competencia: "",
     max_recolhimento: 0,
     base_patronal: 0,
-    base_segurado:0,
+    base_segurado: 0,
   });
   const [errorCompetencia, setErrorCompetencia] = useState<boolean>(true);
-
+*/
   const toast = useToast();
 
   /**
    * validação com padrao regex: MM/yyyy
    * @param e string
-   */
+   
   const validarCampoObrigatorioCompetencia = (e: string) => {
     setErrorCompetencia((prev) => !validarCompetencia(e));
     if (errorCompetencia) setTributo({ ...tributo, competencia: e });
   };
-
+*/
   const salvarConfiguracaoTributo = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-
       // valida os campos preenchidos
-      validarDadosConfiguracaoTributo(tributo);
+      validarDadosConfiguracaoTributo(tributoRef);
 
       // verifica se ha erro em algum campo
-      if(errorCompetencia) throw new Error('Preencha a competencia com valor aceito: ex: 01/2000')
-
-      await inserirConfigTributo(tributo);
-      setLoading(false)
+      /*
+      if (errorCompetencia)
+        throw new Error("Preencha a competencia com valor aceito: ex: 01/2000");
+*/
+      await inserirConfigTributo(tributoRef);
+      setLoading(false);
 
       // mensagem de aviso
       toast({
@@ -74,9 +71,8 @@ const ConfiguracaoIncluirTeto = () => {
         duration: 5000,
         isClosable: true,
       });
-      
     } catch (error: any) {
-      setLoading(false)
+      setLoading(false);
       toast({
         title: "Tivemos um problema",
         description: error.message,
@@ -100,6 +96,7 @@ const ConfiguracaoIncluirTeto = () => {
           icon={<AiFillSetting size={50} color="white" />}
         />
       </Flex>
+
       <Drawer isOpen={isOpen} placement="right" onClose={onClose} size={"md"}>
         <DrawerOverlay />
         <DrawerContent>
@@ -112,12 +109,14 @@ const ConfiguracaoIncluirTeto = () => {
           </DrawerHeader>
 
           <DrawerBody>
+              <FormularioConfigTeto />
+            {/* 
             <VStack gap={4}>
               <FormControl>
                 <FormLabel>Maximo a recolher</FormLabel>
                 <Input
                   type="number"
-                  value={tributo?.max_recolhimento}
+                  value={tributoRef?.max_recolhimento}
                   onChange={(e) =>
                     setTributo({
                       ...tributo,
@@ -132,7 +131,7 @@ const ConfiguracaoIncluirTeto = () => {
                 <FormLabel>Patronal ( % )</FormLabel>
                 <Input
                   type="number"
-                  value={tributo.base_patronal}
+                  value={tributoRef.base_patronal}
                   onChange={(e) =>
                     setTributo({
                       ...tributo,
@@ -147,7 +146,7 @@ const ConfiguracaoIncluirTeto = () => {
                 <FormLabel>Segurado ( % )</FormLabel>
                 <Input
                   type="number"
-                  value={tributo.base_segurado}
+                  value={tributoRef.base_segurado}
                   onChange={(e) =>
                     setTributo({
                       ...tributo,
@@ -162,7 +161,7 @@ const ConfiguracaoIncluirTeto = () => {
                 <FormLabel>Competencia</FormLabel>
                 <Input
                   type="text"
-                  value={tributo?.competencia}
+                  value={tributoRef?.competencia}
                   onChange={(e) => {
                     validarCampoObrigatorioCompetencia(e.target.value);
                   }}
@@ -176,6 +175,7 @@ const ConfiguracaoIncluirTeto = () => {
                 )}
               </FormControl>
             </VStack>
+            */}
           </DrawerBody>
 
           <DrawerFooter>
@@ -187,6 +187,7 @@ const ConfiguracaoIncluirTeto = () => {
               isLoading={loading}
               loadingText={"Aguarde..."}
               onClick={() => salvarConfiguracaoTributo()}
+              //onClick={() => console.log(tributoRef)}
             >
               Salvar
             </Button>
