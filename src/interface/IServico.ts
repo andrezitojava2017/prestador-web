@@ -1,6 +1,6 @@
 export interface IServico {
   id?: number;
-  competencia: string;
+  competencia?: string;
   empenho: number;
   fonte: number;
   pispasep?: number;

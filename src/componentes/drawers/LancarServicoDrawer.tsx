@@ -46,7 +46,7 @@ const LancarServicoDrawer = (props: Props) => {
           <DrawerHeader>Lançar Serviço</DrawerHeader>
 
           <DrawerBody>
-            <FormularioServico />
+            <FormularioServico close={onClose}/>
           </DrawerBody>
 
         </DrawerContent>

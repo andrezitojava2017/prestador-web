@@ -85,7 +85,7 @@ const TableOfServices = ({ data }: Props) => {
               <Tr key={index}>
                 <Td>{el.pisPasep}</Td>
                 <Td>{el.nome}</Td>
-                {pathname === "/lista/prestador" ? (
+                {pathname === "/lista/prestador" ? ( // verifica a rota para definir as opções
                   <Td>{eventos(el)}</Td>
                 ) : (
                   <td>{drawerRegistroServico(el, <TbArrowBigRightLinesFilled size={18} color="blue" />)}</td>

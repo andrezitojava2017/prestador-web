@@ -61,7 +61,7 @@ export const saveLocalStorage = (data:Freelance[])=>{
 /**
  * recupera todos os dados contidos no localstorage
  * @returns  Freelance[]
- */
+
 export const getFreelanceStorage = ()=>{
     
     try {
@@ -76,3 +76,4 @@ export const getFreelanceStorage = ()=>{
 
     return [] ;
 }
+     */

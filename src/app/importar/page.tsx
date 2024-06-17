@@ -14,7 +14,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import {
-  getFreelanceStorage,
   readLinesOfFile,
   saveLocalStorage,
 } from "./actions";
@@ -23,6 +22,7 @@ import { Freelance } from "../../interface/freelance";
 import BarraNavegacao from "@/componentes/navbar";
 import TableOfServices from "@/componentes/tabela/table";
 import { FreelanceProvider } from "@/context/FreelanceContext";
+import { getFreelanceStorage } from "@/utils/storage/storage";
 
 const ImportFile = () => {
   const [freelanceList, setFreelanceList] = useState<Freelance[]>([]);
