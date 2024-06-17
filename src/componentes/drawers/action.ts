@@ -18,14 +18,17 @@ export const validarDadosConfiguracaoTributo = (tributo: ITributos) => {
   if (
     tributo.max_recolhimento === null ||
     tributo.max_recolhimento === undefined ||
-    tributo.max_recolhimento === 0
+    tributo.max_recolhimento === 0 ||
+    Number.isNaN(tributo.max_recolhimento)
+
   ) {
     throw new Error("Maximo de recolhimento não foi informado");
   }
   if (
     tributo.base_patronal === null ||
     tributo.base_patronal === undefined ||
-    tributo.base_patronal === 0
+    tributo.base_patronal === 0 ||
+    Number.isNaN(tributo.base_patronal)
   ) {
     throw new Error("Patronal não foi informado");
   }
@@ -33,7 +36,8 @@ export const validarDadosConfiguracaoTributo = (tributo: ITributos) => {
   if (
     tributo.base_segurado === null ||
     tributo.base_segurado === undefined ||
-    tributo.base_segurado === 0
+    tributo.base_segurado === 0 ||    
+    Number.isNaN(tributo.base_segurado)
   ) {
     throw new Error("Segurado não foi informado");
   }
