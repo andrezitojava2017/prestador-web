@@ -1,0 +1,98 @@
+import { FreelanceContexts } from "@/context/FreelanceContext";
+import { IServico } from "@/interface/IServico";
+import { getFreelanceStorage } from "@/utils/storage/storage";
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  Button,
+} from "@chakra-ui/react";
+import React, { useContext } from "react";
+
+type Props = {
+  open: () => void;
+  isOpen: boolean;
+  close: () => void;
+  message?: string;
+  title?: string;
+  service: React.Dispatch<React.SetStateAction<IServico>>;
+};
+
+const AlertServicoNovo = ({
+  open,
+  isOpen,
+  close,
+  message,
+  title,
+  service,
+}: Props) => {
+
+
+  const cancelRef = React.useRef<any>();
+    const {freelancers, setFreelancers} = useContext(FreelanceContexts)
+
+  const limparCampoServico = () => {
+    service({
+      empenho: 0,
+      fonte: 0,
+      inss_patronal: 0,
+      inss_retido: 0,
+      salario_base: "",
+      cod_lotacao: 0,
+    });
+    close()
+  };
+
+  const removerPrestadorListaStorage = ()=>{
+    try {
+        const storage = getFreelanceStorage();
+        console.log(storage);
+
+        const novo = storage.filter((free)=>{
+            return free.pisPasep !== freelancers.pisPasep
+        });
+
+        localStorage.setItem('freelance',JSON.stringify(novo))
+        close();       
+        
+    } catch (error) {
+        console.warn(error)
+    }
+  }
+
+
+  return (
+    <>
+      <AlertDialog
+        motionPreset="slideInBottom"
+        leastDestructiveRef={cancelRef}
+        onClose={close}
+        isOpen={isOpen}
+        isCentered
+      >
+        <AlertDialogOverlay />
+        <AlertDialogContent>
+          <AlertDialogHeader fontSize="lg" fontWeight="bold">
+            {title || "Prestador Web"}
+          </AlertDialogHeader>
+
+          <AlertDialogBody>{message || "Mensagem de alerta"}</AlertDialogBody>
+
+          <AlertDialogFooter>
+            <Button ref={cancelRef} onClick={removerPrestadorListaStorage}>
+              Não
+            </Button>
+            <Button colorScheme="cyan" onClick={limparCampoServico} ml={3}>
+              Sim, inserir outro
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  );
+};
+
+export default AlertServicoNovo;
