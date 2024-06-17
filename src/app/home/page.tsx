@@ -34,6 +34,7 @@ const HomePage = () => {
 
         const tribReferencial = tributo.filter((trib) => trib.competencia === ref)
         setTributoRef({
+            id: tribReferencial[0].id,
             competencia: tribReferencial[0].competencia,
             max_recolhimento: tribReferencial[0].max_recolhimento,
             base_patronal: tribReferencial[0].base_patronal,

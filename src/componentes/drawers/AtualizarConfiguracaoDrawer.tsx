@@ -17,7 +17,7 @@ import {
 import { useContext, useState } from "react";
 import { TbSettingsCode } from "react-icons/tb";
 import { validarDadosConfiguracaoTributo } from "./action";
-import { inserirConfigTributo } from "@/service/tributoService";
+import { atualizarConfiguracao } from "@/service/tributoService";
 import { TributoContext } from "@/context/tributoContext";
 import FormularioConfigTeto from "../formularioConfigTeto/FormularioConfigTeto";
 import { BiMessageSquareEdit } from "react-icons/bi";
@@ -26,44 +26,24 @@ const AtualizarConfiguracaoDrawer = () => {
   const { tributoRef, setTributoRef } = useContext(TributoContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [loading, setLoading] = useState<boolean>(false);
-  /*
-  const [tributo, setTributo] = useState<ITributos>({
-    competencia: "",
-    max_recolhimento: 0,
-    base_patronal: 0,
-    base_segurado: 0,
-  });
-  const [errorCompetencia, setErrorCompetencia] = useState<boolean>(true);
-*/
+
   const toast = useToast();
 
-  /**
-   * validação com padrao regex: MM/yyyy
-   * @param e string
-   
-  const validarCampoObrigatorioCompetencia = (e: string) => {
-    setErrorCompetencia((prev) => !validarCompetencia(e));
-    if (errorCompetencia) setTributo({ ...tributo, competencia: e });
-  };
-*/
-  const salvarConfiguracaoTributo = async () => {
+
+
+  const atualizaConfigTeto = async () => {
     setLoading(true);
     try {
       // valida os campos preenchidos
       validarDadosConfiguracaoTributo(tributoRef);
 
-      // verifica se ha erro em algum campo
-      /*
-      if (errorCompetencia)
-        throw new Error("Preencha a competencia com valor aceito: ex: 01/2000");
-*/
-      await inserirConfigTributo(tributoRef);
+      await atualizarConfiguracao(tributoRef);
       setLoading(false);
 
       // mensagem de aviso
       toast({
         title: "Parabéns!",
-        description: "Dados registrados com sucesso!",
+        description: "Dados atualizados com sucesso!",
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -114,7 +94,7 @@ const AtualizarConfiguracaoDrawer = () => {
               isLoading={loading}
               loadingText={"Aguarde..."}
               //onClick={() => salvarConfiguracaoTributo()}
-              onClick={() => console.log(tributoRef)}
+              onClick={atualizaConfigTeto}
             >
               Salvar
             </Button>
