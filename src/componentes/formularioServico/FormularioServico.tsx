@@ -10,6 +10,7 @@ import {
   Button,
   Text,
   useToast,
+  useDisclosure,
 } from "@chakra-ui/react";
 import Information from "../information/information";
 import { useContext, useEffect, useState } from "react";
@@ -21,10 +22,18 @@ import {
   formatarCusto,
   novoServico,
   verificaPreenchimentoCamposServico,
+  verificarPisPasepExiste,
 } from "./action";
 import { calcularPatronal, calcularRetido, totalImposto } from "./calculos";
+import { incluirNovoPrestador } from "@/service/prestadorService";
+import { IMessage } from "@/interface/IMessage";
+import AlertServicoNovo from "../alertDialog/alertServicoNovo";
 
-const FormularioServico = () => {
+type Props = {
+  close: () => void;
+};
+
+const FormularioServico = ({ close }: Props) => {
   const [habilitaNovo, setHabilitaNovo] = useState<boolean>(false);
   const { setFreelancers, freelancers } = useContext(FreelanceContexts);
   const [servico, setServico] = useState<IServico>({
@@ -40,7 +49,10 @@ const FormularioServico = () => {
   const { tributoRef } = useContext(TributoContext);
   const { secretarias, erro } = useSecretaria();
   const [loading, setLoading] = useState<boolean>(false);
+  const [message, setMessage] = useState<IMessage>();
+  const [alert, setAlert] = useState<IMessage>();
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
   useEffect(() => {
     // atributo habilitado para habilitar/desabilitar campos de nome e pispasep
     if (tributoRef.competencia === "") setHabilitaNovo(true);
@@ -48,25 +60,67 @@ const FormularioServico = () => {
     // define a referencia conforme selecionado na pagina home
     if (tributoRef.competencia !== "")
       setServico({ ...servico, competencia: tributoRef.competencia });
-  }, []);
+  }, [servico.competencia]);
+
+  useEffect(() => {
+    if (message) {
+      toast({
+        title: `${message?.title}`,
+        description: `${message?.message}`,
+        status: `${message!.type}`,
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  }, [message]);
+
+  useEffect(() => {
+    if (alert) {
+      onOpen();
+    }
+  }, [alert]);
 
   const inserirNovoServico = async () => {
     try {
       setLoading(true);
 
       verificaPreenchimentoCamposServico(servico, freelancers);
-      await novoServico(servico, freelancers);
+      const rs = await verificarPisPasepExiste(freelancers);
+    /* 
+      if (rs?.length !== 0) {
+        // pis/pasep existe na base
+        // salvar servico
+        await novoServico(servico, freelancers);
+      }
+
+      if (rs?.length === 0) {
+        // pis/pasep NÃO EXISTE na base
+
+        // salvar prestador
+        await incluirNovoPrestador(freelancers);
+
+        // lançar serviço
+        await novoServico(servico, freelancers);
+      }
+*/
+      // mensagem do alert
+      setAlert({
+        title: "Sucesso",
+        message: "Deseja fazer outro lançamento para este prestador?",
+        type: "success",
+      });
 
       setLoading(false);
+
     } catch (error: any) {
+
       console.warn(error.message);
 
-      toast({
+      // mensagem de resposta
+      setMessage({
         title: "Atenção",
-        description: `${error.message}`,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
+        message: error.message,
+        type: "error",
       });
       setLoading(false);
     }
@@ -185,6 +239,8 @@ const FormularioServico = () => {
                   cod_lotacao: parseInt(e.currentTarget.value),
                 })
               }
+              defaultValue={0}
+              value={servico.cod_lotacao}
             >
               {secretarias.map((sec) => (
                 <option
@@ -200,7 +256,7 @@ const FormularioServico = () => {
           <FormControl maxWidth={"19%"}>
             <FormLabel>Custos</FormLabel>
             <Input
-              type="text"
+              type="number"
               size={"sm"}
               value={servico?.salario_base}
               onChange={(e) =>
@@ -238,6 +294,15 @@ const FormularioServico = () => {
         >
           <Text>SALVAR</Text>
         </Button>
+        <AlertServicoNovo
+          open={onOpen}
+          close={onClose}
+          isOpen={isOpen}
+          message={alert?.message}
+          title={alert?.title}
+          service={setServico}
+        />
+        ;
       </Flex>
     </Stack>
   );
