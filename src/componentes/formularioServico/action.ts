@@ -1,17 +1,18 @@
-import { IServico } from '@/interface/IServico';
-import { Freelance } from '@/interface/freelance';
-import { inserirNovoServico } from '@/service/servicosService';
+import { IServico } from "@/interface/IServico";
+import { Freelance } from "@/interface/freelance";
+import { consultaPisPasep } from "@/service/prestadorService";
+import { inserirNovoServico } from "@/service/servicosService";
 
 export const verificaPreenchimentoCamposServico = (
   servico: IServico,
   autonomo: Freelance
 ) => {
   if (
-    servico.competencia === '' ||
+    servico.competencia === "" ||
     servico.competencia === undefined ||
     servico.competencia === null
   ) {
-    throw new Error('É necessário definir uma competencia na pagina principal');
+    throw new Error("É necessário definir uma competencia na pagina principal");
   }
 
   if (
@@ -19,7 +20,7 @@ export const verificaPreenchimentoCamposServico = (
     servico.empenho === undefined ||
     servico.empenho === null
   ) {
-    throw new Error('Campo empenho não foi preenchido');
+    throw new Error("Campo empenho não foi preenchido");
   }
 
   if (
@@ -27,15 +28,15 @@ export const verificaPreenchimentoCamposServico = (
     servico.fonte === undefined ||
     servico.fonte === null
   ) {
-    throw new Error('Campo fonte não foi preenchido');
+    throw new Error("Campo fonte não foi preenchido");
   }
 
   if (
-    servico.salario_base === '' ||
+    servico.salario_base === "" ||
     servico.salario_base === undefined ||
     servico.salario_base === null
   ) {
-    throw new Error('Campo de custos não foi preenchido');
+    throw new Error("Campo de custos não foi preenchido");
   }
 
   if (
@@ -43,7 +44,7 @@ export const verificaPreenchimentoCamposServico = (
     servico.inss_retido === undefined ||
     servico.inss_retido === null
   ) {
-    throw new Error('Calculo de INSS retido não foi executado');
+    throw new Error("Calculo de INSS retido não foi executado");
   }
 
   if (
@@ -51,7 +52,7 @@ export const verificaPreenchimentoCamposServico = (
     servico.inss_patronal === undefined ||
     servico.inss_patronal === null
   ) {
-    throw new Error('Calculo de INSS patronal não foi executado');
+    throw new Error("Calculo de INSS patronal não foi executado");
   }
 
   if (
@@ -59,23 +60,23 @@ export const verificaPreenchimentoCamposServico = (
     servico.cod_lotacao === undefined ||
     servico.cod_lotacao === null
   ) {
-    throw new Error('A secretaria não foi selecionada');
+    throw new Error("A secretaria não foi selecionada");
   }
 
   if (
-    autonomo.nome === '' ||
+    autonomo.nome === "" ||
     autonomo.nome === undefined ||
     autonomo.nome === null
   ) {
-    throw new Error('É preciso selecionar um prestador na lista');
+    throw new Error("É preciso selecionar um prestador na lista");
   }
 
   if (
-    autonomo.pisPasep === '' ||
+    autonomo.pisPasep === "" ||
     autonomo.pisPasep === undefined ||
     autonomo.pisPasep === null
   ) {
-    throw new Error('O campo PIS/PASEP não foi preenchido');
+    throw new Error("O campo PIS/PASEP não foi preenchido");
   }
 };
 
@@ -91,8 +92,18 @@ export const novoServico = async (servico: IServico, autonomo: Freelance) => {
  * @returns float - 1234.56
  */
 export const formatarCusto = (value: string) => {
-  if(!value) throw new Error('Preencha o campo CUSTOS')
-  value = value.replaceAll('.', '').replace(',', '.');
+  if (!value) throw new Error("Preencha o campo CUSTOS");
+ // value = value.replaceAll(".", "").replace(",", ".");
 
   return parseFloat(value);
+};
+
+export const verificarPisPasepExiste = async (freelance: Freelance) => {
+  try {
+    const rs = await consultaPisPasep(freelance);
+    return rs;
+    
+  } catch (error) {
+    throw error;
+  }
 };

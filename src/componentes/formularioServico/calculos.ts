@@ -1,4 +1,3 @@
-import { formatarCusto } from './action';
 
 /**
  *
@@ -7,7 +6,7 @@ import { formatarCusto } from './action';
  * @returns rs - string- com valor formatado para pt-br
  */
 export const calcularRetido = (base: number, salario_base: number, max_recolhimento:number) => {
-  console.log(salario_base)
+
   if (
     salario_base === 0 ||
     salario_base === null ||
