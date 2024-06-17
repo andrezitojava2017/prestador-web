@@ -30,3 +30,20 @@ export const recuperarListaTributoMensal = async () => {
 
   return db_tributo;
 };
+
+export const atualizarConfiguracao = async(tributos:ITributos)=>{
+
+  const { data, error } = await supabase
+  .from('db_tributo')
+  .update(tributos)
+  .eq('id', tributos.id)
+  .select()
+
+  if(error){
+    console.log('ocorreu um erro na atualização\n', error)
+    throw new Error('Nao foi possivel atualizar os dados!')
+  }
+
+  console.log(data)
+          
+}
