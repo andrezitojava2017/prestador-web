@@ -233,13 +233,12 @@ const FormularioServico = ({ close }: Props) => {
                   ? "Nenhuma Secretaria localizada"
                   : "Selecione uma Secretaria"
               }
-              onChangeCapture={(e) =>
+              onChange={(e) =>
                 setServico({
                   ...servico,
                   cod_lotacao: parseInt(e.currentTarget.value),
                 })
               }
-              defaultValue={0}
               value={servico.cod_lotacao}
             >
               {secretarias.map((sec) => (
@@ -294,6 +293,10 @@ const FormularioServico = ({ close }: Props) => {
         >
           <Text>SALVAR</Text>
         </Button>
+
+        {
+          /** exibe mensagem ao usuario e retira o prestador que foi lançado do localstorage */
+        }
         <AlertServicoNovo
           open={onOpen}
           close={onClose}

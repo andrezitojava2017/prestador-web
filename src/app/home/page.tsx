@@ -7,6 +7,7 @@ import {
 import useTributo from "@/hook/useTributo";
 import { useContext, useEffect, useState } from "react";
 import { TributoContext } from "@/context/tributoContext";
+import { desconectarUsuario } from "@/service/loginService";
 
 const HomePage = () => {
 
@@ -78,6 +79,9 @@ const HomePage = () => {
                 }
 
             </Stack>
+            <Button onClick={ desconectarUsuario}>
+                Desconectar
+            </Button>
         </Stack>
     )
 }

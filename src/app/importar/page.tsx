@@ -17,16 +17,17 @@ import {
   readLinesOfFile,
   saveLocalStorage,
 } from "./actions";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { Freelance } from "../../interface/freelance";
 import BarraNavegacao from "@/componentes/navbar";
 import TableOfServices from "@/componentes/tabela/table";
-import { FreelanceProvider } from "@/context/FreelanceContext";
+import { FreelanceContexts, FreelanceProvider } from "@/context/FreelanceContext";
 import { getFreelanceStorage } from "@/utils/storage/storage";
 
 const ImportFile = () => {
-  const [freelanceList, setFreelanceList] = useState<Freelance[]>([]);
+  //const [freelanceList, setFreelanceList] = useState<Freelance[]>([]);
   const [buttonDisable, setButtonDisable] = useState<boolean>(true);
+  const {freelanceStorage, setFreelanceStorage} = useContext(FreelanceContexts)
   const toast = useToast();
 
   /**
@@ -39,7 +40,7 @@ const ImportFile = () => {
    */
   const readFileFreelance = async (file: ChangeEvent<HTMLInputElement>) => {
     const list = await readLinesOfFile(file);
-    setFreelanceList(list);
+    setFreelanceStorage(list);
     saveLocalStorage(list);
     setButtonDisable(!buttonDisable);
   };
@@ -53,7 +54,7 @@ const ImportFile = () => {
     if (localStorage.getItem("freelance") !== null) {
       localStorage.removeItem("freelance");
       setButtonDisable(!buttonDisable);
-      setFreelanceList([]);
+      setFreelanceStorage([]);
     }
   };
 
@@ -66,7 +67,7 @@ const ImportFile = () => {
     try {
       let free = getFreelanceStorage();
       if (free.length !== 0) {
-        setFreelanceList(free);
+        setFreelanceStorage(free);
         setButtonDisable(!buttonDisable);
       }
     } catch (error) {
@@ -110,9 +111,9 @@ const ImportFile = () => {
         </Stack>
 
         <Stack maxHeight={"50vh"} marginTop={8}>
-          <FreelanceProvider>
-            <TableOfServices data={freelanceList} />
-          </FreelanceProvider>
+         
+            <TableOfServices data={freelanceStorage} />
+          
         </Stack>
       </Flex>
     </HStack>

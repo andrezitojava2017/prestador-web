@@ -1,3 +1,4 @@
+'use client'
 import { FreelanceContexts } from "@/context/FreelanceContext";
 import { IServico } from "@/interface/IServico";
 import { getFreelanceStorage } from "@/utils/storage/storage";
@@ -32,7 +33,7 @@ const AlertServicoNovo = ({
 
 
   const cancelRef = React.useRef<any>();
-    const {freelancers, setFreelancers} = useContext(FreelanceContexts)
+    const {freelancers, setFreelancers, removeFreelanceStorage} = useContext(FreelanceContexts)
 
   const limparCampoServico = () => {
     service({
@@ -49,13 +50,12 @@ const AlertServicoNovo = ({
   const removerPrestadorListaStorage = ()=>{
     try {
         const storage = getFreelanceStorage();
-        console.log(storage);
 
-        const novo = storage.filter((free)=>{
+        const freeList = storage.filter((free)=>{
             return free.pisPasep !== freelancers.pisPasep
         });
 
-        localStorage.setItem('freelance',JSON.stringify(novo))
+        localStorage.setItem('freelance',JSON.stringify(freeList))
         close();       
         
     } catch (error) {
@@ -82,7 +82,7 @@ const AlertServicoNovo = ({
           <AlertDialogBody>{message || "Mensagem de alerta"}</AlertDialogBody>
 
           <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={removerPrestadorListaStorage}>
+            <Button ref={cancelRef} onClick={removeFreelanceStorage}>
               Não
             </Button>
             <Button colorScheme="cyan" onClick={limparCampoServico} ml={3}>

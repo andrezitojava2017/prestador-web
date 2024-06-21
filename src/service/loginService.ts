@@ -15,3 +15,12 @@ export const logarUsuario = async (usuario: Credencial) => {
 
   return data;
 };
+
+export const desconectarUsuario = async () => {
+  try {
+    let { error } = await supabase.auth.signOut();
+    if(error) throw error
+  } catch (error) {
+    console.warn(`Ocorreu um erro ao deslogar\n ${error}`)
+  }
+};
