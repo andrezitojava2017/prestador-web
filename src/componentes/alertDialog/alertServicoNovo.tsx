@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { FreelanceContexts } from "@/context/FreelanceContext";
 import { IServico } from "@/interface/IServico";
 import { getFreelanceStorage } from "@/utils/storage/storage";
@@ -20,6 +20,7 @@ type Props = {
   message?: string;
   title?: string;
   service: React.Dispatch<React.SetStateAction<IServico>>;
+  disableBtn: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AlertServicoNovo = ({
@@ -29,11 +30,11 @@ const AlertServicoNovo = ({
   message,
   title,
   service,
+  disableBtn,
 }: Props) => {
-
-
   const cancelRef = React.useRef<any>();
-    const {freelancers, setFreelancers, removeFreelanceStorage} = useContext(FreelanceContexts)
+  const { freelancers, setFreelancers, removeFreelanceStorage } =
+    useContext(FreelanceContexts);
 
   const limparCampoServico = () => {
     service({
@@ -44,25 +45,23 @@ const AlertServicoNovo = ({
       salario_base: "",
       cod_lotacao: 0,
     });
-    close()
+    close();
   };
 
-  const removerPrestadorListaStorage = ()=>{
+  const removerPrestadorListaStorage = () => {
     try {
-        const storage = getFreelanceStorage();
+      const storage = getFreelanceStorage();
 
-        const freeList = storage.filter((free)=>{
-            return free.pisPasep !== freelancers.pisPasep
-        });
+      const freeList = storage.filter((free) => {
+        return free.pisPasep !== freelancers.pisPasep;
+      });
 
-        localStorage.setItem('freelance',JSON.stringify(freeList))
-        close();       
-        
+      localStorage.setItem("freelance", JSON.stringify(freeList));
+      close();
     } catch (error) {
-        console.warn(error)
+      console.warn(error);
     }
-  }
-
+  };
 
   return (
     <>
@@ -82,7 +81,14 @@ const AlertServicoNovo = ({
           <AlertDialogBody>{message || "Mensagem de alerta"}</AlertDialogBody>
 
           <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={removeFreelanceStorage}>
+            <Button
+              ref={cancelRef}
+              onClick={() => {
+                disableBtn(true);
+                removeFreelanceStorage();
+                limparCampoServico();
+              }}
+            >
               Não
             </Button>
             <Button colorScheme="cyan" onClick={limparCampoServico} ml={3}>

@@ -86,7 +86,7 @@ const FormularioServico = ({ close }: Props) => {
 
       verificaPreenchimentoCamposServico(servico, freelancers);
       const rs = await verificarPisPasepExiste(freelancers);
-    /* 
+
       if (rs?.length !== 0) {
         // pis/pasep existe na base
         // salvar servico
@@ -102,7 +102,7 @@ const FormularioServico = ({ close }: Props) => {
         // lançar serviço
         await novoServico(servico, freelancers);
       }
-*/
+
       // mensagem do alert
       setAlert({
         title: "Sucesso",
@@ -111,9 +111,7 @@ const FormularioServico = ({ close }: Props) => {
       });
 
       setLoading(false);
-
     } catch (error: any) {
-
       console.warn(error.message);
 
       // mensagem de resposta
@@ -289,14 +287,11 @@ const FormularioServico = ({ close }: Props) => {
           isLoading={loading}
           isDisabled={habilitaNovo}
           colorScheme="blue"
-          onClick={() => inserirNovoServico()}
+          onClick={ inserirNovoServico}
         >
           <Text>SALVAR</Text>
         </Button>
-
-        {
-          /** exibe mensagem ao usuario e retira o prestador que foi lançado do localstorage */
-        }
+        {/** exibe mensagem ao usuario e retira o prestador que foi lançado do localstorage */}
         <AlertServicoNovo
           open={onOpen}
           close={onClose}
@@ -304,6 +299,7 @@ const FormularioServico = ({ close }: Props) => {
           message={alert?.message}
           title={alert?.title}
           service={setServico}
+          disableBtn={setHabilitaNovo}
         />
         ;
       </Flex>

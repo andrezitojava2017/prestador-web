@@ -12,19 +12,16 @@ import {
   Text,
   HStack,
   Flex,
-  useToast,
 } from "@chakra-ui/react";
 import AlterarPrestadorDrawer from "../drawers/AlterarPrestadorDrawer";
 import { BsTools } from "react-icons/bs";
 import { usePathname } from "next/navigation";
 import {
-  FreelanceContexts,
   FreelanceProvider,
 } from "@/context/FreelanceContext";
 import LancarServicoDrawer from "../drawers/LancarServicoDrawer";
-import { ReactNode, useContext, useEffect } from "react";
+import { ReactNode } from "react";
 import { TbArrowBigRightLinesFilled } from "react-icons/tb";
-import { getFreelanceStorage } from "@/utils/storage/storage";
 
 type Props = {
   data: Freelance[];
@@ -32,13 +29,7 @@ type Props = {
 };
 const TableOfServices = ({ data }: Props) => {
   const pathname = usePathname();
-  const { freelanceStorage, setFreelanceStorage } =
-    useContext(FreelanceContexts);
-  const toast = useToast();
 
-  useEffect(() => {
-    console.log('freelanceStorage:', freelanceStorage);
-  }, [freelanceStorage]);
 
   const drawerRegistroServico = (freelance: Freelance, icone: ReactNode) => {
     return (
@@ -86,10 +77,10 @@ const TableOfServices = ({ data }: Props) => {
           </Tr>
         </Thead>
         <Tbody>
-          {freelanceStorage.length !== 0 &&
-          freelanceStorage != null &&
-          freelanceStorage != undefined ? (
-            freelanceStorage.map((el: any, index: number) => (
+          {data.length !== 0 &&
+          data != null &&
+          data != undefined ? (
+            data.map((el: any, index: number) => (
               <Tr key={index}>
                 <Td>{el.pisPasep}</Td>
                 <Td>{el.nome}</Td>

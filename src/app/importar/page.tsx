@@ -25,7 +25,6 @@ import { FreelanceContexts, FreelanceProvider } from "@/context/FreelanceContext
 import { getFreelanceStorage } from "@/utils/storage/storage";
 
 const ImportFile = () => {
-  //const [freelanceList, setFreelanceList] = useState<Freelance[]>([]);
   const [buttonDisable, setButtonDisable] = useState<boolean>(true);
   const {freelanceStorage, setFreelanceStorage} = useContext(FreelanceContexts)
   const toast = useToast();
@@ -81,6 +80,15 @@ const ImportFile = () => {
     }
   }, []);
 
+
+  const atualizaTabela = ()=>{
+    let free = getFreelanceStorage();
+      if (free.length !== 0) {
+        setFreelanceStorage(free);
+        //setButtonDisable(!buttonDisable);
+      }
+  }
+
   return (
     <HStack height={"100vh"}>
       <BarraNavegacao />
@@ -107,6 +115,10 @@ const ImportFile = () => {
           limpar os dados
           <Button isDisabled={buttonDisable} onClick={() => clearHistory()}>
             <Text>Limpar historico</Text>
+          </Button>
+
+          <Button isDisabled={buttonDisable} onClick={atualizaTabela}>
+            <Text>Atualizar lista</Text>
           </Button>
         </Stack>
 
