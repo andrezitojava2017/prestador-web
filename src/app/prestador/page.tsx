@@ -54,22 +54,7 @@ const Prestador = () => {
           />
   */}
         </HStack>
-        <HStack
-          marginLeft={6}
-          alignItems={"end"}
-          paddingBottom={4}
-          height={"100vh"}
-        >
-          <Information
-            value={"R$103.255,32"}
-            information="Total empenhado a terceiros"
-          />
-          <Information
-            value={"R$10.325,53"}
-            information="Total retido segurado"
-          />
-          <Information value={"R$10.325,53"} information="Total patronal" />
-        </HStack>
+
       </Flex>
     </HStack>
   );

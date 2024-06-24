@@ -13,12 +13,7 @@ const Servicos = () => {
       <Flex flexDirection={"column"} height={"100vh"}>
         <Head text="Serviços" buttonReturn={true} />
         <HStack gap={8} marginLeft={6}>
-          <Link href={'/servicos/lancar'}>
-            <ButtonService
-              description="Novo Serviço"
-              icon={<VscNewFolder size={50} color="white" />}
-            />
-          </Link>
+
           <ButtonService
             description="Listar serviços"
             icon={<MdViewKanban size={50} color="white" />}

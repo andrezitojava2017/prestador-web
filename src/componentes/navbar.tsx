@@ -27,11 +27,11 @@ const BarraNavegacao = () => {
           <Avatar
             name="Jederson Andre"
             //src="https://bit.ly/dan-abramov"
-            width={120}
-            height={115}
+            width={100}
+            height={100}
             background={"white"}
           />
-          <Text fontSize={14} color={"#ffff"} textAlign={"center"}>
+          <Text fontSize={12} color={"#ffff"} textAlign={"center"}>
             Municipio de São José do Xingu-MT
           </Text>
         </VStack>
@@ -46,8 +46,8 @@ const BarraNavegacao = () => {
               width={"100%"}
               padding={2}
             >
-              <FaIdCardClip size={40} color="#ffff" />
-              <Text fontSize={13} color="#ffff">
+              <FaIdCardClip size={30} color="#ffff" />
+              <Text fontSize={12} color="#ffff">
                 Prestador
               </Text>
             </Flex>
@@ -61,8 +61,8 @@ const BarraNavegacao = () => {
               padding={2}
               _hover={{ background: "#157A8C", cursor: "pointer" }}
             >
-              <MdAssuredWorkload size={40} color="#ffff" />
-              <Text fontSize={13} color="#ffff">
+              <MdAssuredWorkload size={30} color="#ffff" />
+              <Text fontSize={12} color="#ffff">
                 Serviços
               </Text>
             </Flex>
@@ -76,8 +76,8 @@ const BarraNavegacao = () => {
               padding={2}
               _hover={{ background: "#157A8C", cursor: "pointer" }}
             >
-              <LuUpload size={40} color="#ffff" />
-              <Text fontSize={13} color="#ffff">
+              <LuUpload size={30} color="#ffff" />
+              <Text fontSize={12} color="#ffff">
                 Importar arquivo
               </Text>
             </Flex>
@@ -91,8 +91,8 @@ const BarraNavegacao = () => {
               padding={2}
               _hover={{ background: "#157A8C", cursor: "pointer" }}
             >
-              <MdSettingsApplications size={40} color="#ffff" />
-              <Text fontSize={13} color="#ffff">
+              <MdSettingsApplications size={30} color="#ffff" />
+              <Text fontSize={12} color="#ffff">
                 Configuração
               </Text>
             </Flex>
