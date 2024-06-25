@@ -6,13 +6,7 @@ import Pesquisa from "@/componentes/pesquisa/pesquisa";
 import TableOfServices from "@/componentes/tabela/table";
 import { Freelance } from "@/interface/freelance";
 import { buscarPrestador } from "@/service/prestadorService";
-import {
-  Button,
-  Flex,
-  HStack,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Button, Flex, HStack, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 
 const ListarPrestador = () => {
@@ -29,7 +23,6 @@ const ListarPrestador = () => {
       setListaPrestador(resultado);
     }
   };
-
 
   return (
     <HStack height={"100vh"}>
@@ -50,7 +43,6 @@ const ListarPrestador = () => {
         </VStack>
 
         <TableOfServices data={listaPrestador!} />
-
       </Flex>
     </HStack>
   );

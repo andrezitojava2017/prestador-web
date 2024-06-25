@@ -14,10 +14,12 @@ const Servicos = () => {
         <Head text="Serviços" buttonReturn={true} />
         <HStack gap={8} marginLeft={6}>
 
+        <Link href={"/lista/servico"} style={{ width: "100%" }}>
           <ButtonService
             description="Listar serviços"
             icon={<MdViewKanban size={50} color="white" />}
           />
+          </Link>
         </HStack>
       </Flex>
     </HStack>

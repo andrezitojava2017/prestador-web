@@ -31,7 +31,7 @@ const Pesquisa = (props: Pesquisa) => {
           <Input
             isDisabled={!props.ativaCompetencia}
             type="text"
-            width={"10vw"}
+            width={"18vw"}
             value={props.dadosPesquisa.competencia}
             onChange={(text) =>
               props.setState({
