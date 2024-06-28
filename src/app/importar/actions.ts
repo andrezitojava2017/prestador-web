@@ -1,11 +1,11 @@
-import { Freelance } from "@/interface/freelance";
+import { IPrestador } from "@/interface/IPrestador";
 import { ChangeEvent } from "react";
 
 /**
  * Faz a leitura de todas as linhas do arquivo
  * @param file ChangeEvent<HTMLInputElement> arquivo que foi selecionado
  */
-export const readLinesOfFile = (file: ChangeEvent<HTMLInputElement>) : Promise<Freelance[]> => {
+export const readLinesOfFile = (file: ChangeEvent<HTMLInputElement>) : Promise<IPrestador[]> => {
   return new Promise((resolve, reject) => {
     
 
@@ -24,7 +24,7 @@ export const readLinesOfFile = (file: ChangeEvent<HTMLInputElement>) : Promise<F
             return;
         }
 
-        let freelanceList: Freelance[] = [];
+        let freelanceList: IPrestador[] = [];
         let lines = evt.target?.result?.toString().split("\n");
 
         lines.forEach(el => {
@@ -53,7 +53,7 @@ export const readLinesOfFile = (file: ChangeEvent<HTMLInputElement>) : Promise<F
  * salva os dados recuperados do arquivo em localstorage
  * @param data 
  */
-export const saveLocalStorage = (data:Freelance[])=>{
+export const saveLocalStorage = (data:IPrestador[])=>{
 
     localStorage.setItem('freelance',JSON.stringify(data))
 }

@@ -1,9 +1,9 @@
 import { ISecretaria } from "@/interface/ISecretaria";
 import { ITributos } from "@/interface/ITributos";
-import { Freelance } from "@/interface/freelance";
+import { IPrestador } from "@/interface/IPrestador";
 import { AtualizarDadosPrestadorService } from "@/service/prestadorService";
 
-export const AtualizarDadosPrestador = async (data: Freelance) => {
+export const AtualizarDadosPrestador = async (data: IPrestador) => {
   await AtualizarDadosPrestadorService(data);
 };
 

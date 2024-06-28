@@ -1,4 +1,4 @@
-import { Freelance } from "@/interface/freelance";
+import { IPrestador } from "@/interface/IPrestador";
 import {
   Drawer,
   DrawerBody,
@@ -21,7 +21,7 @@ import { FreelanceContexts } from "@/context/FreelanceContext";
 import { AtualizarDadosPrestador } from "./action";
 
 type Props = {
-  data: Freelance;
+  data: IPrestador;
 };
 
 const AlterarPrestadorDrawer = (props: Props) => {

@@ -1,5 +1,5 @@
 "use client";
-import { Freelance } from "@/interface/freelance";
+import { IPrestador } from "@/interface/IPrestador";
 import {
   Drawer,
   DrawerBody,
@@ -15,7 +15,7 @@ import { FreelanceContexts } from "@/context/FreelanceContext";
 import FormularioServico from "../formularioServico/FormularioServico";
 
 type Props = {
-  data: Freelance;
+  data: IPrestador;
   icone: ReactNode;
 };
 

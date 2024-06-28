@@ -1,11 +1,11 @@
 import { IServico } from "@/interface/IServico";
-import { Freelance } from "@/interface/freelance";
+import { IPrestador } from "@/interface/IPrestador";
 import { consultaPisPasep } from "@/service/prestadorService";
 import { inserirNovoServico } from "@/service/servicosService";
 
 export const verificaPreenchimentoCamposServico = (
   servico: IServico,
-  autonomo: Freelance
+  autonomo: IPrestador
 ) => {
   if (
     servico.competencia === "" ||
@@ -80,7 +80,7 @@ export const verificaPreenchimentoCamposServico = (
   }
 };
 
-export const novoServico = async (servico: IServico, autonomo: Freelance) => {
+export const novoServico = async (servico: IServico, autonomo: IPrestador) => {
   const rs = await inserirNovoServico(servico, autonomo);
 };
 
@@ -98,7 +98,7 @@ export const formatarCusto = (value: string) => {
   return parseFloat(value);
 };
 
-export const verificarPisPasepExiste = async (freelance: Freelance) => {
+export const verificarPisPasepExiste = async (freelance: IPrestador) => {
   try {
     const rs = await consultaPisPasep(freelance);
     return rs;

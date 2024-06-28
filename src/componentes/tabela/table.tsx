@@ -1,5 +1,5 @@
 "use client";
-import { Freelance } from "@/interface/freelance";
+import { IPrestador } from "@/interface/IPrestador";
 import {
   Table,
   Thead,
@@ -24,14 +24,14 @@ import { ReactNode } from "react";
 import { TbArrowBigRightLinesFilled } from "react-icons/tb";
 
 type Props = {
-  data: Freelance[];
+  data: IPrestador[];
   // eventos?: React.ReactNode;
 };
 const TableOfServices = ({ data }: Props) => {
   const pathname = usePathname();
 
 
-  const drawerRegistroServico = (freelance: Freelance, icone: ReactNode) => {
+  const drawerRegistroServico = (freelance: IPrestador, icone: ReactNode) => {
     return (
       <FreelanceProvider>
         <LancarServicoDrawer data={freelance} icone={icone} />
@@ -44,7 +44,7 @@ const TableOfServices = ({ data }: Props) => {
    * @param el
    * @returns
    */
-  const eventos = (el: Freelance) => {
+  const eventos = (el: IPrestador) => {
     return (
       <FreelanceProvider>
         <HStack>
@@ -82,7 +82,7 @@ const TableOfServices = ({ data }: Props) => {
           data != undefined ? (
             data.map((el: any, index: number) => (
               <Tr key={index}>
-                <Td>{el.pisPasep}</Td>
+                <Td>{el.pispasep}</Td>
                 <Td>{el.nome}</Td>
                 {pathname === "/lista/prestador" ? ( // verifica a rota para definir as opções
                   <Td>{eventos(el)}</Td>

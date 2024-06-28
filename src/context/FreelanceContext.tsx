@@ -1,4 +1,4 @@
-import { Freelance } from "@/interface/freelance";
+import { IPrestador } from "@/interface/IPrestador";
 import { getFreelanceStorage } from "@/utils/storage/storage";
 import { useToast } from "@chakra-ui/react";
 import { ReactNode, createContext, useEffect, useState } from "react";
@@ -7,9 +7,9 @@ export const FreelanceContexts = createContext<any | undefined>(undefined);
 
 export const FreelanceProvider = ({ children }: { children: ReactNode }) => {
   const toast = useToast();
-  const [freelancers, setFreelancers] = useState<Freelance>();
+  const [freelancers, setFreelancers] = useState<IPrestador>();
 
-  const [freelanceStorage, setFreelanceStorage] = useState<Freelance[]>([]);
+  const [freelanceStorage, setFreelanceStorage] = useState<IPrestador[]>([]);
 
   const removeFreelanceStorage = () => {
     const storage = getFreelanceStorage();

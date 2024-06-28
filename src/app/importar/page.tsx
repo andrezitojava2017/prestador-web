@@ -18,7 +18,6 @@ import {
   saveLocalStorage,
 } from "./actions";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { Freelance } from "../../interface/freelance";
 import BarraNavegacao from "@/componentes/navbar";
 import TableOfServices from "@/componentes/tabela/table";
 import { FreelanceContexts, FreelanceProvider } from "@/context/FreelanceContext";

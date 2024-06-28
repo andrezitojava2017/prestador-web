@@ -4,7 +4,7 @@ import Head from "@/componentes/head/head";
 import BarraNavegacao from "@/componentes/navbar";
 import Pesquisa from "@/componentes/pesquisa/pesquisa";
 import TableOfServices from "@/componentes/tabela/table";
-import { Freelance } from "@/interface/freelance";
+import { IPrestador } from "@/interface/IPrestador";
 import { buscarPrestador } from "@/service/prestadorService";
 import { Button, Flex, HStack, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
@@ -15,7 +15,7 @@ const ListarPrestador = () => {
     prestador: string;
   }>({ competencia: "", prestador: "" });
 
-  const [listaPrestador, setListaPrestador] = useState<Freelance[]>([]);
+  const [listaPrestador, setListaPrestador] = useState<IPrestador[]>([]);
 
   const consultar = async () => {
     const resultado = await buscarPrestador(dadosPesquisa.prestador);

@@ -1,4 +1,3 @@
-import { Freelance } from "@/interface/freelance";
 import {
   FormControl,
   FormHelperText,
@@ -44,7 +43,7 @@ const FormularioPrestador = () => {
         <FormLabel>PIS/PASEP</FormLabel>
         <Input
           type="text"
-          value={freelancers.pisPasep}
+          value={freelancers.pispasep}
           onChange={(text) => {
             let v = formatarPisPasepParaBancoDeDados(text.target.value); // trazeer aqruivo actions para diretorio drawer
             setFreelancers({ ...freelancers, pisPasep: v });

@@ -1,6 +1,6 @@
 "use client";
 
-import { Freelance } from "@/interface/freelance";
+import { IPrestador } from "@/interface/IPrestador";
 import {
   FormControl,
   FormLabel,
@@ -30,7 +30,7 @@ type Props = {
 const ModalContentNewProvider = ({ close }: Props) => {
   const toast = useToast();
   const [loading, setLoading] = useState<boolean>(false);
-  const [freelance, setFreelance] = useState<Freelance>({
+  const [freelance, setFreelance] = useState<IPrestador>({
     nome: "",
     pisPasep: "",
   });
