@@ -5,8 +5,11 @@ import Pesquisa from "@/componentes/pesquisa/pesquisa";
 import TabelaServiços from "@/componentes/tabela/tabelaServicos";
 import { IServico } from "@/interface/IServico";
 import { buscarServico } from "@/service/servicosService";
-import { Box, Button, Flex, HStack, Input, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { Button, Flex, HStack } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { useToast } from "@chakra-ui/react";
+import { IMessage } from "@/interface/IMessage";
+import { validarCompetencia } from "@/utils/configuracao/actions";
 
 const ListarServicos = () => {
   const [dadosPesquisa, setDadosPesquisa] = useState<{
@@ -14,14 +17,43 @@ const ListarServicos = () => {
     prestador: string;
   }>({ competencia: "", prestador: "" });
   const [listaServico, setListaServico] = useState<IServico[]>([]);
+  const [message, setMessage] = useState<IMessage>();
+  const toast = useToast();
 
-  const consulta = async ()=>{
-    const result = await buscarServico('03/2022')
-    if(result){
-      setListaServico(result)
+  useEffect(() => {
+    if (message) {
+      toast({
+        title: message.title,
+        description: message.message,
+        status: message.type,
+      });
     }
+  }, [message]);
 
-  }
+  const consulta = async () => {
+    try {
+      if (!validarCompetencia(dadosPesquisa.competencia)) {
+        setMessage({
+          title: "Atenção",
+          message: "Preencha o campo competencia corretamente",
+          type: "warning",
+        });
+        return;
+      }
+
+      // faz a busca de serviços em determinada competencia e exibe na tabela
+      const result = await buscarServico(dadosPesquisa.competencia);
+      if (result) {
+        setListaServico(result);
+      }
+    } catch (error: any) {
+      setMessage({
+        title: "Error",
+        message: `${error.message}`,
+        type: "error",
+      });
+    }
+  };
 
   return (
     <HStack height={"100vh"}>
@@ -34,14 +66,10 @@ const ListarServicos = () => {
             dadosPesquisa={dadosPesquisa}
             ativaCompetencia={true}
             ativaPrestador={true}
-            btnBuscar={
-              <Button onClick={consulta}>
-                Buscar
-              </Button>
-            }
+            btnBuscar={<Button onClick={consulta}>Buscar</Button>}
           />
         </HStack>
-        <TabelaServiços data={listaServico}/>
+        <TabelaServiços data={listaServico} />
       </Flex>
     </HStack>
   );
