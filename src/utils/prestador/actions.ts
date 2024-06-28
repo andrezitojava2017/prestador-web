@@ -1,4 +1,4 @@
-import { Freelance } from "@/interface/freelance";
+import { IPrestador } from "@/interface/IPrestador";
 import { consultaPisPasep } from "@/service/prestadorService";
 import { SetStateAction } from "react";
 
@@ -34,7 +34,7 @@ export const verificarNomePrestador = (value: string): string => {
    * @param freelance - dados do prestador para verificação
    * @returns undefined - se não houver prestador
    */
-  export const verificarPrestadorExisteNaBase = async (freelance: Freelance) => {
+  export const verificarPrestadorExisteNaBase = async (freelance: IPrestador) => {
     const rs = await consultaPisPasep(freelance);
   
     if (rs?.length !== 0) {
@@ -50,7 +50,7 @@ export const verificarNomePrestador = (value: string): string => {
    * foram fornecidas
    * @param freelance parametro do tipo Freelance
    */
-  export const verificarCamposPreenchidos = (freelance: Freelance) => {
+  export const verificarCamposPreenchidos = (freelance: IPrestador) => {
     if (
       freelance.nome === null ||
       freelance.nome === "" ||
@@ -73,7 +73,7 @@ export const verificarNomePrestador = (value: string): string => {
    * @param setFreelance setState
    */
   export const limparFormulario = (
-    setFreelance: React.Dispatch<SetStateAction<Freelance>>
+    setFreelance: React.Dispatch<SetStateAction<IPrestador>>
   ) => {
     setFreelance({ nome: "", pisPasep: "" });
   };

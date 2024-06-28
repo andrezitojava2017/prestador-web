@@ -1,5 +1,5 @@
 import { IPesquisa } from "@/interface/IPesquisa";
-import { Freelance } from "@/interface/freelance";
+import { IPrestador } from "@/interface/IPrestador";
 import supabase from "@/lib/supabase";
 
 /**
@@ -8,7 +8,7 @@ import supabase from "@/lib/supabase";
  * @returns A função retorna uma promessa que resolve para um objeto
  * contendo os dados do prestador incluído, ou rejeita para um erro caso a inclusão falhe.
  */
-export const incluirNovoPrestador = async (freelance: Freelance) => {
+export const incluirNovoPrestador = async (freelance: IPrestador) => {
   const { data, error } = await supabase
     .from("db_pessoas")
     .insert([freelance])
@@ -25,7 +25,7 @@ export const incluirNovoPrestador = async (freelance: Freelance) => {
   return data;
 };
 
-export const consultaPisPasep = async (freelance: Freelance) => {
+export const consultaPisPasep = async (freelance: IPrestador) => {
   let { data: db_pessoas, error } = await supabase
     .from("db_pessoas")
     .select("*")
@@ -59,7 +59,7 @@ export const buscarPrestador = async (value: string) => {
   return db_pessoas;
 };
 
-export const AtualizarDadosPrestadorService = async (prestador: Freelance) => {
+export const AtualizarDadosPrestadorService = async (prestador: IPrestador) => {
   const { data, error } = await supabase
     .from("db_pessoas")
     .update(prestador)
