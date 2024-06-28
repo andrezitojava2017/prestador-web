@@ -19,7 +19,6 @@ export const inserirNovoServico = async (
     throw new Error("Ocorreu um erro ao tentar registar novo serviço");
   }
 
-  console.log(data);
   return;
 };
 
@@ -40,6 +39,6 @@ export const buscarServico = async (competencia: string) => {
       "Ocorreu um erro na tentativa de recuperar serviços lançados"
     );
   }
-  console.log(db_servico);
+  
   return db_servico;
 };

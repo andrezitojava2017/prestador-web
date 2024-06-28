@@ -30,7 +30,7 @@ import { IMessage } from "@/interface/IMessage";
 import AlertServicoNovo from "../alertDialog/alertServicoNovo";
 
 type Props = {
-  close: () => void;
+  close?: () => void;
 };
 
 const FormularioServico = ({ close }: Props) => {
