@@ -8,6 +8,7 @@ type Pesquisa = {
   dadosPesquisa: { competencia: string; prestador: string };
   btnBuscar?: ReactNode;
   ativaCompetencia: boolean;
+  ativaPrestador?: boolean;
 };
 
 const Pesquisa = (props: Pesquisa) => {
@@ -29,6 +30,7 @@ const Pesquisa = (props: Pesquisa) => {
         >
           <Text>Competencia</Text>
           <Input
+          placeholder="08/2021"
             isDisabled={!props.ativaCompetencia}
             type="text"
             width={"18vw"}
@@ -49,6 +51,7 @@ const Pesquisa = (props: Pesquisa) => {
         >
           <Text>Prestador</Text>
           <Input
+            isDisabled={false || props.ativaPrestador}
             type="text"
             width={"28vw"}
             value={props.dadosPesquisa.prestador}

@@ -2,6 +2,9 @@
 import Head from "@/componentes/head/head";
 import BarraNavegacao from "@/componentes/navbar";
 import Pesquisa from "@/componentes/pesquisa/pesquisa";
+import TabelaServiços from "@/componentes/tabela/tabelaServicos";
+import { IServico } from "@/interface/IServico";
+import { buscarServico } from "@/service/servicosService";
 import { Box, Button, Flex, HStack, Input, Text } from "@chakra-ui/react";
 import { useState } from "react";
 
@@ -10,6 +13,15 @@ const ListarServicos = () => {
     competencia: string;
     prestador: string;
   }>({ competencia: "", prestador: "" });
+  const [listaServico, setListaServico] = useState<IServico[]>([]);
+
+  const consulta = async ()=>{
+    const result = await buscarServico('03/2022')
+    if(result){
+      setListaServico(result)
+    }
+
+  }
 
   return (
     <HStack height={"100vh"}>
@@ -21,13 +33,15 @@ const ListarServicos = () => {
             setState={setDadosPesquisa}
             dadosPesquisa={dadosPesquisa}
             ativaCompetencia={true}
+            ativaPrestador={true}
             btnBuscar={
-              <Button onClick={() => console.log(dadosPesquisa)}>
+              <Button onClick={consulta}>
                 Buscar
               </Button>
             }
           />
         </HStack>
+        <TabelaServiços data={listaServico}/>
       </Flex>
     </HStack>
   );

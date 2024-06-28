@@ -188,7 +188,7 @@ const FormularioServico = ({ close }: Props) => {
             <Input
               type="number"
               size={"sm"}
-              value={freelancers?.pisPasep}
+              value={freelancers?.pispasep}
               readOnly
               onChange={(e) =>
                 setFreelancers({ ...freelancers, pisPasep: e.target.value })
