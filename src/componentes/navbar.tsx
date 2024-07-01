@@ -1,5 +1,4 @@
 import {
-  Stack,
   Avatar,
   Box,
   Flex,
@@ -26,7 +25,6 @@ const BarraNavegacao = () => {
         <VStack alignItems={"center"} justifyContent={"center"} padding={4}>
           <Avatar
             name="Jederson Andre"
-            //src="https://bit.ly/dan-abramov"
             width={100}
             height={100}
             background={"white"}
@@ -37,7 +35,6 @@ const BarraNavegacao = () => {
         </VStack>
         <Divider />
         <VStack marginTop={8} minWidth={"100%"}>
-          /** PRESTADOR */
           <Link href={"/prestador"} style={{ width: "100%" }}>
             <Flex
               flexDirection={"column"}
@@ -52,7 +49,7 @@ const BarraNavegacao = () => {
               </Text>
             </Flex>
           </Link>
-          /** SERVIÇOS */
+
           <Link href={"/servicos"} style={{ width: "100%" }}>
             <Flex
               flexDirection={"column"}
@@ -67,7 +64,7 @@ const BarraNavegacao = () => {
               </Text>
             </Flex>
           </Link>
-          /** IMPORTAR ARQUIVO */
+
           <Link href={"/importar"} style={{ width: "100%" }}>
             <Flex
               flexDirection={"column"}
@@ -82,7 +79,7 @@ const BarraNavegacao = () => {
               </Text>
             </Flex>
           </Link>
-          /** CONFIGURAÇÃO */
+
           <Link href={"/configuracao"} style={{ width: "100%" }}>
             <Flex
               flexDirection={"column"}
