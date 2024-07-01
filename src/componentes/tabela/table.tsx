@@ -82,7 +82,7 @@ const TableOfServices = ({ data }: Props) => {
           data != undefined ? (
             data.map((el: any, index: number) => (
               <Tr key={index}>
-                <Td>{el.pispasep}</Td>
+                <Td>{el.pisPasep}</Td>
                 <Td>{el.nome}</Td>
                 {pathname === "/lista/prestador" ? ( // verifica a rota para definir as opções
                   <Td>{eventos(el)}</Td>

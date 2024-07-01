@@ -28,7 +28,7 @@ export const buscarServico = async (competencia: string) => {
     .from("db_servico")
     .select(
       `*,
-      db_pessoas (pispasep, nome)`
+      db_pessoas (pisPasep, nome)`
     )
     .eq("competencia", competencia)
 

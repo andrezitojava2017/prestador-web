@@ -31,9 +31,10 @@ import AlertServicoNovo from "../alertDialog/alertServicoNovo";
 
 type Props = {
   close?: () => void;
+  action?: ()=> void;
 };
 
-const FormularioServico = ({ close }: Props) => {
+const FormularioServico = ({ close, action }: Props) => {
   const [habilitaNovo, setHabilitaNovo] = useState<boolean>(false);
   const { setFreelancers, freelancers } = useContext(FreelanceContexts);
   const [servico, setServico] = useState<IServico>({
@@ -188,7 +189,7 @@ const FormularioServico = ({ close }: Props) => {
             <Input
               type="number"
               size={"sm"}
-              value={freelancers?.pispasep}
+              value={freelancers?.pisPasep}
               readOnly
               onChange={(e) =>
                 setFreelancers({ ...freelancers, pisPasep: e.target.value })
@@ -287,7 +288,7 @@ const FormularioServico = ({ close }: Props) => {
           isLoading={loading}
           isDisabled={habilitaNovo}
           colorScheme="blue"
-          onClick={ inserirNovoServico}
+          onClick={ action}
         >
           <Text>SALVAR</Text>
         </Button>

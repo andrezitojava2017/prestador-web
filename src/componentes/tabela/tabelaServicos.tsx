@@ -10,6 +10,9 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 import { IServico } from "@/interface/IServico";
+import LancarServicoDrawer from "../drawers/LancarServicoDrawer";
+import { MdEditSquare } from "react-icons/md";
+import { IPrestador } from "@/interface/IPrestador";
 
 type Props = {
   data: IServico[];
@@ -33,7 +36,7 @@ const TabelaServiços = ({ data }: Props) => {
               data.map((item) => {
                 return (
                   <Tr key={item.id}>
-                    <Td fontWeight={'700'}>{item.competencia}</Td>
+                    <Td fontWeight={"700"}>{item.competencia}</Td>
                     <Td>{item.db_pessoas?.nome}</Td>
                     <Td color={"red"}>
                       {item.inss_retido.toLocaleString("pt-br", {
@@ -41,7 +44,14 @@ const TabelaServiços = ({ data }: Props) => {
                         currency: "BRL",
                       })}
                     </Td>
-                    <Td>oupções</Td>
+                    <Td>
+                      {
+                        <LancarServicoDrawer
+                          icone={<MdEditSquare size={30} color={"red"} />}
+                          data={item.db_pessoas as IPrestador}
+                        />
+                      }
+                    </Td>
                   </Tr>
                 );
               })

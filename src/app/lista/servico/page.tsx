@@ -6,19 +6,21 @@ import TabelaServiços from "@/componentes/tabela/tabelaServicos";
 import { IServico } from "@/interface/IServico";
 import { buscarServico } from "@/service/servicosService";
 import { Button, Flex, HStack } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useToast } from "@chakra-ui/react";
 import { IMessage } from "@/interface/IMessage";
 import { validarCompetencia } from "@/utils/configuracao/actions";
+import { TributoContext } from "@/context/tributoContext";
 
 const ListarServicos = () => {
   const [dadosPesquisa, setDadosPesquisa] = useState<{
-    competencia: string;
+    competencia: string | any;
     prestador: string;
   }>({ competencia: "", prestador: "" });
   const [listaServico, setListaServico] = useState<IServico[]>([]);
   const [message, setMessage] = useState<IMessage>();
   const toast = useToast();
+  const {tributoRef} = useContext(TributoContext)
 
   useEffect(() => {
     if (message) {
@@ -29,6 +31,10 @@ const ListarServicos = () => {
       });
     }
   }, [message]);
+
+  useEffect(()=>{
+    setDadosPesquisa({...dadosPesquisa, competencia: tributoRef.competencia})
+  },[])
 
   const consulta = async () => {
     try {

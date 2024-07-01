@@ -43,7 +43,7 @@ const FormularioPrestador = () => {
         <FormLabel>PIS/PASEP</FormLabel>
         <Input
           type="text"
-          value={freelancers.pispasep}
+          value={freelancers.pisPasep}
           onChange={(text) => {
             let v = formatarPisPasepParaBancoDeDados(text.target.value); // trazeer aqruivo actions para diretorio drawer
             setFreelancers({ ...freelancers, pisPasep: v });

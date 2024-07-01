@@ -110,8 +110,7 @@ const ImportFile = () => {
             />
             <FormHelperText>Arquivo com extensao .RE</FormHelperText>
           </FormControl>
-          // caso existir dados no localstorage, o btn ficara disponivel para
-          limpar os dados
+
           <Button isDisabled={buttonDisable} onClick={() => clearHistory()}>
             <Text>Limpar historico</Text>
           </Button>
