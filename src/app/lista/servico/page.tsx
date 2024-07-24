@@ -5,12 +5,14 @@ import Pesquisa from "@/componentes/pesquisa/pesquisa";
 import TabelaServiços from "@/componentes/tabela/tabelaServicos";
 import { IServico } from "@/interface/IServico";
 import { buscarServico } from "@/service/servicosService";
-import { Button, Flex, HStack } from "@chakra-ui/react";
+import { Box, Button, Flex, HStack } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { useToast } from "@chakra-ui/react";
 import { IMessage } from "@/interface/IMessage";
 import { validarCompetencia } from "@/utils/configuracao/actions";
 import { TributoContext } from "@/context/tributoContext";
+import { BlobProvider, PDFViewer, pdf } from "@react-pdf/renderer";
+import MyDocument from "@/relatorios/fonte";
 
 const ListarServicos = () => {
   const [dadosPesquisa, setDadosPesquisa] = useState<{
@@ -20,7 +22,7 @@ const ListarServicos = () => {
   const [listaServico, setListaServico] = useState<IServico[]>([]);
   const [message, setMessage] = useState<IMessage>();
   const toast = useToast();
-  const {tributoRef} = useContext(TributoContext)
+  const { tributoRef } = useContext(TributoContext)
 
   useEffect(() => {
     if (message) {
@@ -32,9 +34,9 @@ const ListarServicos = () => {
     }
   }, [message]);
 
-  useEffect(()=>{
-    setDadosPesquisa({...dadosPesquisa, competencia: tributoRef.competencia})
-  },[])
+  useEffect(() => {
+    setDadosPesquisa({ ...dadosPesquisa, competencia: tributoRef.competencia })
+  }, [])
 
   const consulta = async () => {
     try {
@@ -61,6 +63,16 @@ const ListarServicos = () => {
     }
   };
 
+  const handlePrint = async () => {
+    // Gera o blob do PDF
+    const blob = await pdf(<MyDocument data={listaServico} />).toBlob();
+    // Cria uma URL para o blob e abre em uma nova aba
+    const url = URL.createObjectURL(blob);
+    const newWindow = window.open(url);
+    // Espera a nova janela carregar e chama a função de impressão
+
+  };
+
   return (
     <HStack height={"100vh"}>
       <BarraNavegacao />
@@ -75,8 +87,17 @@ const ListarServicos = () => {
             btnBuscar={<Button onClick={consulta}>Buscar</Button>}
           />
         </HStack>
+
         <TabelaServiços data={listaServico} />
+
+        <Box paddingLeft={8} paddingBottom={10}>
+          <Button colorScheme="cyan" onClick={handlePrint}>
+            PDF
+          </Button>
+
+        </Box>
       </Flex>
+
     </HStack>
   );
 };
