@@ -7,8 +7,8 @@ export const inserirNovoServico = async (
   autonomo: IPrestador
 ) => {
   const { data, error } = await supabase
-    .from("db_servicos")
-    .insert({ ...servico, pispasep: autonomo.pisPasep })
+    .from("db_servico")
+    .insert({ ...servico, pisPasep: autonomo.pisPasep })
     .select();
 
   if (error) {
