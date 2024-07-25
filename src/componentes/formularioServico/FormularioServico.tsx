@@ -28,10 +28,11 @@ import { calcularPatronal, calcularRetido, totalImposto } from "./calculos";
 import { incluirNovoPrestador } from "@/service/prestadorService";
 import { IMessage } from "@/interface/IMessage";
 import AlertServicoNovo from "../alertDialog/alertServicoNovo";
+import { usePathname } from "next/navigation";
 
 type Props = {
   close?: () => void;
-  action?: ()=> void;
+  action?: () => void;
 };
 
 const FormularioServico = ({ close, action }: Props) => {
@@ -52,6 +53,8 @@ const FormularioServico = ({ close, action }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<IMessage>();
   const [alert, setAlert] = useState<IMessage>();
+
+  const path = usePathname();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   useEffect(() => {
@@ -288,7 +291,11 @@ const FormularioServico = ({ close, action }: Props) => {
           isLoading={loading}
           isDisabled={habilitaNovo}
           colorScheme="blue"
-          onClick={ action}
+          onClick={
+            path === "/importar"
+              ? inserirNovoServico
+              : () => console.log("Rota de atualização")
+          }
         >
           <Text>SALVAR</Text>
         </Button>
