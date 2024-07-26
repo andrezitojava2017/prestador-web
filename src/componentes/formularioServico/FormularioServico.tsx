@@ -33,9 +33,11 @@ import { usePathname } from "next/navigation";
 type Props = {
   close?: () => void;
   action?: () => void;
+  // receber o seviço
+  service?: IServico;
 };
 
-const FormularioServico = ({ close, action }: Props) => {
+const FormularioServico = ({ close, action, service }: Props) => {
   const [habilitaNovo, setHabilitaNovo] = useState<boolean>(false);
   const { setFreelancers, freelancers } = useContext(FreelanceContexts);
   const [servico, setServico] = useState<IServico>({
@@ -65,6 +67,16 @@ const FormularioServico = ({ close, action }: Props) => {
     if (tributoRef.competencia !== "")
       setServico({ ...servico, competencia: tributoRef.competencia });
   }, [servico.competencia]);
+
+  /**
+   * incluir useeffect com logica para carregar no state servico, se houver
+   */
+
+  useEffect(() => {
+    if (service) {
+      setServico({ ...service })
+    }
+  }, [])
 
   useEffect(() => {
     if (message) {

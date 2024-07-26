@@ -48,7 +48,8 @@ const TabelaServiços = ({ data }: Props) => {
                       {
                         <LancarServicoDrawer
                           icone={<MdEditSquare size={30} color={"red"} />}
-                          data={item.db_pessoas as IPrestador}
+                          data={item.db_pessoas!}
+                          service={item}
                         />
                       }
                     </Td>

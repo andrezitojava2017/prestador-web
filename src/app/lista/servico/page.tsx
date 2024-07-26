@@ -23,6 +23,7 @@ const ListarServicos = () => {
   const [message, setMessage] = useState<IMessage>();
   const toast = useToast();
   const { tributoRef } = useContext(TributoContext)
+  const [enable, setEnable] = useState<boolean>(true);
 
   useEffect(() => {
     if (message) {
@@ -53,7 +54,7 @@ const ListarServicos = () => {
       const result = await buscarServico(dadosPesquisa.competencia);
       if (result) {
         setListaServico(result);
-        console.log(result);
+        setEnable(false)
 
       }
     } catch (error: any) {
@@ -93,7 +94,7 @@ const ListarServicos = () => {
         <TabelaServiços data={listaServico} />
 
         <Box paddingLeft={8} paddingBottom={10}>
-          <Button colorScheme="cyan" onClick={handlePrint}>
+          <Button colorScheme="cyan" onClick={handlePrint} isDisabled={enable}>
             PDF
           </Button>
 

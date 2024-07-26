@@ -13,10 +13,12 @@ import {
 import { ReactNode, useContext, useEffect } from "react";
 import { FreelanceContexts } from "@/context/FreelanceContext";
 import FormularioServico from "../formularioServico/FormularioServico";
+import { IServico } from "@/interface/IServico";
 
 type Props = {
   data: IPrestador;
   icone: ReactNode;
+  service?: IServico;
 };
 
 const LancarServicoDrawer = (props: Props) => {
@@ -48,6 +50,7 @@ const LancarServicoDrawer = (props: Props) => {
             <FormularioServico
               close={onClose}
               action={() => console.log("ação de ATUALIZAR SERVIÇO")}
+              service={props.service}
             />
           </DrawerBody>
         </DrawerContent>
