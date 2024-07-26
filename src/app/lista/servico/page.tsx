@@ -53,6 +53,8 @@ const ListarServicos = () => {
       const result = await buscarServico(dadosPesquisa.competencia);
       if (result) {
         setListaServico(result);
+        console.log(result);
+
       }
     } catch (error: any) {
       setMessage({

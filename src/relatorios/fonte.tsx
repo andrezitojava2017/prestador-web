@@ -6,7 +6,6 @@ import { IServico } from '@/interface/IServico';
 const styles = StyleSheet.create({
     page: {
         flexDirection: 'column',
-        backgroundColor: '#E4E4E4',
         padding: 20,
     },
     section: {
@@ -51,6 +50,8 @@ const styles = StyleSheet.create({
     },
     totalizacao: {
         fontSize: 14,
+        marginTop: 8,
+        lineHeight: 2,
 
     },
     developer: {
@@ -86,7 +87,9 @@ const totalizacao = (data: IServico[]) => {
         return acumulador + curr.inss_patronal
     }, 0)
 
-    const total = [formatValue(retido), formatValue(patronal)]
+    let totalRecolher = retido + patronal;
+
+    const total = [formatValue(retido), formatValue(patronal), formatValue(totalRecolher)]
 
     return total;
 }
@@ -136,7 +139,7 @@ const MyDocument = ({ data }: Props) => {
                     <Text render={({ pageNumber, totalPages }) => {
                         if (pageNumber === totalPages) {
                             let rs = totalizacao(data);
-                            let text = `Total retido: ${rs[0]}\nTotal patronal: ${rs[1]}`
+                            let text = `Total retido: ${rs[0]}\nTotal patronal: ${rs[1]}\nTotal Recolher: ${rs[2]}`
                             return text;
 
                         }
