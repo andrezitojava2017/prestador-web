@@ -13,6 +13,7 @@ import { IServico } from "@/interface/IServico";
 import LancarServicoDrawer from "../drawers/LancarServicoDrawer";
 import { MdEditSquare } from "react-icons/md";
 import { IPrestador } from "@/interface/IPrestador";
+import { FreelanceProvider } from "@/context/FreelanceContext";
 
 type Props = {
   data: IServico[];
@@ -26,7 +27,7 @@ const TabelaServiços = ({ data }: Props) => {
           <Thead>
             <Tr>
               <Th>COMPETENCIA</Th>
-              <Th>PIS/PASESP</Th>
+              <Th>PRESTADOR</Th>
               <Th>INSS RETIDO</Th>
               <Th>OPÇÕES</Th>
             </Tr>
@@ -46,11 +47,13 @@ const TabelaServiços = ({ data }: Props) => {
                     </Td>
                     <Td>
                       {
-                        <LancarServicoDrawer
-                          icone={<MdEditSquare size={30} color={"red"} />}
-                          data={item.db_pessoas!}
-                          service={item}
-                        />
+                        <FreelanceProvider>
+                          <LancarServicoDrawer
+                            icone={<MdEditSquare size={30} color={"red"} />}
+                            data={item.db_pessoas!}
+                            service={item}
+                          />
+                        </FreelanceProvider>
                       }
                     </Td>
                   </Tr>
