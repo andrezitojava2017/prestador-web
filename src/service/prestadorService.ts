@@ -66,9 +66,26 @@ export const AtualizarDadosPrestadorService = async (prestador: IPrestador) => {
     .eq("id", prestador.id)
     .select();
 
+  if (error) {
+    console.log("ocorreu um erro na atualização\n", error);
+  }
+  console.log("dados atualizados\n", data);
+};
+
+export const uploadAvatarPerfil = async (avatar: File) => {
+  let type = avatar.type.split("/")[1];
+
+  const { data, error } = await supabase.storage
+    .from("avatar")
+    .upload(`avatar1.${type}`, avatar, {
+      cacheControl: "3600",
+      upsert: false,
+    });
+
     if(error){
-      console.log('ocorreu um erro na atualização\n', error);
+      console.warn('ocorre um erro', error)
+    } else {
+      console.log('Avatar enviado ', data);
       
     }
-    console.log('dados atualizados\n', data)
 };
