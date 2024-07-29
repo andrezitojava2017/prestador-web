@@ -13,7 +13,7 @@
 
 ## Introdução
 
-Prestador Web é um sistema web desenvolvido para gerenciar e gerar guias de INSS de prestadores de serviços contratados por órgãos públicos municipais. Este sistema visa facilitar o controle e a emissão desses documentos, garantindo eficiência e organização no processo.
+Prestador Web é um sistema web desenvolvido para gerenciar, gerar guias de INSS, relatórios de prestadores de serviços contratados por órgãos públicos municipais. Este sistema visa facilitar o controle e a emissão desses documentos, garantindo eficiência e organização no processo.
 
 ## Funcionalidades
 
@@ -23,7 +23,7 @@ Prestador Web é um sistema web desenvolvido para gerenciar e gerar guias de INS
 - **Autenticação de Usuários:** Sistema de login e gerenciamento de usuários para segurança e controle de acesso.
 
 ## Tecnologias Utilizadas
-
+![Tecnologias](https://skillicons.dev/icons?i=js,ts,html,css,nextjs,nodejs,supabase,react,vscode)
 - **Next.js:** Framework React para construção da aplicação.
 - **JavaScript e TypeScript:** Linguagens de programação utilizadas no desenvolvimento.
 - **Supabase:** Plataforma de backend como serviço (BaaS) utilizada para armazenamento de dados.
@@ -37,7 +37,7 @@ Para instalar e rodar o projeto localmente, siga os passos abaixo:
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/seu-usuario/prestador-web.git
+   git clone https://github.com/andrezitojava2017/prestador-web.git
 
    ```
 
