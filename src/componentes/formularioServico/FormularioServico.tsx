@@ -304,7 +304,7 @@ const FormularioServico = ({ close, action, service }: Props) => {
           isDisabled={habilitaNovo}
           colorScheme="blue"
           onClick={
-            path === "/importar"
+            path === "/importar" || path === '/lista/prestador'
               ? inserirNovoServico
               : () => console.log("Rota de atualização")
           }
