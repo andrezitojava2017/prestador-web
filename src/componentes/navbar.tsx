@@ -11,6 +11,7 @@ import { MdAssuredWorkload } from "react-icons/md";
 import { LuUpload } from "react-icons/lu";
 import { MdSettingsApplications } from "react-icons/md";
 import Link from "next/link";
+import Perfil from "./avatar/avatar";
 
 const BarraNavegacao = () => {
   return (
@@ -23,12 +24,15 @@ const BarraNavegacao = () => {
         width={"15vw"}
       >
         <VStack alignItems={"center"} justifyContent={"center"} padding={4}>
+          { /*
           <Avatar
             name="Jederson Andre"
             width={100}
             height={100}
             background={"white"}
           />
+          */}
+          <Perfil/>
           <Text fontSize={12} color={"#ffff"} textAlign={"center"}>
             Municipio de São José do Xingu-MT
           </Text>
