@@ -6,15 +6,13 @@ import { autenticarUsuario, verificarCampos } from "./action";
 import { useRouter } from "next/navigation";
 import { michroma } from "../fonts/fonts";
 import { useState } from "react";
+import { Credencial } from "@/interface/credencial";
 
 const Login = () => {
   const router = useRouter();
   const toast = useToast();
 
-  const [credencial, setCredencial] = useState<{
-    email: string;
-    senha: string;
-  }>({ email: "", senha: "" });
+  const [credencial, setCredencial] = useState<Credencial>({ email: "", senha: "" });
 
   const logar = async () => {
     try {
