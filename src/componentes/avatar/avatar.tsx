@@ -50,7 +50,7 @@ const Perfil = () => {
   const uploadAvatar = async (e: FormEvent<HTMLInputElement>) => {
     if (e.currentTarget.files) {
       let file = e.currentTarget.files[0];
-      const rs = await uploadAvatarPerfil(file, user.nome);
+      const rs = await uploadAvatarPerfil(file, user.nome!);
 
       if (rs) updateInfoUsuario(rs);
     }
