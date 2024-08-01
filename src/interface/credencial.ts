@@ -1,5 +1,6 @@
-
 export interface Credencial {
-    email:string,
-    senha: string;
+  email?: string;
+  senha?: string;
+  nome: string;
+  avatar?: string;
 }

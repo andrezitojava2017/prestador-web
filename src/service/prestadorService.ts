@@ -72,20 +72,19 @@ export const AtualizarDadosPrestadorService = async (prestador: IPrestador) => {
   console.log("dados atualizados\n", data);
 };
 
-export const uploadAvatarPerfil = async (avatar: File) => {
+export const uploadAvatarPerfil = async (avatar: File, name:string) => {
   let type = avatar.type.split("/")[1];
 
   const { data, error } = await supabase.storage
     .from("avatar")
-    .upload(`avatar1.${type}`, avatar, {
+    .upload(`public/${name.trim()}.${type}`, avatar, {
       cacheControl: "3600",
       upsert: false,
     });
 
     if(error){
       console.warn('ocorre um erro', error)
-    } else {
-      console.log('Avatar enviado ', data);
-      
-    }
+    } 
+    //console.log('Avatar enviado ', data);
+    return data;
 };
