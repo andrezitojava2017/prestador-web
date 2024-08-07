@@ -13,11 +13,14 @@ import { TributoContext } from "@/context/tributoContext";
 import { desconectarUsuario } from "@/service/loginService";
 import { useRouter } from "next/navigation";
 
+
 const HomePage = () => {
+
   const [disable, setDisalbe] = useState<boolean>(false);
   const { tributo, error } = useTributo();
   const { tributoRef, setTributoRef } = useContext(TributoContext);
-const router = useRouter()
+  const router = useRouter();
+
   useEffect(() => {
     const desabilitarSelect = () => {
       if (tributoRef.competencia !== "") {
@@ -44,8 +47,11 @@ const router = useRouter()
 
   const deslogar = async () => {
     await desconectarUsuario();
-    router.refresh()
+    router.refresh();
   };
+
+
+
 
   return (
     <Stack

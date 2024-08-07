@@ -4,17 +4,30 @@ import BarraNavegacao from "@/componentes/navbar";
 import Pesquisa from "@/componentes/pesquisa/pesquisa";
 import TabelaServiços from "@/componentes/tabela/tabelaServicos";
 import { IServico } from "@/interface/IServico";
-import { buscarServico } from "@/service/servicosService";
+import { buscarServico, relatorioResumoGuia } from "@/service/servicosService";
 import { Box, Button, Flex, HStack } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { useToast } from "@chakra-ui/react";
 import { IMessage } from "@/interface/IMessage";
 import { validarCompetencia } from "@/utils/configuracao/actions";
 import { TributoContext } from "@/context/tributoContext";
-import { BlobProvider, PDFViewer, pdf } from "@react-pdf/renderer";
+import { pdf } from "@react-pdf/renderer";
 import MyDocument from "@/relatorios/fonte";
+import ResumoGuias from "@/relatorios/resumo";
+
+type Resumo = {
+  cod_lotacao: string;
+  descricao: string;
+  competencia: string;
+  fonte: string;
+  patronal: number;
+  retido: number;
+  total_guia: number;
+};
+
 
 const ListarServicos = () => {
+
   const [dadosPesquisa, setDadosPesquisa] = useState<{
     competencia: string | any;
     prestador: string;
@@ -24,6 +37,7 @@ const ListarServicos = () => {
   const toast = useToast();
   const { tributoRef } = useContext(TributoContext)
   const [enable, setEnable] = useState<boolean>(true);
+  const [resumoGuia, setResumoGuia] = useState<Resumo[]>([]);
 
   useEffect(() => {
     if (message) {
@@ -52,8 +66,11 @@ const ListarServicos = () => {
 
       // faz a busca de serviços em determinada competencia e exibe na tabela
       const result = await buscarServico(dadosPesquisa.competencia);
-      if (result) {
+      const rsGuias = await relatorioResumoGuia(dadosPesquisa.competencia);
+  
+      if (result && rsGuias) {
         setListaServico(result);
+        setResumoGuia(rsGuias);
         setEnable(false)
 
       }
@@ -76,6 +93,16 @@ const ListarServicos = () => {
 
   };
 
+  const printResumGuias = async () => {
+    // Gera o blob do PDF
+    const blob = await pdf(<ResumoGuias data={resumoGuia} />).toBlob();
+    // Cria uma URL para o blob e abre em uma nova aba
+    const url = URL.createObjectURL(blob);
+    const newWindow = window.open(url);
+    // Espera a nova janela carregar e chama a função de impressão
+  };
+
+
   return (
     <HStack height={"100vh"}>
       <BarraNavegacao />
@@ -93,10 +120,14 @@ const ListarServicos = () => {
 
         <TabelaServiços data={listaServico} />
 
-        <Box paddingLeft={8} paddingBottom={10}>
+        <Box display={'flex'} flex={'row'} paddingLeft={8} paddingBottom={10} gap={8}>
           <Button colorScheme="cyan" onClick={handlePrint} isDisabled={enable}>
-            PDF
+            PDF por Fonte
           </Button>
+          <Button colorScheme="cyan" onClick={printResumGuias} isDisabled={enable}>
+            PDF Resumo Guias
+          </Button>
+
 
         </Box>
       </Flex>
