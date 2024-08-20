@@ -29,6 +29,7 @@ import { incluirNovoPrestador } from "@/service/prestadorService";
 import { IMessage } from "@/interface/IMessage";
 import AlertServicoNovo from "../alertDialog/alertServicoNovo";
 import { usePathname } from "next/navigation";
+import { atualizarServiço } from "@/service/servicosService";
 
 type Props = {
   close?: () => void;
@@ -164,6 +165,11 @@ const FormularioServico = ({ close, action, service }: Props) => {
       });
     }
   };
+
+  const atualizaRegistro = async ()=>{
+    await atualizarServiço(servico)
+  }
+
 
   return (
     <Stack width={"70vw"} maxWidth={"max-content"}>
@@ -306,7 +312,7 @@ const FormularioServico = ({ close, action, service }: Props) => {
           onClick={
             path === "/importar" || path === '/lista/prestador'
               ? inserirNovoServico
-              : () => console.log("Rota de atualização")
+              : atualizaRegistro
           }
         >
           <Text>SALVAR</Text>

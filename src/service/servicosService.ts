@@ -47,10 +47,25 @@ export const relatorioResumoGuia = async (competencia: string) => {
     competencia_param: competencia,
   });
   if (error) {
-    console.warn(error)
+    console.warn(error);
     throw new Error(
       "Ocorreu um erro na captura de dados para gerar relatorio de resumo"
     );
   }
   return data;
+};
+
+export const atualizarServiço = async (servico:IServico) => {
+  const { data, error } = await supabase
+    .from("db_servico")
+    .update(servico)
+    .eq("id", servico.id)
+    .select();
+
+    if(error){
+      console.warn('ocorreu um erro na atualização\n', error)
+      throw new Error('Ocorreu um erro na atualização')
+    }
+
+    console.log(data)
 };
