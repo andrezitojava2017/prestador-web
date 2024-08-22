@@ -1,8 +1,27 @@
 import { Credencial } from "@/interface/credencial";
 import supabase from "@/lib/supabase";
+import { instance } from "@/utils/api/config";
+import axios from "axios";
 
 export const logarUsuario = async (usuario: Credencial) => {
+  try {
+    const rs = await instance.post("/login/", {
+      email: usuario.email,
+      password: usuario.senha,
+      nome: usuario.nome,
+    });
 
+    return rs.data;
+
+  } catch (error:any) {
+    console.warn("Erro ocorrido: ", error);
+    if(error.response){
+      throw new Error(`${error.response.data.error}`);
+    }
+    
+  }
+
+  /*
    let { data, error } = await supabase.auth.signInWithPassword({
     email: usuario.email!,
     password: usuario.senha!,
@@ -12,16 +31,13 @@ export const logarUsuario = async (usuario: Credencial) => {
     console.log(error.message);
     throw new Error(`Ocorreu um erro na autenticação: ${error.message}`);
   }
-
-  return data;
+*/
 };
 
 export const desconectarUsuario = async () => {
-
   try {
     let { error } = await supabase.auth.signOut();
     if (error) throw error;
-
   } catch (error) {
     console.warn(`Ocorreu um erro ao deslogar\n ${error}`);
   }
@@ -57,7 +73,7 @@ export const getInfoUsuario = async () => {
       infoUser.nome = user.user_metadata.nome;
       infoUser.avatar = user.user_metadata.avatar;
     }
-    
+
     return infoUser;
   } catch (error) {
     console.warn(error);
@@ -82,11 +98,7 @@ export const updateInfoUsuario = async (path: any) => {
 };
 
 export const getImageAvatar = async (path: string) => {
-  
-  const { data } = supabase.storage
-    .from("avatar")
-    .getPublicUrl(path)
- 
+  const { data } = supabase.storage.from("avatar").getPublicUrl(path);
 
   //console.log(data);
   return data;

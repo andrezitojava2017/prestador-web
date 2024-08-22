@@ -11,32 +11,34 @@ import BarraNavegacao from "@/componentes/navbar";
 import ModalContentNewProvider from "@/componentes/modals/modalContentNovoPrestador";
 import ButtonService from "@/componentes/buttons/buttonService";
 import Link from "next/link";
+import AuthProvider from "@/providersApp/AuthProvider";
 
 const Prestador = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <HStack height={"100vh"}>
-      <BarraNavegacao />
-      <Flex flexDirection={"column"} height={"100vh"}>
-        <Head text="Prestador" buttonReturn={true} />
-        <HStack gap={8} marginLeft={6}>
-          <Option
-            // action={isOpen()}
-            description="Novo Prestador"
-            icon={<FaUsersCog size={50} color="white" />}
-            isOpen={isOpen}
-            onOpen={onOpen}
-            onClose={onClose}
-            modalContentProvider={<ModalContentNewProvider close={onClose} />}
-          />
-          <Link href={'/lista/prestador'}>
-            <ButtonService
-              description="Listar Prestador"
-              icon={<BsClipboardDataFill size={50} color="white" />}
+    <AuthProvider>
+      <HStack height={"100vh"}>
+        <BarraNavegacao />
+        <Flex flexDirection={"column"} height={"100vh"}>
+          <Head text="Prestador" buttonReturn={true} />
+          <HStack gap={8} marginLeft={6}>
+            <Option
+              // action={isOpen()}
+              description="Novo Prestador"
+              icon={<FaUsersCog size={50} color="white" />}
+              isOpen={isOpen}
+              onOpen={onOpen}
+              onClose={onClose}
+              modalContentProvider={<ModalContentNewProvider close={onClose} />}
             />
-          </Link>
-          {/* 
+            <Link href={"/lista/prestador"}>
+              <ButtonService
+                description="Listar Prestador"
+                icon={<BsClipboardDataFill size={50} color="white" />}
+              />
+            </Link>
+            {/* 
           <Option
             // action={() => console.log("Alterar informação de prestador")}
             description="Alterar inf. Prestador"
@@ -53,10 +55,10 @@ const Prestador = () => {
             onClose={onClose}
           />
   */}
-        </HStack>
-
-      </Flex>
-    </HStack>
+          </HStack>
+        </Flex>
+      </HStack>
+    </AuthProvider>
   );
 };
 

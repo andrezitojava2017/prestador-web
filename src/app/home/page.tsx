@@ -12,10 +12,10 @@ import { useContext, useEffect, useState } from "react";
 import { TributoContext } from "@/context/tributoContext";
 import { desconectarUsuario } from "@/service/loginService";
 import { useRouter } from "next/navigation";
-
+import AuthProvider from "@/providersApp/AuthProvider";
+import { signOut } from "next-auth/react";
 
 const HomePage = () => {
-
   const [disable, setDisalbe] = useState<boolean>(false);
   const { tributo, error } = useTributo();
   const { tributoRef, setTributoRef } = useContext(TributoContext);
@@ -50,46 +50,47 @@ const HomePage = () => {
     router.refresh();
   };
 
-
-
-
   return (
-    <Stack
-      maxWidth={"30%"}
-      border={"1px solid #157A8C"}
-      borderRadius={12}
-      padding={6}
-    >
-      <Stack>
-        <FormControl>
-          <FormLabel>Defina uma competencia</FormLabel>
-          <Select
-            placeholder="Competencia"
-            onChangeCapture={(e) =>
-              definirReferenciaTributos(e.currentTarget.value)
-            }
-            isDisabled={disable}
-          >
-            {tributo.map((trib) => {
-              return <option key={trib.competencia}>{trib.competencia}</option>;
-            })}
-          </Select>
-        </FormControl>
+    <AuthProvider>
+      <Stack
+        maxWidth={"30%"}
+        border={"1px solid #157A8C"}
+        borderRadius={12}
+        padding={6}
+      >
+        <Stack>
+          <FormControl>
+            <FormLabel>Defina uma competencia</FormLabel>
+            <Select
+              placeholder="Competencia"
+              onChangeCapture={(e) =>
+                definirReferenciaTributos(e.currentTarget.value)
+              }
+              isDisabled={disable}
+            >
+              {tributo.map((trib) => {
+                return (
+                  <option key={trib.competencia}>{trib.competencia}</option>
+                );
+              })}
+            </Select>
+          </FormControl>
 
-        <Button onClick={() => setDisalbe(!disable)}>
-          <Text>Alterar</Text>
-        </Button>
-        {tributoRef.competencia !== "" || tributoRef.competencia ? (
-          <Text
-            textAlign={"center"}
-            color={"red"}
-          >{`${tributoRef.competencia} selecionada`}</Text>
-        ) : (
-          <span>Nenhuma selecionada</span>
-        )}
+          <Button onClick={() => setDisalbe(!disable)}>
+            <Text>Alterar</Text>
+          </Button>
+          {tributoRef.competencia !== "" || tributoRef.competencia ? (
+            <Text
+              textAlign={"center"}
+              color={"red"}
+            >{`${tributoRef.competencia} selecionada`}</Text>
+          ) : (
+            <span>Nenhuma selecionada</span>
+          )}
+        </Stack>
+        <Button onClick={()=>signOut()}>Desconectar</Button>
       </Stack>
-      <Button onClick={deslogar}>Desconectar</Button>
-    </Stack>
+    </AuthProvider>
   );
 };
 

@@ -21,6 +21,7 @@ export const autenticarUsuario = async (usuario: Credencial) => {
 
     if (!rs) throw new Error("Não foi possivel logar com email e senha");
 
+    sessionStorage.setItem("token", `${rs.token}`);
     return rs;
   } catch (error) {
     throw error;
