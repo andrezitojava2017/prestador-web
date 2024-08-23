@@ -1,3 +1,4 @@
+
 import { instance } from "@/utils/api/config";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -23,13 +24,14 @@ const handler = NextAuth({
         // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
         // You can also use the `req` object to obtain additional parameters
         // (i.e., the request IP address)
+        
         const rs = await instance.post("/login/", {
           email: credentials?.username,
           password: credentials?.password,
         });
         const user = await rs.data;
 
-       // console.log("rs ", rs);
+        console.log("rs ", rs);
         console.log('user', user)
         // If no error and we have user data, return it
         if (rs && user) {

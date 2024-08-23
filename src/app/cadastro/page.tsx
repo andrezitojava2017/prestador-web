@@ -16,9 +16,10 @@ import { useState } from "react";
 import { Credencial } from "@/interface/credencial";
 import { novoUsuario } from "@/service/loginService";
 import AuthProvider from "@/providersApp/AuthProvider";
+import { useSession } from "next-auth/react";
 
 const Cadastro = () => {
-
+  const { data: session } = useSession();
   const toast = useToast();
   const router = useRouter();
   const [user, setUser] = useState<Credencial>({
@@ -30,7 +31,8 @@ const Cadastro = () => {
 
   const adicionaNovoUsuario = async () => {
     try {
-      await novoUsuario(user);
+      const token = session?.user.access_token;
+      await novoUsuario(user, token as string);
 
       // mensagem de aviso
       toast({

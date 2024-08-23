@@ -1,7 +1,7 @@
 import { Credencial } from "@/interface/credencial";
 import supabase from "@/lib/supabase";
 import { instance } from "@/utils/api/config";
-import axios from "axios";
+import { useSession } from "next-auth/react";
 
 export const logarUsuario = async (usuario: Credencial) => {
   try {
@@ -12,13 +12,11 @@ export const logarUsuario = async (usuario: Credencial) => {
     });
 
     return rs.data;
-
-  } catch (error:any) {
+  } catch (error: any) {
     console.warn("Erro ocorrido: ", error);
-    if(error.response){
+    if (error.response) {
       throw new Error(`${error.response.data.error}`);
     }
-    
   }
 
   /*
@@ -43,7 +41,22 @@ export const desconectarUsuario = async () => {
   }
 };
 
-export const novoUsuario = async (user: Credencial) => {
+export const novoUsuario = async (user: Credencial, token: string) => {
+  await instance.post(
+    "/login/add",
+    {
+      nome: user.nome,
+      email: user.email,
+      password: user.senha,
+    },
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  /*
   const { data, error } = await supabase.auth.signUp({
     email: user.email!,
     password: user.senha!,
@@ -59,6 +72,7 @@ export const novoUsuario = async (user: Credencial) => {
     console.warn(error);
     throw new Error("Ocorreu um erro na tentaiva de inserir usuario");
   }
+    */
 };
 
 export const getInfoUsuario = async () => {
