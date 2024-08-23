@@ -51,7 +51,7 @@ export const novoUsuario = async (user: Credencial, token: string) => {
     },
     {
       headers: {
-        authorization: `Bearer ${token}`,
+        authorization: `${token}`,
       },
     }
   );

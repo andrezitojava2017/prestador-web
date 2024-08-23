@@ -45,10 +45,6 @@ const HomePage = () => {
     });
   };
 
-  const deslogar = async () => {
-    await desconectarUsuario();
-    router.refresh();
-  };
 
   return (
     <AuthProvider>

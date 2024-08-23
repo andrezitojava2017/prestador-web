@@ -32,6 +32,8 @@ const Cadastro = () => {
   const adicionaNovoUsuario = async () => {
     try {
       const token = session?.user.access_token;
+      console.log('token do usuario ', token);
+      
       await novoUsuario(user, token as string);
 
       // mensagem de aviso

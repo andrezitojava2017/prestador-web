@@ -30,6 +30,8 @@ const Login = () => {
         password: credencial.senha,
       });
 
+      if(rs?.error) throw new Error('Não foi possivel autenticar usuario')
+
       /*
       // faz o login no supabase
       const user = await autenticarUsuario(credencial);
@@ -40,6 +42,8 @@ const Login = () => {
       }
         */
     } catch (error: any) {
+      console.warn('Erro ocorrido ', error);
+      
       toast({
         title: "Atenção",
         description: `${error.message}`,
@@ -52,8 +56,6 @@ const Login = () => {
 
   useEffect(() => {
 		if (session?.user?.access_token) {
-      console.log(session.user.access_token);
-      
 			sessionStorage.setItem('token', session.user.access_token)
 			router.push('/')
 		}
