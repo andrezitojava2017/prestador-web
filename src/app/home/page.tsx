@@ -26,9 +26,10 @@ const HomePage = () => {
       if (tributoRef.competencia !== "") {
         setDisalbe(!disable);
       }
+      console.log(tributo)
     };
     desabilitarSelect();
-  }, [tributoRef]);
+  }, [tributoRef, tributo]);
 
   if (error) {
     return <p>Não foi possive carregar as config. de tributos</p>;

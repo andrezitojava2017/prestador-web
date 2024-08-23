@@ -11,6 +11,7 @@ const useTributo = () => {
       const getTributos = async () => {
         const data = await recuperarListaTributoMensal();
         if (data) setTributo(data!);
+        console.log('useTributo ', data)
       };
 
       getTributos();
