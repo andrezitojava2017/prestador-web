@@ -42,8 +42,22 @@ export const inserirConfigTributo = async (info: ITributos, token: string) => {
   */
 };
 
-export const recuperarListaTributoMensal = async () => {
+export const recuperarListaTributoMensal = async (token: string) => {
+  try {
+    const rs = await instance.get("/config/inss/list", {
+      headers: {
+        authorization: token,
+      },
+    });
+    
+  return rs.data
 
+  } catch (error) {
+    console.warn("Erro ocorrido: ", error);
+    throw error;
+  }
+
+  /*
 
   let { data: db_tributo, error } = await supabase
     .from("db_tributo")
@@ -56,9 +70,7 @@ export const recuperarListaTributoMensal = async () => {
     );
     throw new Error("Ocorreu um erro ao tentar recuperar lista de Tributos");
   }
-
-  return db_tributo;
- 
+*/
 };
 
 export const atualizarConfiguracao = async (
