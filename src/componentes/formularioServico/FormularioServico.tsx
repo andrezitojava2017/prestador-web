@@ -263,9 +263,9 @@ const FormularioServico = ({ close, action, service }: Props) => {
             >
               {secretarias.map((sec) => (
                 <option
-                  value={sec.codigo}
-                  key={sec.codigo}
-                >{`${sec.codigo} - ${sec.descricao}`}</option>
+                  value={sec.codigo_dotacao}
+                  key={sec.codigo_dotacao}
+                >{`${sec.codigo_dotacao} - ${sec.descricao}`}</option>
               ))}
             </Select>
           </FormControl>
