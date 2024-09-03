@@ -43,7 +43,7 @@ const FormularioServico = ({ close, action, service }: Props) => {
   const { setFreelancers, freelancers } = useContext(FreelanceContexts);
   const [servico, setServico] = useState<IServico>({
     competencia: "",
-    cod_lotacao: 0,
+    cod_dotacao: 0,
     empenho: 0,
     fonte: 0,
     inss_patronal: 0,
@@ -75,9 +75,9 @@ const FormularioServico = ({ close, action, service }: Props) => {
 
   useEffect(() => {
     if (service) {
-      setServico({ ...service })
+      setServico({ ...service });
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (message) {
@@ -166,10 +166,9 @@ const FormularioServico = ({ close, action, service }: Props) => {
     }
   };
 
-  const atualizaRegistro = async ()=>{
-    await atualizarServiço(servico)
-  }
-
+  const atualizaRegistro = async () => {
+    await atualizarServiço(servico);
+  };
 
   return (
     <Stack width={"70vw"} maxWidth={"max-content"}>
@@ -210,10 +209,10 @@ const FormularioServico = ({ close, action, service }: Props) => {
             <Input
               type="number"
               size={"sm"}
-              value={freelancers?.pisPasep}
+              value={freelancers?.pis_pasep}
               readOnly
               onChange={(e) =>
-                setFreelancers({ ...freelancers, pisPasep: e.target.value })
+                setFreelancers({ ...freelancers, pis_pasep: e.target.value })
               }
             />
           </FormControl>
@@ -256,10 +255,10 @@ const FormularioServico = ({ close, action, service }: Props) => {
               onChange={(e) =>
                 setServico({
                   ...servico,
-                  cod_lotacao: parseInt(e.currentTarget.value),
+                  cod_dotacao: parseInt(e.currentTarget.value),
                 })
               }
-              value={servico.cod_lotacao}
+              value={servico.cod_dotacao}
             >
               {secretarias.map((sec) => (
                 <option
@@ -295,7 +294,9 @@ const FormularioServico = ({ close, action, service }: Props) => {
       <HStack>
         <Information value={servico.inss_retido} information="INSS retido" />
         <Information
-          value={servico.inss_patronal || 0}
+          value={
+            servico.inss_patronal || 0
+          }
           information="Patronal"
         />
         <Information
@@ -310,7 +311,7 @@ const FormularioServico = ({ close, action, service }: Props) => {
           isDisabled={habilitaNovo}
           colorScheme="blue"
           onClick={
-            path === "/importar" || path === '/lista/prestador'
+            path === "/importar" || path === "/lista/prestador"
               ? inserirNovoServico
               : atualizaRegistro
           }

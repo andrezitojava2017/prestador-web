@@ -14,6 +14,7 @@ import { TributoContext } from "@/context/tributoContext";
 import { pdf } from "@react-pdf/renderer";
 import MyDocument from "@/relatorios/fonte";
 import ResumoGuias from "@/relatorios/resumo";
+import { useSession } from "next-auth/react";
 
 type Resumo = {
   cod_lotacao: string;
@@ -25,9 +26,7 @@ type Resumo = {
   total_guia: number;
 };
 
-
 const ListarServicos = () => {
-
   const [dadosPesquisa, setDadosPesquisa] = useState<{
     competencia: string | any;
     prestador: string;
@@ -35,9 +34,10 @@ const ListarServicos = () => {
   const [listaServico, setListaServico] = useState<IServico[]>([]);
   const [message, setMessage] = useState<IMessage>();
   const toast = useToast();
-  const { tributoRef } = useContext(TributoContext)
+  const { tributoRef } = useContext(TributoContext);
   const [enable, setEnable] = useState<boolean>(true);
   const [resumoGuia, setResumoGuia] = useState<Resumo[]>([]);
+  const { data: session } = useSession();
 
   useEffect(() => {
     if (message) {
@@ -50,8 +50,8 @@ const ListarServicos = () => {
   }, [message]);
 
   useEffect(() => {
-    setDadosPesquisa({ ...dadosPesquisa, competencia: tributoRef.competencia })
-  }, [])
+    setDadosPesquisa({ ...dadosPesquisa, competencia: tributoRef.competencia });
+  }, []);
 
   const consulta = async () => {
     try {
@@ -65,14 +65,16 @@ const ListarServicos = () => {
       }
 
       // faz a busca de serviços em determinada competencia e exibe na tabela
-      const result = await buscarServico(dadosPesquisa.competencia);
-      const rsGuias = await relatorioResumoGuia(dadosPesquisa.competencia);
-  
+      const result = await buscarServico(
+        dadosPesquisa.competencia,
+        session!.user.access_token
+      );
+      const rsGuias = await relatorioResumoGuia(dadosPesquisa.competencia); // dados retornados do supabase
+      
       if (result && rsGuias) {
-        setListaServico(result);
+        setListaServico(result.data.data);
         setResumoGuia(rsGuias);
-        setEnable(false)
-
+        setEnable(false);
       }
     } catch (error: any) {
       setMessage({
@@ -90,7 +92,6 @@ const ListarServicos = () => {
     const url = URL.createObjectURL(blob);
     const newWindow = window.open(url);
     // Espera a nova janela carregar e chama a função de impressão
-
   };
 
   const printResumGuias = async () => {
@@ -101,7 +102,6 @@ const ListarServicos = () => {
     const newWindow = window.open(url);
     // Espera a nova janela carregar e chama a função de impressão
   };
-
 
   return (
     <HStack height={"100vh"}>
@@ -120,18 +120,25 @@ const ListarServicos = () => {
 
         <TabelaServiços data={listaServico} />
 
-        <Box display={'flex'} flex={'row'} paddingLeft={8} paddingBottom={10} gap={8}>
+        <Box
+          display={"flex"}
+          flex={"row"}
+          paddingLeft={8}
+          paddingBottom={10}
+          gap={8}
+        >
           <Button colorScheme="cyan" onClick={handlePrint} isDisabled={enable}>
             PDF por Fonte
           </Button>
-          <Button colorScheme="cyan" onClick={printResumGuias} isDisabled={enable}>
+          <Button
+            colorScheme="cyan"
+            onClick={printResumGuias}
+            isDisabled={enable}
+          >
             PDF Resumo Guias
           </Button>
-
-
         </Box>
       </Flex>
-
     </HStack>
   );
 };

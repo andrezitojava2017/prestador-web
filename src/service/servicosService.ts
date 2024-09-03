@@ -1,6 +1,7 @@
 import { IServico } from "@/interface/IServico";
 import { IPrestador } from "@/interface/IPrestador";
 import supabase from "@/lib/supabase";
+import { instance } from "@/utils/api/config";
 
 export const inserirNovoServico = async (
   servico: IServico,
@@ -8,7 +9,7 @@ export const inserirNovoServico = async (
 ) => {
   const { data, error } = await supabase
     .from("db_servico")
-    .insert({ ...servico, pisPasep: autonomo.pisPasep })
+    .insert({ ...servico, pisPasep: autonomo.pis_pasep })
     .select();
 
   if (error) {
@@ -22,7 +23,26 @@ export const inserirNovoServico = async (
   return;
 };
 
-export const buscarServico = async (competencia: string) => {
+export const buscarServico = async (competencia: string, token: string) => {
+  try {
+    const rs = await instance.post(
+      "/freelance/service/list",
+      {
+        referencia: competencia,
+      },
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+    return rs;
+  } catch (error) {
+    throw new Error(
+      "Ocorreu um erro na tentativa de recuperar serviços lançados"
+    );
+  }
+  /*
   let { data: db_servico, error } = await supabase
     .from("db_servico")
     .select(
@@ -40,6 +60,7 @@ export const buscarServico = async (competencia: string) => {
   }
 
   return db_servico;
+  */
 };
 
 export const relatorioResumoGuia = async (competencia: string) => {
@@ -55,17 +76,17 @@ export const relatorioResumoGuia = async (competencia: string) => {
   return data;
 };
 
-export const atualizarServiço = async (servico:IServico) => {
+export const atualizarServiço = async (servico: IServico) => {
   const { data, error } = await supabase
     .from("db_servico")
     .update(servico)
     .eq("id", servico.id)
     .select();
 
-    if(error){
-      console.warn('ocorreu um erro na atualização\n', error)
-      throw new Error('Ocorreu um erro na atualização')
-    }
+  if (error) {
+    console.warn("ocorreu um erro na atualização\n", error);
+    throw new Error("Ocorreu um erro na atualização");
+  }
 
-    console.log(data)
+  console.log(data);
 };

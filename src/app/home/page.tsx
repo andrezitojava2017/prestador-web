@@ -26,7 +26,7 @@ const HomePage = () => {
       if (tributoRef.competencia !== "") {
         setDisalbe(!disable);
       }
-      console.log(tributo)
+      
     };
     desabilitarSelect();
   }, [tributoRef, tributo]);

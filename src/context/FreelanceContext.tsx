@@ -15,7 +15,7 @@ export const FreelanceProvider = ({ children }: { children: ReactNode }) => {
     const storage = getFreelanceStorage();
 
     const freeList = storage.filter((free) => {
-      return free.pisPasep !== freelancers!.pisPasep;
+      return free.pis_pasep !== freelancers!.pis_pasep;
     });
 
     localStorage.setItem("freelance", JSON.stringify(freeList));
