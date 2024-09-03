@@ -7,9 +7,11 @@ import TableOfServices from "@/componentes/tabela/table";
 import { IPrestador } from "@/interface/IPrestador";
 import { buscarPrestador } from "@/service/prestadorService";
 import { Button, Flex, HStack, Text, VStack } from "@chakra-ui/react";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 const ListarPrestador = () => {
+  const {data:session} = useSession()
   const [dadosPesquisa, setDadosPesquisa] = useState<{
     competencia: string;
     prestador: string;
@@ -18,10 +20,12 @@ const ListarPrestador = () => {
   const [listaPrestador, setListaPrestador] = useState<IPrestador[]>([]);
 
   const consultar = async () => {
-    const resultado = await buscarPrestador(dadosPesquisa.prestador);
+    const resultado = await buscarPrestador(dadosPesquisa.prestador, session!.user.token);
+    
     if (resultado) {
       setListaPrestador(resultado);
     }
+      
   };
 
   return (

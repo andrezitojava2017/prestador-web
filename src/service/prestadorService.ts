@@ -1,6 +1,7 @@
 import { IPesquisa } from "@/interface/IPesquisa";
 import { IPrestador } from "@/interface/IPrestador";
 import supabase from "@/lib/supabase";
+import { instance } from "@/utils/api/config";
 
 /**
  * Esta função assincrona inclui um novo prestador de serviços na base de dados
@@ -29,7 +30,7 @@ export const consultaPisPasep = async (freelance: IPrestador) => {
   let { data: db_pessoas, error } = await supabase
     .from("db_pessoas")
     .select("*")
-    .eq("pisPasep", freelance.pisPasep);
+    .eq("pisPasep", freelance.pis_pasep);
 
   if (error) {
     console.log(
@@ -42,7 +43,20 @@ export const consultaPisPasep = async (freelance: IPrestador) => {
   return db_pessoas;
 };
 
-export const buscarPrestador = async (value: string) => {
+export const buscarPrestador = async (value: string, token: string) => {
+  try {
+    const rs = await instance.get(`/freelance/list/${value}`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+
+    console.log('lista resutado: ', rs);
+    return rs.data;
+  } catch (error) {
+    throw error;
+  }
+  /*
   let { data: db_pessoas, error } = await supabase
     .from("db_pessoas")
     .select("*")
@@ -57,6 +71,7 @@ export const buscarPrestador = async (value: string) => {
 
   //console.log(db_pessoas)
   return db_pessoas;
+  */
 };
 
 export const AtualizarDadosPrestadorService = async (prestador: IPrestador) => {
@@ -72,7 +87,7 @@ export const AtualizarDadosPrestadorService = async (prestador: IPrestador) => {
   console.log("dados atualizados\n", data);
 };
 
-export const uploadAvatarPerfil = async (avatar: File, name:string) => {
+export const uploadAvatarPerfil = async (avatar: File, name: string) => {
   let type = avatar.type.split("/")[1];
 
   const { data, error } = await supabase.storage
@@ -82,9 +97,9 @@ export const uploadAvatarPerfil = async (avatar: File, name:string) => {
       upsert: false,
     });
 
-    if(error){
-      console.warn('ocorre um erro', error)
-    } 
-    //console.log('Avatar enviado ', data);
-    return data;
+  if (error) {
+    console.warn("ocorre um erro", error);
+  }
+  //console.log('Avatar enviado ', data);
+  return data;
 };

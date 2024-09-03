@@ -56,9 +56,9 @@ export const verificaPreenchimentoCamposServico = (
   }
 
   if (
-    servico.cod_lotacao === 0 ||
-    servico.cod_lotacao === undefined ||
-    servico.cod_lotacao === null
+    servico.cod_dotacao === 0 ||
+    servico.cod_dotacao === undefined ||
+    servico.cod_dotacao === null
   ) {
     throw new Error("A secretaria não foi selecionada");
   }
@@ -72,9 +72,9 @@ export const verificaPreenchimentoCamposServico = (
   }
 
   if (
-    autonomo.pisPasep === "" ||
-    autonomo.pisPasep === undefined ||
-    autonomo.pisPasep === null
+    autonomo.pis_pasep === "" ||
+    autonomo.pis_pasep === undefined ||
+    autonomo.pis_pasep === null
   ) {
     throw new Error("O campo PIS/PASEP não foi preenchido");
   }
