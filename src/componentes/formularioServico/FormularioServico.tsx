@@ -30,6 +30,7 @@ import { IMessage } from "@/interface/IMessage";
 import AlertServicoNovo from "../alertDialog/alertServicoNovo";
 import { usePathname } from "next/navigation";
 import { atualizarServiço } from "@/service/servicosService";
+import { useSession } from "next-auth/react";
 
 type Props = {
   close?: () => void;
@@ -58,7 +59,7 @@ const FormularioServico = ({ close, action, service }: Props) => {
   const [alert, setAlert] = useState<IMessage>();
 
   const path = usePathname();
-
+  const { data: session } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
   useEffect(() => {
     // atributo habilitado para habilitar/desabilitar campos de nome e pispasep
@@ -102,23 +103,13 @@ const FormularioServico = ({ close, action, service }: Props) => {
       setLoading(true);
 
       verificaPreenchimentoCamposServico(servico, freelancers);
-      const rs = await verificarPisPasepExiste(freelancers);
+      // const rs = await verificarPisPasepExiste(freelancers);
 
-      if (rs?.length !== 0) {
-        // pis/pasep existe na base
-        // salvar servico
-        await novoServico(servico, freelancers);
-      }
-
-      if (rs?.length === 0) {
-        // pis/pasep NÃO EXISTE na base
-
-        // salvar prestador
-        await incluirNovoPrestador(freelancers);
-
-        // lançar serviço
-        await novoServico(servico, freelancers);
-      }
+      // pis/pasep existe na base
+      // salvar servico
+     // console.log(servico);
+      
+     await novoServico(servico, freelancers, session!.user.access_token);
 
       // mensagem do alert
       setAlert({
@@ -294,9 +285,7 @@ const FormularioServico = ({ close, action, service }: Props) => {
       <HStack>
         <Information value={servico.inss_retido} information="INSS retido" />
         <Information
-          value={
-            servico.inss_patronal || 0
-          }
+          value={servico.inss_patronal || 0}
           information="Patronal"
         />
         <Information

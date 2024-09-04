@@ -22,6 +22,7 @@ import { AtualizarDadosPrestador } from "./action";
 
 type Props = {
   data: IPrestador;
+  token:string;
 };
 
 const AlterarPrestadorDrawer = (props: Props) => {
@@ -37,9 +38,16 @@ const AlterarPrestadorDrawer = (props: Props) => {
 
     try {
 
-      await AtualizarDadosPrestador(freelancers);
+      await AtualizarDadosPrestador(freelancers, props.token);
       setLoading(false);
 
+      toast({
+        title: "Sucesso",
+        description: `Os dados foram atualizados`,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
     } catch (error: any) {
 
       toast({
@@ -49,6 +57,8 @@ const AlterarPrestadorDrawer = (props: Props) => {
         duration: 5000,
         isClosable: true,
       });
+
+      setLoading(false);
     }
   };
 

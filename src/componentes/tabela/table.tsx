@@ -22,6 +22,7 @@ import {
 import LancarServicoDrawer from "../drawers/LancarServicoDrawer";
 import { ReactNode } from "react";
 import { TbArrowBigRightLinesFilled } from "react-icons/tb";
+import { useSession } from "next-auth/react";
 
 type Props = {
   data: IPrestador[];
@@ -29,6 +30,7 @@ type Props = {
 };
 const TableOfServices = ({ data }: Props) => {
   const pathname = usePathname();
+  const {data:session} = useSession()
 
 
   const drawerRegistroServico = (freelance: IPrestador, icone: ReactNode) => {
@@ -48,7 +50,7 @@ const TableOfServices = ({ data }: Props) => {
     return (
       <FreelanceProvider>
         <HStack>
-          <AlterarPrestadorDrawer data={el} />
+          <AlterarPrestadorDrawer data={el} token={session!.user.access_token} />
 
           <Flex flexDirection={"column"} alignItems={"center"}>
             <Text fontSize={10}>Serviço</Text>

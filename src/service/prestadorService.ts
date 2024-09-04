@@ -2,6 +2,7 @@ import { IPesquisa } from "@/interface/IPesquisa";
 import { IPrestador } from "@/interface/IPrestador";
 import supabase from "@/lib/supabase";
 import { instance } from "@/utils/api/config";
+import { warn } from "console";
 
 /**
  * Esta função assincrona inclui um novo prestador de serviços na base de dados
@@ -28,11 +29,10 @@ export const incluirNovoPrestador = async (
 
     return rs.data;
   } catch (error: any) {
-
     if (error.response.status === 401 && error.response.data.data) {
-      let message = error.response.data.message
-      let freelance = error.response.data.data[0].nome
-      throw new Error(`${message}: ${freelance}`)
+      let message = error.response.data.message;
+      let freelance = error.response.data.data[0].nome;
+      throw new Error(`${message}: ${freelance}`);
     }
     throw error;
   }
@@ -77,7 +77,6 @@ export const buscarPrestador = async (value: string, token: string) => {
       },
     });
 
-    console.log("lista resutado: ", rs);
     return rs.data;
   } catch (error) {
     throw error;
@@ -100,17 +99,30 @@ export const buscarPrestador = async (value: string, token: string) => {
   */
 };
 
-export const AtualizarDadosPrestadorService = async (prestador: IPrestador) => {
-  const { data, error } = await supabase
-    .from("db_pessoas")
-    .update(prestador)
-    .eq("id", prestador.id)
-    .select();
+export const AtualizarDadosPrestadorService = async (
+  prestador: IPrestador,
+  token: string
+) => {
+  try {
+    const rs = await instance.put(
+      "/freelance/update/",
+      {
+        ...prestador,
+      },
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
 
-  if (error) {
-    console.log("ocorreu um erro na atualização\n", error);
+    return rs;
+
+  } catch (error: any) {
+    console.warn("Erro ao tentar atualizar prestador ", error.message);
+    throw new Error("Não foi possivel atualizar o prestador");
   }
-  console.log("dados atualizados\n", data);
+
 };
 
 export const uploadAvatarPerfil = async (avatar: File, name: string) => {

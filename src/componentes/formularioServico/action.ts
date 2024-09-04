@@ -80,8 +80,8 @@ export const verificaPreenchimentoCamposServico = (
   }
 };
 
-export const novoServico = async (servico: IServico, autonomo: IPrestador) => {
-  const rs = await inserirNovoServico(servico, autonomo);
+export const novoServico = async (servico: IServico, autonomo: IPrestador, token:string) => {
+  const rs = await inserirNovoServico(servico, autonomo, token);
 };
 
 /**

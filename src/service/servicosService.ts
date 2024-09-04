@@ -5,8 +5,31 @@ import { instance } from "@/utils/api/config";
 
 export const inserirNovoServico = async (
   servico: IServico,
-  autonomo: IPrestador
+  autonomo: IPrestador,
+  token: string
 ) => {
+  try {
+    const rs = await instance.post(
+      "/freelance/service/new",
+      {
+        ...servico,
+        pisPasep: autonomo.pis_pasep,
+      },
+      {
+        headers: {
+          Authorization: token,
+          service: true,
+        },
+      }
+    );
+
+    console.log("resultado: ", rs);
+    return rs;
+  } catch (error) {
+    console.log("erro ocorrido ", error);
+    throw error;
+  }
+  /*
   const { data, error } = await supabase
     .from("db_servico")
     .insert({ ...servico, pisPasep: autonomo.pis_pasep })
@@ -21,6 +44,7 @@ export const inserirNovoServico = async (
   }
 
   return;
+  */
 };
 
 export const buscarServico = async (competencia: string, token: string) => {
