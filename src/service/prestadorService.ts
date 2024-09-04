@@ -9,7 +9,34 @@ import { instance } from "@/utils/api/config";
  * @returns A função retorna uma promessa que resolve para um objeto
  * contendo os dados do prestador incluído, ou rejeita para um erro caso a inclusão falhe.
  */
-export const incluirNovoPrestador = async (freelance: IPrestador) => {
+export const incluirNovoPrestador = async (
+  freelance: IPrestador,
+  token: string
+) => {
+  try {
+    const rs = await instance.post(
+      "/freelance/new",
+      {
+        ...freelance,
+      },
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+
+    return rs.data;
+  } catch (error: any) {
+
+    if (error.response.status === 401 && error.response.data.data) {
+      let message = error.response.data.message
+      let freelance = error.response.data.data[0].nome
+      throw new Error(`${message}: ${freelance}`)
+    }
+    throw error;
+  }
+  /*
   const { data, error } = await supabase
     .from("db_pessoas")
     .insert([freelance])
@@ -22,8 +49,7 @@ export const incluirNovoPrestador = async (freelance: IPrestador) => {
     );
     throw new Error("Ocorreu um erro na tentativa de incluir novo prestador");
   }
-
-  return data;
+*/
 };
 
 export const consultaPisPasep = async (freelance: IPrestador) => {
@@ -51,7 +77,7 @@ export const buscarPrestador = async (value: string, token: string) => {
       },
     });
 
-    console.log('lista resutado: ', rs);
+    console.log("lista resutado: ", rs);
     return rs.data;
   } catch (error) {
     throw error;

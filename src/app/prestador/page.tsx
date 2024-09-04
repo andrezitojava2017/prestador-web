@@ -12,10 +12,12 @@ import ModalContentNewProvider from "@/componentes/modals/modalContentNovoPresta
 import ButtonService from "@/componentes/buttons/buttonService";
 import Link from "next/link";
 import AuthProvider from "@/providersApp/AuthProvider";
+import { useSession } from "next-auth/react";
 
 const Prestador = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const {data:session} = useSession()
+  
   return (
     <AuthProvider>
       <HStack height={"100vh"}>
@@ -30,7 +32,7 @@ const Prestador = () => {
               isOpen={isOpen}
               onOpen={onOpen}
               onClose={onClose}
-              modalContentProvider={<ModalContentNewProvider close={onClose} />}
+              modalContentProvider={<ModalContentNewProvider close={onClose} token={session!.user.access_token} />}
             />
             <Link href={"/lista/prestador"}>
               <ButtonService

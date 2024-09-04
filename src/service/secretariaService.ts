@@ -10,7 +10,7 @@ export const adicionarNovaSecretaria = async (
     "/config/add",
     {
       descricao: secretaria.descricao,
-      codigo: secretaria.codigo,
+      codigo: secretaria.codigo_dotacao,
     },
     {
       headers: {
