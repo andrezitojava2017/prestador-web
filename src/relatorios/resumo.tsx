@@ -87,7 +87,7 @@ const totalizacao = (data: Resumo[]) => {
 }
 
 type Resumo ={
-    cod_lotacao:string,
+    cod_dotacao:string,
     descricao:string,
     competencia:string,
     fonte:string,

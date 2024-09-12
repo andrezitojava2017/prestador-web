@@ -17,7 +17,7 @@ import ResumoGuias from "@/relatorios/resumo";
 import { useSession } from "next-auth/react";
 
 type Resumo = {
-  cod_lotacao: string;
+  cod_dotacao: string;
   descricao: string;
   competencia: string;
   fonte: string;
@@ -69,11 +69,11 @@ const ListarServicos = () => {
         dadosPesquisa.competencia,
         session!.user.access_token
       );
-      const rsGuias = await relatorioResumoGuia(dadosPesquisa.competencia); // dados retornados do supabase
-      
+      const rsGuias = await relatorioResumoGuia(dadosPesquisa.competencia, session!.user.access_token); // dados retornados do supabase
+      console.log(rsGuias.rs)
       if (result && rsGuias) {
         setListaServico(result.data.data);
-        setResumoGuia(rsGuias);
+        setResumoGuia(rsGuias.rs);
         setEnable(false);
       }
     } catch (error: any) {

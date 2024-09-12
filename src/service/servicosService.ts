@@ -87,7 +87,25 @@ export const buscarServico = async (competencia: string, token: string) => {
   */
 };
 
-export const relatorioResumoGuia = async (competencia: string) => {
+export const relatorioResumoGuia = async (competencia: string, token:string) => {
+
+  try {
+    const data = await instance.get(`/freelance/rel/${competencia}`,{
+      
+      headers:{
+        authorization: token
+      },
+
+    });
+
+    return data.data;
+
+  } catch (error:any) {
+    console.warn('Erro ocorrido: ', error.message)
+    throw error;
+  }
+/*
+
   let { data, error } = await supabase.rpc("resumo_guias", {
     competencia_param: competencia,
   });
@@ -97,7 +115,7 @@ export const relatorioResumoGuia = async (competencia: string) => {
       "Ocorreu um erro na captura de dados para gerar relatorio de resumo"
     );
   }
-  return data;
+    */
 };
 
 export const atualizarServiço = async (servico: IServico, token: string) => {
