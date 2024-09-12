@@ -103,13 +103,8 @@ const FormularioServico = ({ close, action, service }: Props) => {
       setLoading(true);
 
       verificaPreenchimentoCamposServico(servico, freelancers);
-      // const rs = await verificarPisPasepExiste(freelancers);
 
-      // pis/pasep existe na base
-      // salvar servico
-     // console.log(servico);
-      
-     await novoServico(servico, freelancers, session!.user.access_token);
+      await novoServico(servico, freelancers, session!.user.access_token);
 
       // mensagem do alert
       setAlert({
@@ -158,7 +153,27 @@ const FormularioServico = ({ close, action, service }: Props) => {
   };
 
   const atualizaRegistro = async () => {
-    await atualizarServiço(servico);
+    try {
+      
+      setLoading(true);
+      await atualizarServiço(servico, session!.user.access_token);
+
+      // mensagem de resposta
+      setMessage({
+        title: "Sucesso",
+        message: "Dados atualizados com sucesso!",
+        type: "success",
+      });
+    } catch (error:any) {
+       // mensagem de resposta
+       setMessage({
+        title: "Atenção",
+        message: error.message,
+        type: "error",
+      });
+    }
+
+    setLoading(false);
   };
 
   return (

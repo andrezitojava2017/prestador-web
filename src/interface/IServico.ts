@@ -6,7 +6,7 @@ export interface IServico {
   competencia?: string;
   empenho: number;
   fonte: number;
-  pisPasep?: number;
+  pis_pasep?: number;
   inss_retido: number;
   inss_patronal: number;
   salario_base: string;

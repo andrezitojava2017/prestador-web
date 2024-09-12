@@ -2,6 +2,7 @@ import { IServico } from "@/interface/IServico";
 import { IPrestador } from "@/interface/IPrestador";
 import supabase from "@/lib/supabase";
 import { instance } from "@/utils/api/config";
+import { headers } from "next/headers";
 
 export const inserirNovoServico = async (
   servico: IServico,
@@ -13,7 +14,7 @@ export const inserirNovoServico = async (
       "/freelance/service/new",
       {
         ...servico,
-        pisPasep: autonomo.pis_pasep,
+        pis_pasep: autonomo.pis_pasep,
       },
       {
         headers: {
@@ -23,7 +24,6 @@ export const inserirNovoServico = async (
       }
     );
 
-    console.log("resultado: ", rs);
     return rs;
   } catch (error) {
     console.log("erro ocorrido ", error);
@@ -100,7 +100,22 @@ export const relatorioResumoGuia = async (competencia: string) => {
   return data;
 };
 
-export const atualizarServiço = async (servico: IServico) => {
+export const atualizarServiço = async (servico: IServico, token: string) => {
+  try {
+    instance.patch(
+      "/freelance/service/update",
+      { ...servico },
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+  } catch (error:any) {
+    console.warn('Erro ocorrido: ', error.message)
+    throw error;
+  }
+  /*
   const { data, error } = await supabase
     .from("db_servico")
     .update(servico)
@@ -113,4 +128,5 @@ export const atualizarServiço = async (servico: IServico) => {
   }
 
   console.log(data);
+  */
 };
