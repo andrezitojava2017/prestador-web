@@ -73,7 +73,7 @@ export const buscarPrestador = async (value: string, token: string) => {
   try {
     const rs = await instance.get(`/freelance/list/${value}`, {
       headers: {
-        Authorization: token,
+        authorization: token,
       },
     });
 

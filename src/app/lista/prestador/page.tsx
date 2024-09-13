@@ -20,7 +20,7 @@ const ListarPrestador = () => {
   const [listaPrestador, setListaPrestador] = useState<IPrestador[]>([]);
 
   const consultar = async () => {
-    const resultado = await buscarPrestador(dadosPesquisa.prestador, session!.user.token);
+    const resultado = await buscarPrestador(dadosPesquisa.prestador, session!.user.access_token);
     
     if (resultado) {
       setListaPrestador(resultado);

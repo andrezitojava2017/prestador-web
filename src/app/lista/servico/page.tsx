@@ -70,7 +70,7 @@ const ListarServicos = () => {
         session!.user.access_token
       );
       const rsGuias = await relatorioResumoGuia(dadosPesquisa.competencia, session!.user.access_token); // dados retornados do supabase
-      console.log(rsGuias.rs)
+      
       if (result && rsGuias) {
         setListaServico(result.data.data);
         setResumoGuia(rsGuias.rs);

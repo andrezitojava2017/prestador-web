@@ -37,5 +37,6 @@ export const calcularPatronal = (base: number, salario_base: number)=>{
 
 export const totalImposto = (valor_retido:number, valor_patronal:number)=>{
 
-  return valor_retido+valor_patronal
+  const rs = valor_retido+valor_patronal 
+  return parseFloat(rs.toFixed(2))
 }

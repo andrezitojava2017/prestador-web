@@ -132,9 +132,9 @@ const FormularioServico = ({ close, action, service }: Props) => {
       const salBase = formatarCusto(servico.salario_base);
 
       let retido = calcularRetido(
-        tributoRef.base_segurado,
+        parseFloat(tributoRef.base_segurado),
         salBase,
-        tributoRef.max_recolhimento
+        parseFloat(tributoRef.max_recolhimento)
       );
 
       let patronal = calcularPatronal(tributoRef.base_patronal, salBase);

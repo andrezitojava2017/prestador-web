@@ -14,7 +14,7 @@ const useTributo = () => {
         if(!session) {
           setTributo([])
         }
-        const data = await recuperarListaTributoMensal(session!.user.token);
+        const data = await recuperarListaTributoMensal(session!.user.access_token);
         if (data) setTributo(data!);
         
       };
