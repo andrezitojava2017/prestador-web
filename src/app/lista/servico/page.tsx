@@ -85,7 +85,7 @@ const ListarServicos = () => {
     }
   };
 
-  const handlePrint = async () => {
+  const handlePrint = async () => {    
     // Gera o blob do PDF
     const blob = await pdf(<MyDocument data={listaServico} />).toBlob();
     // Cria uma URL para o blob e abre em uma nova aba

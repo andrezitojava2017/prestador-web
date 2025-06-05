@@ -6,6 +6,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const { data: session, status } = useSession();
   useEffect(() => {
+    console.log(session, status)
     if (status === "unauthenticated") {
       router.push("/login"); // Redireciona para a página de login
     }
