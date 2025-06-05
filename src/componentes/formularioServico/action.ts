@@ -24,7 +24,7 @@ export const verificaPreenchimentoCamposServico = (
   }
 
   if (
-    servico.fonte === 0 ||
+    servico.fonte === '' ||
     servico.fonte === undefined ||
     servico.fonte === null
   ) {

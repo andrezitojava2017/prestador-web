@@ -46,7 +46,7 @@ const FormularioServico = ({ close, action, service }: Props) => {
     competencia: "",
     cod_dotacao: 0,
     empenho: 0,
-    fonte: 0,
+    fonte: "0",
     inss_patronal: 0,
     inss_retido: 0,
     salario_base: "",
@@ -244,7 +244,7 @@ const FormularioServico = ({ close, action, service }: Props) => {
               size={"sm"}
               value={servico?.fonte}
               onChange={(e) =>
-                setServico({ ...servico, fonte: parseFloat(e.target.value) })
+                setServico({ ...servico, fonte: e.target.value })
               }
             />
           </FormControl>

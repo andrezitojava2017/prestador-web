@@ -5,7 +5,7 @@ export interface IServico {
   id?: number;
   competencia?: string;
   empenho: number;
-  fonte: number;
+  fonte: string;
   pis_pasep?: number;
   inss_retido: number;
   inss_patronal: number;

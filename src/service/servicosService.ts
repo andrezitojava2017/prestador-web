@@ -25,7 +25,10 @@ export const inserirNovoServico = async (
     );
 
     return rs;
-  } catch (error) {
+  } catch (error: any) {
+    if (error.response) {
+      throw error.response.data;
+    }
     console.log("erro ocorrido ", error);
     throw error;
   }
@@ -87,24 +90,23 @@ export const buscarServico = async (competencia: string, token: string) => {
   */
 };
 
-export const relatorioResumoGuia = async (competencia: string, token:string) => {
-
+export const relatorioResumoGuia = async (
+  competencia: string,
+  token: string
+) => {
   try {
-    const data = await instance.get(`/freelance/rel/${competencia}`,{
-      
-      headers:{
-        authorization: token
+    const data = await instance.get(`/freelance/rel/${competencia}`, {
+      headers: {
+        authorization: token,
       },
-
     });
 
     return data.data;
-
-  } catch (error:any) {
-    console.warn('Erro ocorrido: ', error.message)
+  } catch (error: any) {
+    console.warn("Erro ocorrido: ", error.message);
     throw error;
   }
-/*
+  /*
 
   let { data, error } = await supabase.rpc("resumo_guias", {
     competencia_param: competencia,
@@ -129,8 +131,8 @@ export const atualizarServiço = async (servico: IServico, token: string) => {
         },
       }
     );
-  } catch (error:any) {
-    console.warn('Erro ocorrido: ', error.message)
+  } catch (error: any) {
+    console.warn("Erro ocorrido: ", error.message);
     throw error;
   }
   /*
