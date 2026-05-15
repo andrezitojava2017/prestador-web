@@ -3,7 +3,7 @@ import { Flex, HStack, Text } from "@chakra-ui/react";
 
 type Props = {
   information: string;
-  value: number;
+  value: number | string;
 }
 
 const Information = ({ value, information }: Props) => {

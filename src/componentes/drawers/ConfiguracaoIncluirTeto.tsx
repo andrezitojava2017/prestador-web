@@ -22,14 +22,14 @@ import { validarDadosConfiguracaoTributo } from "./action";
 import { inserirConfigTributo } from "@/service/tributoService";
 import { TributoContext } from "@/context/tributoContext";
 import FormularioConfigTeto from "../formularioConfigTeto/FormularioConfigTeto";
-
-
+import { useSession } from "next-auth/react";
 
 const ConfiguracaoIncluirTeto = () => {
   const { tributoRef, setTributoRef } = useContext(TributoContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [loading, setLoading] = useState<boolean>(false);
-/*
+  const { data: session } = useSession();
+  /*
   const [tributo, setTributo] = useState<ITributos>({
     competencia: "",
     max_recolhimento: 0,
@@ -60,7 +60,7 @@ const ConfiguracaoIncluirTeto = () => {
       if (errorCompetencia)
         throw new Error("Preencha a competencia com valor aceito: ex: 01/2000");
 */
-      await inserirConfigTributo(tributoRef);
+      await inserirConfigTributo(tributoRef, session!.user.access_token);
       setLoading(false);
 
       // mensagem de aviso
@@ -109,7 +109,7 @@ const ConfiguracaoIncluirTeto = () => {
           </DrawerHeader>
 
           <DrawerBody>
-              <FormularioConfigTeto />
+            <FormularioConfigTeto />
             {/* 
             <VStack gap={4}>
               <FormControl>

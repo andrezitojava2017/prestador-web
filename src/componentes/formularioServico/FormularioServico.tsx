@@ -30,6 +30,7 @@ import { IMessage } from "@/interface/IMessage";
 import AlertServicoNovo from "../alertDialog/alertServicoNovo";
 import { usePathname } from "next/navigation";
 import { atualizarServiço } from "@/service/servicosService";
+import { useSession } from "next-auth/react";
 
 type Props = {
   close?: () => void;
@@ -43,9 +44,9 @@ const FormularioServico = ({ close, action, service }: Props) => {
   const { setFreelancers, freelancers } = useContext(FreelanceContexts);
   const [servico, setServico] = useState<IServico>({
     competencia: "",
-    cod_lotacao: 0,
+    cod_dotacao: 0,
     empenho: 0,
-    fonte: 0,
+    fonte: "0",
     inss_patronal: 0,
     inss_retido: 0,
     salario_base: "",
@@ -58,7 +59,7 @@ const FormularioServico = ({ close, action, service }: Props) => {
   const [alert, setAlert] = useState<IMessage>();
 
   const path = usePathname();
-
+  const { data: session } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
   useEffect(() => {
     // atributo habilitado para habilitar/desabilitar campos de nome e pispasep
@@ -75,9 +76,9 @@ const FormularioServico = ({ close, action, service }: Props) => {
 
   useEffect(() => {
     if (service) {
-      setServico({ ...service })
+      setServico({ ...service });
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (message) {
@@ -102,23 +103,8 @@ const FormularioServico = ({ close, action, service }: Props) => {
       setLoading(true);
 
       verificaPreenchimentoCamposServico(servico, freelancers);
-      const rs = await verificarPisPasepExiste(freelancers);
 
-      if (rs?.length !== 0) {
-        // pis/pasep existe na base
-        // salvar servico
-        await novoServico(servico, freelancers);
-      }
-
-      if (rs?.length === 0) {
-        // pis/pasep NÃO EXISTE na base
-
-        // salvar prestador
-        await incluirNovoPrestador(freelancers);
-
-        // lançar serviço
-        await novoServico(servico, freelancers);
-      }
+      await novoServico(servico, freelancers, session!.user.access_token);
 
       // mensagem do alert
       setAlert({
@@ -146,9 +132,9 @@ const FormularioServico = ({ close, action, service }: Props) => {
       const salBase = formatarCusto(servico.salario_base);
 
       let retido = calcularRetido(
-        tributoRef.base_segurado,
+        parseFloat(tributoRef.base_segurado),
         salBase,
-        tributoRef.max_recolhimento
+        parseFloat(tributoRef.max_recolhimento)
       );
 
       let patronal = calcularPatronal(tributoRef.base_patronal, salBase);
@@ -166,10 +152,29 @@ const FormularioServico = ({ close, action, service }: Props) => {
     }
   };
 
-  const atualizaRegistro = async ()=>{
-    await atualizarServiço(servico)
-  }
+  const atualizaRegistro = async () => {
+    try {
+      
+      setLoading(true);
+      await atualizarServiço(servico, session!.user.access_token);
 
+      // mensagem de resposta
+      setMessage({
+        title: "Sucesso",
+        message: "Dados atualizados com sucesso!",
+        type: "success",
+      });
+    } catch (error:any) {
+       // mensagem de resposta
+       setMessage({
+        title: "Atenção",
+        message: error.message,
+        type: "error",
+      });
+    }
+
+    setLoading(false);
+  };
 
   return (
     <Stack width={"70vw"} maxWidth={"max-content"}>
@@ -210,10 +215,10 @@ const FormularioServico = ({ close, action, service }: Props) => {
             <Input
               type="number"
               size={"sm"}
-              value={freelancers?.pisPasep}
+              value={freelancers?.pis_pasep}
               readOnly
               onChange={(e) =>
-                setFreelancers({ ...freelancers, pisPasep: e.target.value })
+                setFreelancers({ ...freelancers, pis_pasep: e.target.value })
               }
             />
           </FormControl>
@@ -239,7 +244,7 @@ const FormularioServico = ({ close, action, service }: Props) => {
               size={"sm"}
               value={servico?.fonte}
               onChange={(e) =>
-                setServico({ ...servico, fonte: parseFloat(e.target.value) })
+                setServico({ ...servico, fonte: e.target.value })
               }
             />
           </FormControl>
@@ -256,16 +261,16 @@ const FormularioServico = ({ close, action, service }: Props) => {
               onChange={(e) =>
                 setServico({
                   ...servico,
-                  cod_lotacao: parseInt(e.currentTarget.value),
+                  cod_dotacao: parseInt(e.currentTarget.value),
                 })
               }
-              value={servico.cod_lotacao}
+              value={servico.cod_dotacao}
             >
               {secretarias.map((sec) => (
                 <option
-                  value={sec.codigo}
-                  key={sec.codigo}
-                >{`${sec.codigo} - ${sec.descricao}`}</option>
+                  value={sec.codigo_dotacao}
+                  key={sec.codigo_dotacao}
+                >{`${sec.codigo_dotacao} - ${sec.descricao}`}</option>
               ))}
             </Select>
           </FormControl>
@@ -310,7 +315,7 @@ const FormularioServico = ({ close, action, service }: Props) => {
           isDisabled={habilitaNovo}
           colorScheme="blue"
           onClick={
-            path === "/importar" || path === '/lista/prestador'
+            path === "/importar" || path === "/lista/prestador"
               ? inserirNovoServico
               : atualizaRegistro
           }

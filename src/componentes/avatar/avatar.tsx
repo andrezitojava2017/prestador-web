@@ -32,6 +32,7 @@ const Perfil = () => {
     avatar: icon.src,
   });
 
+  /*
   useEffect(() => {
     (async () => {
       try {
@@ -46,7 +47,7 @@ const Perfil = () => {
       }
     })();
   }, []);
-
+*/
   const uploadAvatar = async (e: FormEvent<HTMLInputElement>) => {
     if (e.currentTarget.files) {
       let file = e.currentTarget.files[0];
@@ -60,7 +61,7 @@ const Perfil = () => {
     <>
       <Avatar
         /* name={user?.nome || 'Prestador Web'}*/
-        icon={<Image src={icon} width={50} height={50} alt={"icone"} />}
+        icon={<Image src={icon} width={50} height={50} alt={"Perfil"} />}
         size={"xl"}
         background={"white"}
         src={image ? image : icon.src}
@@ -68,6 +69,7 @@ const Perfil = () => {
         _hover={{ cursor: "pointer" }}
       />
 
+      {/*
       <AlertDialog
         isOpen={isOpen}
         leastDestructiveRef={cancelRef}
@@ -97,6 +99,7 @@ const Perfil = () => {
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
+      */}
     </>
   );
 };

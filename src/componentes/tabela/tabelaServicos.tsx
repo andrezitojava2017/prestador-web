@@ -38,7 +38,7 @@ const TabelaServiços = ({ data }: Props) => {
                 return (
                   <Tr key={item.id}>
                     <Td fontWeight={"700"}>{item.competencia}</Td>
-                    <Td>{item.db_pessoas?.nome}</Td>
+                    <Td>{item.pessoa?.nome}</Td>
                     <Td color={"red"}>
                       {item.inss_retido.toLocaleString("pt-br", {
                         style: "currency",
@@ -50,7 +50,7 @@ const TabelaServiços = ({ data }: Props) => {
                         <FreelanceProvider>
                           <LancarServicoDrawer
                             icone={<MdEditSquare size={30} color={"red"} />}
-                            data={item.db_pessoas!}
+                            data={item.pessoa!}
                             service={item}
                           />
                         </FreelanceProvider>

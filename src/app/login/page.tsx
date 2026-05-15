@@ -5,20 +5,34 @@ import { FormControl, FormLabel } from "@chakra-ui/react";
 import { autenticarUsuario, verificarCampos } from "./action";
 import { useRouter } from "next/navigation";
 import { michroma } from "../fonts/fonts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Credencial } from "@/interface/credencial";
+import { signIn, useSession } from "next-auth/react";
 
 const Login = () => {
   const router = useRouter();
+  const { data:session } = useSession();
   const toast = useToast();
 
-  const [credencial, setCredencial] = useState<Credencial>({ email: "", senha: "" });
+  const [credencial, setCredencial] = useState<Credencial>({
+    email: "",
+    senha: "",
+  });
 
   const logar = async () => {
     try {
       // verifica se os campos estão preenchidos
       verificarCampos(credencial);
 
+      const rs = await signIn("credentials", {
+        redirect: false,
+        username: credencial.email,
+        password: credencial.senha,
+      });
+
+      if(rs?.error) throw new Error('Não foi possivel autenticar usuario')
+
+      /*
       // faz o login no supabase
       const user = await autenticarUsuario(credencial);
 
@@ -26,7 +40,10 @@ const Login = () => {
       if (user) {
         router.refresh();
       }
+        */
     } catch (error: any) {
+      console.warn('Erro ocorrido ', error);
+      
       toast({
         title: "Atenção",
         description: `${error.message}`,
@@ -36,6 +53,13 @@ const Login = () => {
       });
     }
   };
+
+  useEffect(() => {
+		if (session?.user?.access_token) {
+			sessionStorage.setItem('token', session.user.access_token)
+			router.push('/')
+		}
+	}, [session])
 
   return (
     <VStack

@@ -5,12 +5,12 @@ export interface IServico {
   id?: number;
   competencia?: string;
   empenho: number;
-  fonte: number;
-  pisPasep?: number;
+  fonte: string;
+  pis_pasep?: number;
   inss_retido: number;
   inss_patronal: number;
   salario_base: string;
-  cod_lotacao: number;
-  db_pessoas?: IPrestador;
-  db_lotacao?: ISecretaria;
+  cod_dotacao: number;
+  pessoa?: IPrestador;
+  lotacao?: ISecretaria;
 }

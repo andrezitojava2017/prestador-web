@@ -24,15 +24,18 @@ import {
 } from "@/utils/prestador/actions";
 import { incluirNovoPrestador } from "@/service/prestadorService";
 
+
 type Props = {
   close: () => void;
+  token:string;
 };
-const ModalContentNewProvider = ({ close }: Props) => {
+const ModalContentNewProvider = ({ close, token }: Props) => {
+  
   const toast = useToast();
   const [loading, setLoading] = useState<boolean>(false);
   const [freelance, setFreelance] = useState<IPrestador>({
     nome: "",
-    pisPasep: "",
+    pis_pasep: "",
   });
   const [mensagem, setMensagem] = useState<{
     message: string;
@@ -60,10 +63,10 @@ const ModalContentNewProvider = ({ close }: Props) => {
       verificarCamposPreenchidos(freelance);
 
       // verifica se pispasep já existe na base de dados
-      await verificarPrestadorExisteNaBase(freelance);
+    //  await verificarPrestadorExisteNaBase(freelance);
 
-      // faz a inserção dos dados
-      await incluirNovoPrestador(freelance);
+      // faz a inserção dos dados   
+      await incluirNovoPrestador(freelance, token);
 
       // limpa o formulario
       limparFormulario(setFreelance);
@@ -105,10 +108,10 @@ const ModalContentNewProvider = ({ close }: Props) => {
           <FormLabel>PIS/PASEP</FormLabel>
           <Input
             type="text"
-            value={freelance.pisPasep}
+            value={freelance.pis_pasep}
             onChange={(text) => {
               let v = formatarPisPasepParaBancoDeDados(text.target.value);
-              setFreelance({ ...freelance, pisPasep: v });
+              setFreelance({ ...freelance, pis_pasep: v });
             }}
           />
           <FormHelperText>Numero de PIS/PASEP</FormHelperText>

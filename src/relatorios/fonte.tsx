@@ -127,9 +127,9 @@ const MyDocument = ({ data }: Props) => {
                     {data.slice(pageIndex * rowsPerPage, (pageIndex + 1) * rowsPerPage).map((obj, index) => (
                         <View style={styles.tableRow} key={index}>
                             <Text style={styles.tableCell}>{obj.fonte}</Text>
-                            <Text style={{ ...styles.tableCell, flex: 2 }}>{obj.db_lotacao?.descricao}</Text>
-                            <Text style={{ ...styles.tableCell, flex: 2 }}>{obj.db_pessoas?.nome}</Text>
-                            <Text style={styles.tableCell}>{obj.db_pessoas?.pisPasep}</Text>
+                            <Text style={{ ...styles.tableCell, flex: 2 }}>{obj.lotacao?.descricao}</Text>
+                            <Text style={{ ...styles.tableCell, flex: 2 }}>{obj.pessoa?.nome}</Text>
+                            <Text style={styles.tableCell}>{obj.pessoa?.pis_pasep}</Text>
                             <Text style={styles.tableCell}>{formatValue(parseFloat(obj.salario_base))}</Text>
                             <Text style={styles.tableCell}>{formatValue(obj.inss_retido)}</Text>
                             <Text style={styles.tableCell}>{formatValue(obj.inss_patronal)}</Text>

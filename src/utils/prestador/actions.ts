@@ -60,9 +60,9 @@ export const verificarNomePrestador = (value: string): string => {
     }
   
     if (
-      freelance.pisPasep === "" ||
-      freelance.pisPasep === null ||
-      freelance.pisPasep === undefined
+      freelance.pis_pasep === "" ||
+      freelance.pis_pasep === null ||
+      freelance.pis_pasep === undefined
     ) {
       throw new Error("PIS/PASEP do prestador não foi informado");
     }
@@ -75,6 +75,6 @@ export const verificarNomePrestador = (value: string): string => {
   export const limparFormulario = (
     setFreelance: React.Dispatch<SetStateAction<IPrestador>>
   ) => {
-    setFreelance({ nome: "", pisPasep: "" });
+    setFreelance({ nome: "", pis_pasep: "" });
   };
   

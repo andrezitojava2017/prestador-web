@@ -16,12 +16,11 @@ import {
 import AlterarPrestadorDrawer from "../drawers/AlterarPrestadorDrawer";
 import { BsTools } from "react-icons/bs";
 import { usePathname } from "next/navigation";
-import {
-  FreelanceProvider,
-} from "@/context/FreelanceContext";
+import { FreelanceProvider } from "@/context/FreelanceContext";
 import LancarServicoDrawer from "../drawers/LancarServicoDrawer";
 import { ReactNode } from "react";
 import { TbArrowBigRightLinesFilled } from "react-icons/tb";
+import { useSession } from "next-auth/react";
 
 type Props = {
   data: IPrestador[];
@@ -29,7 +28,7 @@ type Props = {
 };
 const TableOfServices = ({ data }: Props) => {
   const pathname = usePathname();
-
+  const { data: session } = useSession();
 
   const drawerRegistroServico = (freelance: IPrestador, icone: ReactNode) => {
     return (
@@ -48,7 +47,10 @@ const TableOfServices = ({ data }: Props) => {
     return (
       <FreelanceProvider>
         <HStack>
-          <AlterarPrestadorDrawer data={el} />
+          <AlterarPrestadorDrawer
+            data={el}
+            token={session!.user.access_token}
+          />
 
           <Flex flexDirection={"column"} alignItems={"center"}>
             <Text fontSize={10}>Serviço</Text>
@@ -77,12 +79,10 @@ const TableOfServices = ({ data }: Props) => {
           </Tr>
         </Thead>
         <Tbody>
-          {data.length !== 0 &&
-          data != null &&
-          data != undefined ? (
+          {data.length !== 0 && data != null && data != undefined ? (
             data.map((el: any, index: number) => (
               <Tr key={index}>
-                <Td>{el.pisPasep}</Td>
+                <Td>{el.pis_pasep}</Td>
                 <Td>{el.nome}</Td>
                 {pathname === "/lista/prestador" ? ( // verifica a rota para definir as opções
                   <Td>{eventos(el)}</Td>

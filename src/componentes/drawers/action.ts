@@ -3,8 +3,8 @@ import { ITributos } from "@/interface/ITributos";
 import { IPrestador } from "@/interface/IPrestador";
 import { AtualizarDadosPrestadorService } from "@/service/prestadorService";
 
-export const AtualizarDadosPrestador = async (data: IPrestador) => {
-  await AtualizarDadosPrestadorService(data);
+export const AtualizarDadosPrestador = async (data: IPrestador, token:string) => {
+  await AtualizarDadosPrestadorService(data, token);
 };
 
 export const validarDadosConfiguracaoTributo = (tributo: ITributos) => {
@@ -45,9 +45,9 @@ export const validarDadosConfiguracaoTributo = (tributo: ITributos) => {
 
 export const validarDadosSecretaria = (secretaria: ISecretaria) => {
   if (
-    secretaria.codigo === null ||
-    secretaria.codigo === 0 ||
-    secretaria.codigo === undefined
+    secretaria.codigo_dotacao === null ||
+    secretaria.codigo_dotacao === 0 ||
+    secretaria.codigo_dotacao === undefined
   ) {
     throw new Error("Codigo nao foi informado");
   }

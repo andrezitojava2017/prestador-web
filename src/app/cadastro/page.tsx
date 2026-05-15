@@ -15,9 +15,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Credencial } from "@/interface/credencial";
 import { novoUsuario } from "@/service/loginService";
-import { warn } from "console";
+import AuthProvider from "@/providersApp/AuthProvider";
+import { useSession } from "next-auth/react";
 
 const Cadastro = () => {
+  const { data: session } = useSession();
   const toast = useToast();
   const router = useRouter();
   const [user, setUser] = useState<Credencial>({
@@ -29,7 +31,10 @@ const Cadastro = () => {
 
   const adicionaNovoUsuario = async () => {
     try {
-      await novoUsuario(user);
+      const token = session?.user.access_token;
+      console.log('token do usuario ', token);
+      
+      await novoUsuario(user, token as string);
 
       // mensagem de aviso
       toast({
@@ -41,7 +46,7 @@ const Cadastro = () => {
       });
     } catch (error) {
       console.warn(error);
-      
+
       toast({
         title: "Error",
         description: "Erro no cadastro de usuario",
@@ -53,57 +58,59 @@ const Cadastro = () => {
   };
 
   return (
-    <Flex
-      flexDirection={"column"}
-      alignItems={"center"}
-      justifyContent={"center"}
-      height={"100vh"}
-      gap={4}
-    >
-      <Box display={"flex"} flexDir={"column"} alignItems={"center"}>
-        <Image src={icone} alt="Prestador Web" width={80} height={80} />
-        <Text fontSize={"2xl"} paddingBottom={8}>
-          Cadastro de usuarios
-        </Text>
-      </Box>
+    <AuthProvider>
+      <Flex
+        flexDirection={"column"}
+        alignItems={"center"}
+        justifyContent={"center"}
+        height={"100vh"}
+        gap={4}
+      >
+        <Box display={"flex"} flexDir={"column"} alignItems={"center"}>
+          <Image src={icone} alt="Prestador Web" width={80} height={80} />
+          <Text fontSize={"2xl"} paddingBottom={8}>
+            Cadastro de usuarios
+          </Text>
+        </Box>
 
-      <Box display={"flex"} flexDirection={"column"} width={"40%"} gap={"4"}>
-        <Input
-          type="text"
-          placeholder="Nome do usuario"
-          onChange={(e) => setUser({ ...user, nome: e.currentTarget.value })}
-          value={user.nome}
-        />
-        <Input
-          type="email"
-          placeholder="E-mail"
-          onChange={(e) => setUser({ ...user, email: e.currentTarget.value })}
-          value={user.email}
-        />
-        <Input
-          type="password"
-          placeholder="Senha"
-          onChange={(e) => setUser({ ...user, senha: e.currentTarget.value })}
-          value={user.senha}
-        />
-      </Box>
-      <Flex flexDir={"column"} gap={8}>
-        <Button colorScheme="blue" onClick={adicionaNovoUsuario}>
-          Criar usuario
-        </Button>
-        <Text
-          onClick={() => router.push("/")}
-          textAlign={"center"}
-          _hover={{
-            cursor: "pointer",
-            border: "1px solid black",
-            borderRadius: 20,
-          }}
-        >
-          Voltar
-        </Text>
+        <Box display={"flex"} flexDirection={"column"} width={"40%"} gap={"4"}>
+          <Input
+            type="text"
+            placeholder="Nome do usuario"
+            onChange={(e) => setUser({ ...user, nome: e.currentTarget.value })}
+            value={user.nome}
+          />
+          <Input
+            type="email"
+            placeholder="E-mail"
+            onChange={(e) => setUser({ ...user, email: e.currentTarget.value })}
+            value={user.email}
+          />
+          <Input
+            type="password"
+            placeholder="Senha"
+            onChange={(e) => setUser({ ...user, senha: e.currentTarget.value })}
+            value={user.senha}
+          />
+        </Box>
+        <Flex flexDir={"column"} gap={8}>
+          <Button colorScheme="blue" onClick={adicionaNovoUsuario}>
+            Criar usuario
+          </Button>
+          <Text
+            onClick={() => router.push("/")}
+            textAlign={"center"}
+            _hover={{
+              cursor: "pointer",
+              border: "1px solid black",
+              borderRadius: 20,
+            }}
+          >
+            Voltar
+          </Text>
+        </Flex>
       </Flex>
-    </Flex>
+    </AuthProvider>
   );
 };
 

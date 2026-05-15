@@ -26,10 +26,12 @@ import { validarDadosSecretaria } from "./action";
 import { ISecretaria } from "@/interface/ISecretaria";
 import { FiEdit } from "react-icons/fi";
 import { adicionarNovaSecretaria } from "@/service/secretariaService";
+import { useSession } from "next-auth/react";
 
 const CadastroSecretariaDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [loading, setLoading] = useState<boolean>(false);
+  const {data:session} = useSession();
 
   const [secretaria, setSecretaria] = useState<ISecretaria>({
     codigo: 0,
@@ -43,7 +45,7 @@ const CadastroSecretariaDrawer = () => {
 
     try {
       validarDadosSecretaria(secretaria);
-      await adicionarNovaSecretaria(secretaria);
+      await adicionarNovaSecretaria(secretaria, session!.user.access_token);
 
       // mensagem de aviso
       toast({

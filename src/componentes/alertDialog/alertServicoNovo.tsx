@@ -43,7 +43,7 @@ const AlertServicoNovo = ({
       inss_patronal: 0,
       inss_retido: 0,
       salario_base: "",
-      cod_lotacao: 0,
+      cod_dotacao: 0,
     });
     close();
   };
@@ -53,7 +53,7 @@ const AlertServicoNovo = ({
       const storage = getFreelanceStorage();
 
       const freeList = storage.filter((free) => {
-        return free.pisPasep !== freelancers.pisPasep;
+        return free.pis_pasep !== freelancers.pis_pasep;
       });
 
       localStorage.setItem("freelance", JSON.stringify(freeList));

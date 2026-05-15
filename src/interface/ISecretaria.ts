@@ -1,6 +1,6 @@
 
 export interface ISecretaria{
     id?:number,
-    codigo:number,
+    codigo_dotacao:number,
     descricao:string
 }

@@ -21,11 +21,13 @@ import { atualizarConfiguracao } from "@/service/tributoService";
 import { TributoContext } from "@/context/tributoContext";
 import FormularioConfigTeto from "../formularioConfigTeto/FormularioConfigTeto";
 import { BiMessageSquareEdit } from "react-icons/bi";
+import { useSession } from "next-auth/react";
 
 const AtualizarConfiguracaoDrawer = () => {
   const { tributoRef, setTributoRef } = useContext(TributoContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [loading, setLoading] = useState<boolean>(false);
+  const {data:session} = useSession()
 
   const toast = useToast();
 
@@ -37,7 +39,7 @@ const AtualizarConfiguracaoDrawer = () => {
       // valida os campos preenchidos
       validarDadosConfiguracaoTributo(tributoRef);
 
-      await atualizarConfiguracao(tributoRef);
+      await atualizarConfiguracao(tributoRef, session!.user.access_token);
       setLoading(false);
 
       // mensagem de aviso
